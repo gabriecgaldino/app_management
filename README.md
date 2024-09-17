@@ -1,8 +1,3 @@
-Aqui está um exemplo de um arquivo README para o repositório:
-
-```markdown
-# App Management
-
 Este projeto é uma aplicação web feita com Django para gerenciar aplicações. 
 
 ## Requisitos

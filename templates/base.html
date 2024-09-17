@@ -5,10 +5,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SGE</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles\base.css' %}">
 </head>
 
 <body>
-    <h1>Estamos na página principal</h1>
+    <header>
+        <h1 id="logo">SGE</h1>
+        <div>
+            <h3>Gabriel G</h3>
+            <img src="{% static 'assets\80058962.jpeg' %}" alt="">
+        </div>
+    </header>
 </body>
 
 </html>

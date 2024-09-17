@@ -82,9 +82,4 @@ Contribuições são bem-vindas! Siga os passos abaixo:
 4. Faça um push para a branch (`git push origin feature/nova-feature`)
 5. Abra um Pull Request
 
-## Licença
-
-Este projeto está licenciado sob a Licença MIT. Consulte o arquivo LICENSE para mais detalhes.
-```
-
 Esse README cobre as instruções básicas de clonagem, instalação e execução do projeto. Se precisar de ajustes ou mais detalhes específicos, é só me avisar!

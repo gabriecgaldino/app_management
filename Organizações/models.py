@@ -4,6 +4,6 @@ from django.db import models
 
 
 class Organizações(models.Model):
-    nome_fantasia = models.CharField()
-    cnpj = models.CharField()
-    email = models.CharField()
+    nome_fantasia = models.CharField(max_length=100)
+    cnpj = models.CharField(max_length=100)
+    email = models.CharField(max_length=100)

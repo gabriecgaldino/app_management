@@ -4,19 +4,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block titulo %}
+
     <title>SGE</title>
+
+    {% endblock %}
     {% load static %}
-    <link rel="stylesheet" href="{% static 'styles\base.css' %}">
 </head>
 
 <body>
     <header>
         <h1 id="logo">SGE</h1>
-        <div>
-            <h3>Gabriel G</h3>
-            <img src="{% static 'assets\80058962.jpeg' %}" alt="">
-        </div>
+
     </header>
+    {% block conteudo %}
+    <form action="login">
+        <label for="email"><input type="email" name="email" id="email" placeholder="E-mail"></label>
+        <label for="password"><input type="password" name="password" id="password" placeholder="Senha"></label>
+        <button type="login">Entrar</button>
+        <a href="{% url 'registro' %}">Registrar</a>
+    </form>
+
+    {% endblock %}
 </body>
 
 </html>

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+
+{% block titulo %}
+
+<title>Cadastro</title>
+
+{% endblock %}
+
+
+
+{% block conteudo %}
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Entrar</button>
+    <a href="{% url 'registro' %}">Registrar</a>
+</form>
+
+{% endblock %}

@@ -5,9 +5,6 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django import forms
 
 
-# Create your views here.
-
-
 class RegistroForm(UserCreationForm):
     nome = forms.CharField(required=True)
     sobrenome = forms.CharField(required=True)
@@ -17,7 +14,7 @@ class RegistroForm(UserCreationForm):
     class Meta:
         model = Usuario
         fields = ('nome', 'sobrenome', 'email',
-                  'telefone', 'cpf', 'cargo')
+                  'telefone', 'cpf', 'cargo', 'organização')
 
 
 def registroView(request):
@@ -31,3 +28,15 @@ def registroView(request):
         form = RegistroForm()
 
     return render(request, 'registro.html', {'form': form})
+
+
+def loginView(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            return redirect('home')  # Redireciona para a página inicial
+    else:
+        form = AuthenticationForm()
+    return render(request, 'login.html', {'form': form})

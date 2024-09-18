@@ -16,8 +16,10 @@
         <h1 class="text-center">SGE</h1>
         {% csrf_token %}
         <div class="col-md-12">
-            <input type="text" name="username" id="" class="form-control mb-3" placeholder="E-mail">
-            <input type="password" name="password" id="" class="form-control mb-3" placeholder="Senha">
+            <input type="text" name="username" class="form-control mb-3" placeholder="E-mail"
+                value="{{ form.username.value }}">
+            <input type="password" name="password" class="form-control mb-3" placeholder="Senha"
+                value="{{ form.password.value }}">
         </div>
         <div class="d-flex flex-column align-items-center col-md-12">
             <button type="submit" class="btn btn-primary mt-4 col-md-12">Entrar</button>

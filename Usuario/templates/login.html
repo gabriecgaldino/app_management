@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+
+{% block titulo %}
+
+<title>SGE</title>
+
+{% endblock %}
+
+
+
+{% block conteudo %}
+
+<style>
+    .bg-light-red {
+        background-color: #ff7979;
+        /* Vermelho claro */
+    }
+</style>
+
+<div class="d-flex justify-content-center align-items-center mt-5">
+    <form method="POST" action="" class="bg-light d-flex flex-column border p-4 rounded mt-5"
+        style="width: 400px; height: 50vh;">
+        <h1 class="text-center">SGE</h1>
+        {% csrf_token %}
+        <div class="col-md-12">
+            <input type="email" name="email" class="form-control form-control-lg mb-3 mt-3" placeholder="E-mail">
+            <input type="password" name="password" class="form-control form-control-lg mb-3" placeholder="Senha">
+        </div>
+        {% for message in messages %}
+        <p style="color: red;">{{ message }}</p>
+        {% endfor %}
+        <div class="d-flex flex-column align-items-center col-md-12">
+            <button type="submit" class="btn btn-primary mt-4 col-md-12">Entrar</button>
+            <a href="{% url 'registro' %}" class="mt-2">Registrar</a>
+        </div>
+    </form>
+</div>
+
+
+
+{% endblock %}

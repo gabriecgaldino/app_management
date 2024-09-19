@@ -11,10 +11,74 @@
 
 {% block conteudo %}
 
-<form method="post">
+<style>
+    .bg-light-green {
+        background-color: #d4edda;
+        /* Verde claro */
+    }
+</style>
+
+<form action="/" method="post">
     {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Registrar</button>
+    <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+        <div class="col-4 text-center">
+            <h1>SGE</h1>
+            <div class="form-group">
+                <div class="d-flex justify-content-between m-2">
+                    {{ form.first_name }}
+                    <div class="col-1"></div>
+                    {{ form.last_name }}
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="d-flex justify-content-between m-2">
+                    {{ form.email }}
+                    <div class="col-1"></div>
+                    {{ form.telefone }}
+                </div>
+            </div>
+            <div class="form-group m-2">
+                {{ form.cpf }}
+            </div>
+            <div class="form-group m-2">
+                {{ form.organizacao }}
+            </div>
+            <div class="form-group m-2">
+                {{ form.password1 }}
+            </div>
+            <div class="form-group m-2">
+                {{ form.password2 }}
+            </div>
+            {% for message in messages %}
+            <p class="bg-light-green text-dark rounded p-3">{{ message }}</p>
+            {% endfor %}
+            <div class="d-flex justify-content-between">
+                <button type="submit" class="btn btn-primary col-4 m-2">Registrar</button>
+                <button type="button" class="btn btn-danger col-4 m-2">Voltar</button>
+            </div>
+        </div>
+    </div>
 </form>
+
+{{ form.erros }}
+
+<script>
+    var form_fields = document.getElementsByTagName('input')
+    form_fields[1].placeholder = 'Primeiro Nome'
+    form_fields[2].placeholder = 'Último Nome'
+    form_fields[3].placeholder = 'E-mail'
+    form_fields[4].placeholder = 'CPF'
+    form_fields[5].placeholder = 'Telefone'
+    form_fields[6].placeholder = 'Senha'
+    form_fields[7].placeholder = 'Confirme a Senha'
+
+    for (var field in form_fields) {
+        form_fields[field].className += 'form-control'
+    }
+
+    var select = document.getElementsByTagName('select')
+
+    select[0].className += 'form-control'
+</script>
 
 {% endblock %}

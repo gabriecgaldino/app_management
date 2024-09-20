@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from Usuario.models import Colaborador, CriaColaborador
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login
 
 
 
@@ -36,3 +36,6 @@ def login_view(request):
             messages.info(request, 'E-mail ou senha inválidos')
 
     return render(request, 'login.html')
+
+def change_data_user(request): 
+    return render(request, 'change_data_user.html')

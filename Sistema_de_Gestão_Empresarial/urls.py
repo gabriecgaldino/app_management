@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.contrib.auth.views import LogoutView
 from django.urls import path
-from Usuario.views import registro, login_view
+from Usuario.views import registro, login_view, change_data_user
 from Sistema_de_Gestão_Empresarial.views import home
 
 
@@ -26,5 +26,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', login_view, name='login'),
     path('home/', home, name='home'),
-    path('logout/', LogoutView.as_view(), name='logout')
+    path('logout/', LogoutView.as_view(), name='logout'),
+    path('update-user/', change_data_user, name='update-user')
 ]

@@ -4,6 +4,8 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 
 
+
+
 def registro(request):
     if request.method == 'POST':
         form = CriaColaborador(request.POST)
@@ -12,7 +14,8 @@ def registro(request):
             form.save()
             messages.success(
                 request, 'Usuário criado com sucesso, realize o login!')
-
+        else: 
+            messages.error(request, "Erro ao criar o usuário. Verifique os dados.")
     else:
         form = CriaColaborador()
 

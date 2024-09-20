@@ -14,16 +14,48 @@
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
     <style>
-        body {
-            background-color: #f4f4f4
+        .navbar-custom {
+        background-color: #343a40; /* Cinza Chumbo */
         }
-    </style>
+        .navbar-custom .navbar-brand, .navbar-custom .nav-link {
+        color: white;
+        }
+        .navbar-custom .nav-link:hover {
+        color: #d4d4d4; /* Um cinza mais claro ao passar o mouse */
+        }
+  </style>
 </head>
 
 <body class="text-center">
     {% block conteudo %}
 
-    <h1>Página Inicial</h1>
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">SGE</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="#">Vendas</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Compras</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Agenda</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Estoque</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Relatórios</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
     {% endblock %}
 
 

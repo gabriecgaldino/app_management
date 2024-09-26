@@ -8,6 +8,8 @@ class Estoque(models.Model):
     def __str__(self):
         return self.nome
 
+
+
 class Produto(models.Model):
     UNIDADES_MEDIDA = [
         ('KG', 'Kilograma'),
@@ -20,8 +22,8 @@ class Produto(models.Model):
     descricao = models.CharField(max_length=100)
     valor = models.DecimalField(max_digits=10, decimal_places=2)
     unidade_medida = models.CharField(max_length=5, choices=UNIDADES_MEDIDA, blank=False, null=False)
-    quantidade = models.DecimalField(max_digits=10, decimal_places=1)  # Ajustado para ser Decimal
-    estoque = models.ForeignKey('Estoque', on_delete=models.CASCADE, related_name='produtos')  # Referência correta
+    quantidade = models.DecimalField(max_digits=10, decimal_places=1)
+    estoque_id = models.ForeignKey(Estoque, on_delete=models.CASCADE, related_name='produtos')  
 
     def __str__(self):
         return self.descricao
@@ -29,11 +31,11 @@ class Produto(models.Model):
 class CriaProduto(ModelForm):
     class Meta:
         model = Produto
-        fields = ['descricao', 'valor', 'unidade_medida', 'quantidade', 'estoque']
+        fields = ['descricao', 'valor', 'unidade_medida', 'quantidade', 'estoque_id']
         widgets = {
             'descricao': forms.TextInput(attrs={'class': 'form-control', 'required': 'true'}),
-            'valor': forms.NumberInput(attrs={'class': 'form-control'}),  # Usar NumberInput para valores monetários
+            'valor': forms.NumberInput(attrs={'class': 'form-control'}),
             'unidade_medida': forms.Select(attrs={'class': 'form-control'}),
-            'quantidade': forms.NumberInput(attrs={'class': 'form-control'}),  # Melhor utilizar NumberInput
-            'estoque': forms.Select(attrs={'class': 'form-control'}),
+            'quantidade': forms.NumberInput(attrs={'class': 'form-control'}),
+            'estoque_id': forms.Select(attrs={'class': 'form-control'}),
         }

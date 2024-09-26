@@ -14,8 +14,11 @@
             <input type="text" class="form-control" placeholder="Pesquisar produtos...">
         </div>
 
-        <div class="col-md-3 text-end">
+        <div class="col-md-3 text-center">
             <a href="{% url 'produtos' %}" class="btn btn-success">Adicionar Produto</a>
+        </div>
+        <div class="col-md-3 text-center">
+            <a href="#" class="btn btn-success">Adicionar Estoque</a>
         </div>
 
     </section>
@@ -29,6 +32,8 @@
                     <th>Unidade de Medida</th>
                     <th>Quantidade</th>
                     <th>Preço</th>
+                    <th>Entrada</th>
+                    <th>Última movimentação</th>
                     <th>Ações</th>
                 </tr>
             </thead>
@@ -41,6 +46,8 @@
                     <td>{{produto.unidade_medida}}</td>
                     <td>{{produto.quantidade}}</td>
                     <td>{{produto.valor}}</td>
+                    <td>{{produto.data_entrada}}</td>
+                    <td>{{produto.data_saida}}</td>
                     <td>
                         <a href="#" class="btn btn-sm btn-warning">Editar</a>
                         <a href="#" class="btn btn-sm btn-danger">Excluir</a>

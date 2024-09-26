@@ -19,8 +19,7 @@ from django.contrib.auth.views import LogoutView
 from django.urls import path
 from Usuario.views import registro, login_view, change_data_user
 from Sistema_de_Gestão_Empresarial.views import home
-from Estoque.views import estoque
-from Produto.views import cria_produto_view
+from Produto.views import cria_produto_view, lista_produto
 
 
 urlpatterns = [
@@ -30,6 +29,6 @@ urlpatterns = [
     path('home/', home, name='home'),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('update-user/', change_data_user, name='update-user'),
-    path('estoque/', estoque, name='estoque'),
+    path('estoque/', lista_produto, name='estoque'),
     path('adicionar/', cria_produto_view, name='produtos')
 ]

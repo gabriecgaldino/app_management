@@ -20,5 +20,5 @@ def cria_produto_view(request):
 
 
 def lista_produto(request):
-    produto = Produto.objects.all()
-    return render(request, 'estoque.html', {'produtos': produto})
+    produtos = Produto.objects.all()
+    return render(request, 'estoque.html', {'produtos': produtos})

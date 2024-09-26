@@ -4,7 +4,5 @@ from Produto.models import Produto
 
 
 class Estoque(models.Model):
-    produto = models.OneToOneField(Produto, on_delete=models.CASCADE)
-    quantidade = models.DecimalField(decimal_places=1, max_digits=10)
-    data_entrada = models.DateField()
-    data_saida = models.DateField()
+    nome = models.CharField(max_length=50, default='Estoque')
+    

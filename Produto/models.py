@@ -1,13 +1,7 @@
 from django.db import models
 from django.forms import ModelForm
 from django import forms
-
-class Estoque(models.Model):
-    nome = models.CharField(max_length=100)
-
-    def __str__(self):
-        return self.nome
-
+from Estoque.models import Estoque
 
 
 class Produto(models.Model):
@@ -37,5 +31,9 @@ class CriaProduto(ModelForm):
             'valor': forms.NumberInput(attrs={'class': 'form-control'}),
             'unidade_medida': forms.Select(attrs={'class': 'form-control'}),
             'quantidade': forms.NumberInput(attrs={'class': 'form-control'}),
-            'estoque_id': forms.Select(attrs={'class': 'form-control'}),
+            'estoque_id': forms.Select(attrs={'class': 'form-control'})
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['estoque_id'].queryset = Estoque.objects.none()

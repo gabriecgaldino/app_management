@@ -1,10 +1,7 @@
 from django.shortcuts import render, redirect
-from Usuario.models import Colaborador, CriaColaborador
+from Usuario.models import CriaColaborador
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
-
-
-
 
 def registro(request):
     if request.method == 'POST':

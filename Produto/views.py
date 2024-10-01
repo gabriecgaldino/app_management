@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from Produto.models import CriaProduto, Produto
 from Usuario.models import Colaborador
+from Estoque.models import Estoque
 
 def estoque_view(request):
     colaborador = Colaborador.objects.get(username=request.user)
@@ -20,7 +21,7 @@ def estoque_view(request):
 
     else:
         form = CriaProduto(organizacao=organizacao)
-        produtos = Produto.objects.all()
+        produtos = Produto.objects.filter(estoque_id__organizacao=organizacao)
     
         
 

@@ -4,6 +4,7 @@ from Produto.models import CriaProduto, Produto
 from Usuario.models import Colaborador
 from Estoque.models import Estoque
 
+
 def estoque_view(request):
     colaborador = Colaborador.objects.get(username=request.user)
     organizacao = colaborador.organizacao
@@ -22,14 +23,12 @@ def estoque_view(request):
     else:
         form = CriaProduto(organizacao=organizacao)
         produtos = Produto.objects.filter(estoque_id__organizacao=organizacao)
-    
-        
+        query = request.GET.get('q')
+
+        if query:
+            produtos = produtos.filter(descricao__icontains=query)
 
     return render(request, 'estoque.html', {
         'form': form,
         'produtos': produtos
     })
-
-
-
-

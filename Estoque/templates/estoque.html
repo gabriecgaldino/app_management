@@ -10,10 +10,13 @@
     <section class="d-flex justify-content-between align-items-center mb-4">
 
         <!-- Campo de pesquisa -->
-        <div class="input-group">
-            <input type="text" class="form-control" placeholder="Pesquisar produtos...">
-            <button class="btn btn-outline-primary" type="button">Buscar</button>
-        </div>
+        <form method="GET" action="{% url 'estoque' %}">
+            <div class="input-group">
+                <input type="text" class="form-control" name="q" placeholder="Pesquisar produtos..."
+                    value="{{ request.GET.q }}">
+                <button class="btn btn-outline-primary" type="submit">Buscar</button>
+            </div>
+        </form>
 
         <div class="col-md-2 text-center">
             <a type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productModal">
@@ -21,7 +24,8 @@
             </a>
         </div>
 
-        <div class="modal fade mt-5" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
+        <div class="modal fade mt-5" id="productModal" tabindex="-1" aria-labelledby="productModalLabel"
+            aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -85,8 +89,8 @@
                     <td>{{produto.data_joined|date:"d/m/y"}}</td>
                     <td>{{produto.data_saida}}</td>
                     <td>
-                        <a href="#" class="btn btn-sm btn-warning">Editar</a>
-                        <a href="#" class="btn btn-sm btn-danger">Excluir</a>
+                        <a href="#" class="btn btn-sm btn-info">Editar</a>
+                        <a href="#" class="btn btn-sm btn-secondary">Excluir</a>
                     </td>
                 </tr>
                 {%empty%}

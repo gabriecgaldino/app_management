@@ -3,8 +3,7 @@ from django.contrib import messages
 from Produto.models import CriaProduto, Produto
 from Usuario.models import Colaborador
 
-
-def cria_produto_view(request):
+def estoque_view(request):
     colaborador = Colaborador.objects.get(username=request.user)
     organizacao = colaborador.organizacao
     if request.method == 'POST':
@@ -21,10 +20,15 @@ def cria_produto_view(request):
 
     else:
         form = CriaProduto(organizacao=organizacao)
+        produtos = Produto.objects.all()
+    
+        
 
-    return render(request, 'produtos.html', {'form': form})
+    return render(request, 'estoque.html', {
+        'form': form,
+        'produtos': produtos
+    })
 
 
-def lista_produto(request):
-    produtos = Produto.objects.all()
-    return render(request, 'estoque.html', {'produtos': produtos})
+
+

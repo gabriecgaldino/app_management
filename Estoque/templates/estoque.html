@@ -1,7 +1,7 @@
 {% extends "base.html"%}
 
 {%block titulo%}
-<title>Produtos</title>
+<title>Estoque</title>
 {%endblock%}
 
 {%block conteudo%}
@@ -10,15 +10,51 @@
     <section class="d-flex justify-content-between align-items-center mb-4">
 
         <!-- Campo de pesquisa -->
-        <div class="col-md-6">
+        <div class="input-group">
             <input type="text" class="form-control" placeholder="Pesquisar produtos...">
+            <button class="btn btn-outline-primary" type="button">Buscar</button>
         </div>
 
-        <div class="col-md-3 text-center">
-            <a href="{% url 'produtos' %}" class="btn btn-success">Adicionar Produto</a>
+        <div class="col-md-2 text-center">
+            <a type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productModal">
+                Adicionar Produto
+            </a>
         </div>
-        <div class="col-md-3 text-center">
-            <a href="#" class="btn btn-success">Adicionar Estoque</a>
+
+        <div class="modal fade mt-5" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="productModalLabel">Cadastrar Produto</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Formulário de cadastro de produto -->
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            <!-- Campo de Descrição -->
+                            <div class="mb-3">
+                                <label for="descricao" class="form-label"><strong>Descrição</strong></label>
+                                {{form.descricao}}
+                                <label for="unidade" class="form-label"><strong>Unidade de Medida</strong></label>
+                                {{form.unidade_medida}}
+                            </div>
+                            <div class="mb-3">
+                                <label for="valor" class="form-label"><strong>Valor</strong></label>
+                                {{form.valor}}
+                                <label for="quantidade" class="form-label"><strong>Quantidade</strong></label>
+                                {{form.quantidade}}
+                            </div>
+                            <div class="mb-3">
+                                <label for="quantidade" class="form-label"><strong>Estoque</strong></label>
+                                {{form.estoque_id}}
+                            </div>
+                            <!-- Botão de Enviar -->
+                            <button type="submit" class="btn btn-primary">Adicionar Produto</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
 
     </section>

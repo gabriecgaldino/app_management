@@ -19,7 +19,7 @@ from django.contrib.auth.views import LogoutView
 from django.urls import path
 from Usuario.views import registro, login_view, change_data_user
 from Sistema_de_Gestão_Empresarial.views import home
-from Produto.views import estoque_view
+from Produto.views import estoque_view, excluir_produto
 
 
 urlpatterns = [
@@ -30,4 +30,6 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(), name='logout'),
     path('update-user/', change_data_user, name='update-user'),
     path('estoque/', estoque_view, name='estoque'),
+    path('estoque/excluir/<int:produto_id>/',
+         excluir_produto, name='excluir_produto'),
 ]

@@ -1,8 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
+from django.http import JsonResponse
 from Produto.models import CriaProduto, Produto
 from Usuario.models import Colaborador
-from Estoque.models import Estoque
 
 
 def estoque_view(request):
@@ -22,13 +22,24 @@ def estoque_view(request):
 
     else:
         form = CriaProduto(organizacao=organizacao)
-        produtos = Produto.objects.filter(estoque_id__organizacao=organizacao)
         query = request.GET.get('q')
 
         if query:
             produtos = produtos.filter(descricao__icontains=query)
+        else:
+            produtos = Produto.objects.filter(
+                estoque_id__organizacao=organizacao)
 
     return render(request, 'estoque.html', {
         'form': form,
         'produtos': produtos
     })
+
+
+def excluir_produto(request, produto_id):
+    if request.method == 'DELETE':
+        produto = get_object_or_404(Produto, id=produto_id)
+        produto.delete()
+        return JsonResponse({'message': 'Produto removido!'}, status=200)
+    else:
+        return JsonResponse({'message': 'Produto não encontrado.'}, status=404)

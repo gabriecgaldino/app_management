@@ -68,6 +68,7 @@
         <table class="table table-striped">
             <thead>
                 <tr>
+                    <th>ID</th>
                     <th>Nome</th>
                     <th>Unidade de Medida</th>
                     <th>Quantidade</th>
@@ -82,6 +83,7 @@
 
                 {%for produto in produtos%}
                 <tr>
+                    <td>{{produto.id}}</td>
                     <td>{{produto.descricao}}</td>
                     <td>{{produto.unidade_medida}}</td>
                     <td>{{produto.quantidade}}</td>
@@ -90,7 +92,10 @@
                     <td>{{produto.data_saida}}</td>
                     <td>
                         <a href="#" class="btn btn-sm btn-info">Editar</a>
-                        <a href="#" class="btn btn-sm btn-secondary">Excluir</a>
+                        <button type="button" class="btn btn-sm btn-secondary" data-bs-toggle="modal"
+                            data-bs-target="#confirmDeleteModal" data-produto-id="{{ produto.id }}">
+                            Excluir
+                        </button>
                     </td>
                 </tr>
                 {%empty%}
@@ -102,6 +107,56 @@
         </table>
     </div>
 </div>
+
+<!-- Modal de confirmação -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirmar Exclusão</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Você tem certeza que deseja excluir este produto?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button id="confirmDeleteButton" type="button" class="btn btn-danger">Excluir</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    let produtoId;
+
+    // Capturar o ID do produto quando o modal for aberto
+    document.getElementById('confirmDeleteModal').addEventListener('show.bs.modal', function (event) {
+        let button = event.relatedTarget;  // Botão que acionou o modal
+        produtoId = button.getAttribute('data-produto-id');  // Extrai o ID do produto
+    });
+
+    // Enviar solicitação de exclusão quando o botão "Excluir" for clicado
+    document.getElementById('confirmDeleteButton').addEventListener('click', function () {
+        fetch(`/estoque/excluir/${produtoId}/`, {
+            method: 'DELETE',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+            },
+        })
+            .then(response => {
+                if (response.ok) {
+                    document.getElementById(`produto-${produtoId}`).remove();
+                    let modal = bootstrap.Modal.getInstance(document.getElementById('confirmDeleteModal'));
+                    modal.hide();
+                } else {
+                    alert('Erro ao excluir o produto.');
+                }
+            });
+    });
+</script>
+
 
 
 {%endblock%}

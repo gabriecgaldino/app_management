@@ -1,5 +1,5 @@
 {% extends "base.html"%}
-
+{% load static %}
 {%block titulo%}
 <title>Estoque</title>
 {%endblock%}
@@ -82,7 +82,7 @@
                 <!-- Exemplo de produtos -->
 
                 {%for produto in produtos%}
-                <tr>
+                <tr id="produto-{{produto.id}}">
                     <td>{{produto.id}}</td>
                     <td>{{produto.descricao}}</td>
                     <td>{{produto.unidade_medida}}</td>
@@ -120,7 +120,7 @@
                 Você tem certeza que deseja excluir este produto?
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button name="editButton" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                 <button id="confirmDeleteButton" type="button" class="btn btn-danger">Excluir</button>
             </div>
         </div>
@@ -147,15 +147,19 @@
         })
             .then(response => {
                 if (response.ok) {
+                    console.log(`produto-${produtoId}`)
                     document.getElementById(`produto-${produtoId}`).remove();
                     let modal = bootstrap.Modal.getInstance(document.getElementById('confirmDeleteModal'));
                     modal.hide();
+                    alert('Produto removido com sucesso!')
                 } else {
                     alert('Erro ao excluir o produto.');
                 }
             });
     });
 </script>
+
+<script src="{% static 'js/script.js' %}"></script>
 
 
 

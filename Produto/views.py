@@ -19,13 +19,12 @@ def estoque_view(request):
             return redirect('estoque')
         else:
             messages.info(request, 'Erro ao criar o produto, tente novamente.')
-
     else:
         form = CriaProduto(organizacao=organizacao)
         query = request.GET.get('q')
 
         if query:
-            produtos = produtos.filter(descricao__icontains=query)
+            produtos = Produto.objects.filter(descricao__icontains=query)
         else:
             produtos = Produto.objects.filter(
                 estoque_id__organizacao=organizacao)

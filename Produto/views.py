@@ -42,3 +42,14 @@ def excluir_produto(request, produto_id):
         return JsonResponse({'message': 'Produto removido!'}, status=200)
     else:
         return JsonResponse({'message': 'Produto não encontrado.'}, status=404)
+    
+def editar_produto(request, produto_id):
+    produto = get_object_or_404(Produto, id=produto_id)
+    if request.method == 'POST':
+        form = Produto(request.POST, instance=produto)
+        if form.is_valid():
+            form.save()
+            return JsonResponse({'message': 'Produto atualizado com sucesso!'}, status=200)
+        else:
+            return JsonResponse({'message': 'Erro ao validar formulário!'}, status=400)
+    return JsonResponse({'message': 'Método não permitido!'}, status=405)

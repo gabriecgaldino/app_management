@@ -68,7 +68,7 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>ID</th>
+                    <th>CÓD.</th>
                     <th>Nome</th>
                     <th>Unidade de Medida</th>
                     <th>Quantidade</th>
@@ -91,7 +91,7 @@
                     <td>{{produto.data_joined|date:"d/m/y"}}</td>
                     <td>{{produto.data_saida}}</td>
                     <td>
-                        <a href="#" class="btn btn-sm btn-info">Editar</a>
+                        <a href="#" class="btn btn-sm btn-info" data-id="{{ produto.id }}" data-bs-toggle="modal" data-bs-target="#editProductModal">Editar</a>
                         <button type="button" class="btn btn-sm btn-secondary" data-bs-toggle="modal"
                             data-bs-target="#confirmDeleteModal" data-produto-id="{{ produto.id }}">
                             Excluir
@@ -107,6 +107,42 @@
         </table>
     </div>
 </div>
+
+<!-- Modal de edição de produto -->
+<div class="modal fade" id="editProductModal" tabindex="-1" aria-labelledby="editProductModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editProductModalLabel">Editar Produto</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editProductForm">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="descricao" class="form-label"><strong>Descrição</strong></label>
+                        <input type="text" class="form-control" id="editDescricao" name="descricao">
+                    </div>
+                    <div class="mb-3">
+                        <label for="unidade" class="form-label"><strong>Unidade de Medida</strong></label>
+                        <input type="text" class="form-control" id="editUnidade" name="unidade_medida">
+                    </div>
+                    <div class="mb-3">
+                        <label for="quantidade" class="form-label"><strong>Quantidade</strong></label>
+                        <input type="number" class="form-control" id="editQuantidade" name="quantidade">
+                    </div>
+                    <div class="mb-3">
+                        <label for="valor" class="form-label"><strong>Valor</strong></label>
+                        <input type="text" class="form-control" id="editValor" name="valor">
+                    </div>
+                    <input type="hidden" id="editProdutoId">
+                    <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <!-- Modal de confirmação -->
 <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -128,36 +164,6 @@
 </div>
 
 
-<script>
-    let produtoId;
-
-    // Capturar o ID do produto quando o modal for aberto
-    document.getElementById('confirmDeleteModal').addEventListener('show.bs.modal', function (event) {
-        let button = event.relatedTarget;  // Botão que acionou o modal
-        produtoId = button.getAttribute('data-produto-id');  // Extrai o ID do produto
-    });
-
-    // Enviar solicitação de exclusão quando o botão "Excluir" for clicado
-    document.getElementById('confirmDeleteButton').addEventListener('click', function () {
-        fetch(`/estoque/excluir/${produtoId}/`, {
-            method: 'DELETE',
-            headers: {
-                'X-CSRFToken': '{{ csrf_token }}',
-            },
-        })
-            .then(response => {
-                if (response.ok) {
-                    console.log(`produto-${produtoId}`)
-                    document.getElementById(`produto-${produtoId}`).remove();
-                    let modal = bootstrap.Modal.getInstance(document.getElementById('confirmDeleteModal'));
-                    modal.hide();
-                    alert('Produto removido com sucesso!')
-                } else {
-                    alert('Erro ao excluir o produto.');
-                }
-            });
-    });
-</script>
 
 <script src="{% static 'js/script.js' %}"></script>
 

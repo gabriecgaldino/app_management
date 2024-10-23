@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.http import JsonResponse
 from Produto.models import CriaProduto, Produto
 from Usuario.models import Colaborador
+import json
 
 
 def estoque_view(request):
@@ -45,11 +46,16 @@ def excluir_produto(request, produto_id):
     
 def editar_produto(request, produto_id):
     produto = get_object_or_404(Produto, id=produto_id)
+    
     if request.method == 'POST':
-        form = Produto(request.POST, instance=produto)
-        if form.is_valid():
-            form.save()
-            return JsonResponse({'message': 'Produto atualizado com sucesso!'}, status=200)
-        else:
-            return JsonResponse({'message': 'Erro ao validar formulário!'}, status=400)
-    return JsonResponse({'message': 'Método não permitido!'}, status=405)
+        data = json.loads(request.body.decode('utf-8'))
+
+        produto.descricao = data.get('descricao', produto.descricao)
+        produto.unidade_medida = data.get('unidade_medida', produto.unidade_medida)
+        produto.quantidade = data.get('quantidade', produto.quantidade)
+        produto.valor = data.get('valor', produto.valor)
+        produto.save()
+
+        return JsonResponse({'message': 'Produto atualizado com sucesso!'}, status=200)
+    
+    return JsonResponse({'message': 'Método não permitido'}, status=405)

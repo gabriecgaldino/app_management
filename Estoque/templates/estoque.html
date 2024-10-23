@@ -79,70 +79,34 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- Exemplo de produtos -->
-
-                {%for produto in produtos%}
-                <tr id="produto-{{produto.id}}">
-                    <td>{{produto.id}}</td>
-                    <td>{{produto.descricao}}</td>
-                    <td>{{produto.unidade_medida}}</td>
-                    <td>{{produto.quantidade}}</td>
-                    <td>{{produto.valor}}</td>
-                    <td>{{produto.data_joined|date:"d/m/y"}}</td>
-                    <td>{{produto.data_saida}}</td>
+                {% for produto in produtos %}
+                <tr data-id="{{ produto.id }}">
+                    <td data-field="id">{{ produto.id }}</td>
+                    <td class="editavel" data-field="descricao">{{ produto.descricao }}</td>
+                    <td class="editavel" data-field="unidade_medida">{{ produto.unidade_medida }}</td>
+                    <td class="editavel" data-field="quantidade">{{ produto.quantidade }}</td>
+                    <td class="editavel" data-field="valor">{{ produto.valor }}</td>
+                    <td>{{ produto.data_joined|date:"d/m/y" }}</td>
+                    <td>{{ produto.data_saida }}</td>
                     <td>
-                        <a href="#" class="btn btn-sm btn-info" data-id="{{ produto.id }}" data-bs-toggle="modal" data-bs-target="#editProductModal">Editar</a>
-                        <button type="button" class="btn btn-sm btn-secondary" data-bs-toggle="modal"
+                        <button type="button" class="btn btn-sm btn-secondary btn-editar">Editar</button>
+                        <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal"
                             data-bs-target="#confirmDeleteModal" data-produto-id="{{ produto.id }}">
                             Excluir
                         </button>
+                        <button type="button" class="btn btn-sm btn-success btn-confirmar d-none">Confirmar</button>
+                        <button type="button" class="btn btn-sm btn-secondary btn-cancelar d-none">Cancelar</button>
                     </td>
                 </tr>
-                {%empty%}
+                {% empty %}
                 <tr>
                     <td colspan="7" class="text-center">Nenhum produto encontrado</td>
                 </tr>
-                {%endfor%}
+                {% endfor %}
             </tbody>
         </table>
     </div>
 </div>
-
-<!-- Modal de edição de produto -->
-<div class="modal fade" id="editProductModal" tabindex="-1" aria-labelledby="editProductModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editProductModalLabel">Editar Produto</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="editProductForm">
-                    {% csrf_token %}
-                    <div class="mb-3">
-                        <label for="descricao" class="form-label"><strong>Descrição</strong></label>
-                        <input type="text" class="form-control" id="editDescricao" name="descricao">
-                    </div>
-                    <div class="mb-3">
-                        <label for="unidade" class="form-label"><strong>Unidade de Medida</strong></label>
-                        <input type="text" class="form-control" id="editUnidade" name="unidade_medida">
-                    </div>
-                    <div class="mb-3">
-                        <label for="quantidade" class="form-label"><strong>Quantidade</strong></label>
-                        <input type="number" class="form-control" id="editQuantidade" name="quantidade">
-                    </div>
-                    <div class="mb-3">
-                        <label for="valor" class="form-label"><strong>Valor</strong></label>
-                        <input type="text" class="form-control" id="editValor" name="valor">
-                    </div>
-                    <input type="hidden" id="editProdutoId">
-                    <button type="submit" class="btn btn-primary">Salvar Alterações</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
 
 <!-- Modal de confirmação -->
 <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

@@ -13,7 +13,8 @@ document.getElementById('confirmDeleteButton').addEventListener('click', functio
     fetch(`/estoque/excluir/${produtoId}/`, {
         method: 'DELETE',
         headers: {
-            'X-CSRFToken': '{{ csrf_token }}',
+            'Content-Type': 'application/json',
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
         },
     })
         .then(response => {
@@ -29,56 +30,76 @@ document.getElementById('confirmDeleteButton').addEventListener('click', functio
         });
 });
 
-// Ao clicar no botão de edição
+// Lógica de edição dos produtos
 document.querySelectorAll('.btn-editar').forEach(button => {
-    button.addEventListener('click', function() {
-        const produtoId = this.getAttribute('data-id');
-        
-        // Fazer requisição para buscar os dados do produto
-        fetch(`/produto/${produtoId}/`)
-            .then(response => response.json())
-            .then(data => {
-                // Preencher os campos do modal com os dados do produto
-                document.getElementById('editDescricao').value = data.descricao;
-                document.getElementById('editUnidade').value = data.unidade_medida;
-                document.getElementById('editQuantidade').value = data.quantidade;
-                document.getElementById('editValor').value = data.valor;
-                document.getElementById('editProdutoId').value = data.id;
-            })
-            .catch(error => console.error('Erro ao carregar dados do produto:', error));
+    button.addEventListener('click', function () {
+        const row = this.closest('tr');
+        const fields = row.querySelectorAll('.editavel');
+
+        fields.forEach(field => {
+            field.setAttribute('contenteditable', 'true');
+            field.classList.add('editable');
+        });
+
+        row.querySelector('.btn-confirmar').classList.remove('d-none');
+        row.querySelector('.btn-cancelar').classList.remove('d-none');
+        this.classList.add('d-none'); 
     });
 });
 
-// Lógica para salvar as alterações
-document.getElementById('editProductForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    const produtoId = document.getElementById(`${produto.id}`).value;
-    console.log(produtoId)
-    
-    const formData = {
-        descricao: document.getElementById('editDescricao').value,
-        unidade_medida: document.getElementById('editUnidade').value,
-        quantidade: document.getElementById('editQuantidade').value,
-        valor: document.getElementById('editValor').value
-    };
-    
-    fetch(`/produto/editar/${produtoId}/`, {
-        
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
-        },
-        body: JSON.stringify(formData)
-    })
-    .then(response => {
-        if (response.ok) {
-            location.reload(); // Recarregar a página após salvar as alterações
-        } else {
-            console.error('Erro ao salvar produto');
-        }
-    })
-    .catch(error => console.error('Erro ao salvar produto:', error));
+document.querySelectorAll('.btn-cancelar').forEach(button => {
+    button.addEventListener('click', function () {
+        const row = this.closest('tr');
+        const fields = row.querySelectorAll('.editavel');
+
+        fields.forEach(field => {
+            field.setAttribute('contenteditable', 'false');
+            field.classList.remove('editable');
+            field.textContent = field.getAttribute('data-original');  
+        });
+
+        row.querySelector('.btn-editar').classList.remove('d-none');
+        row.querySelector('.btn-confirmar').classList.add('d-none');
+        this.classList.add('d-none');
+    });
 });
 
+document.querySelectorAll('.btn-confirmar').forEach(button => {
+    button.addEventListener('click', function () {
+        const row = this.closest('tr');
+        const produtoId = row.getAttribute('data-id');
+        const fields = row.querySelectorAll('.editavel');
+        let data = {};
+
+        // Coleta os novos valores dos campos
+        fields.forEach(field => {
+            const fieldName = field.getAttribute('data-field');
+            const newValue = field.textContent.trim();
+            data[fieldName] = newValue;
+        });
+
+        // Enviar os dados via AJAX para o servidor
+        fetch(`/produto/editar/${produtoId}/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => {
+            if (response.ok) {
+                fields.forEach(field => {
+                    field.setAttribute('contenteditable', 'false');
+                    field.classList.remove('editable');
+                });
+                row.querySelector('.btn-editar').classList.remove('d-none');
+                row.querySelector('.btn-confirmar').classList.add('d-none');
+                row.querySelector('.btn-cancelar').classList.add('d-none');
+            } else {
+                alert('Erro ao atualizar o produto.');
+            }
+        })
+        .catch(error => console.error('Erro na requisição:', error));
+    });
+});

@@ -37,6 +37,12 @@ document.querySelectorAll('.btn-editar').forEach(button => {
         const fields = row.querySelectorAll('.editavel');
 
         fields.forEach(field => {
+            field.setAttribute('data-original', field.textContent.trim());
+            field.setAttribute('contenteditable', 'true');
+            field.classList.add('editable');
+        });
+
+        fields.forEach(field => {
             field.setAttribute('contenteditable', 'true');
             field.classList.add('editable');
         });
@@ -51,6 +57,13 @@ document.querySelectorAll('.btn-cancelar').forEach(button => {
     button.addEventListener('click', function () {
         const row = this.closest('tr');
         const fields = row.querySelectorAll('.editavel');
+
+        fields.forEach(field => {
+            const originalValue = field.getAttribute('data-original');
+            field.textContent = originalValue;  // Restaura o valor original
+            field.setAttribute('contenteditable', 'false');
+            field.classList.remove('editable');
+        });
 
         fields.forEach(field => {
             field.setAttribute('contenteditable', 'false');

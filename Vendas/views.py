@@ -1,11 +1,11 @@
 from django.shortcuts import render
-from Vendas.models import Vendas
+from Vendas.models import Vendas, NovaVenda
 from Usuario.models import Colaborador 
 from django.contrib import messages
 
-def nova_venda(request):
+def vendas(request):
     if request.method == 'POST':
-        form = Vendas(request.POST)
+        form = NovaVenda(request.POST)
         
         if form.is_valid():
             form.save()

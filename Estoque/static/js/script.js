@@ -1,6 +1,6 @@
 
 // Ao clicar no botão de exclusão
-let produtoId;
+var produtoId;
 
 // Capturar o ID do produto quando o modal for aberto
 document.getElementById('confirmDeleteModal').addEventListener('show.bs.modal', function (event) {
@@ -9,21 +9,29 @@ document.getElementById('confirmDeleteModal').addEventListener('show.bs.modal', 
 });
 
 // Enviar solicitação de exclusão quando o botão "Excluir" for clicado
-document.getElementById('confirmDeleteButton').addEventListener('click', function () {
-    fetch(`/estoque/excluir/${produtoId}/`, {
+document.getElementById('confirmDeleteButton').addEventListener('click', async function () {
+    await fetch(`/estoque/excluir/${produtoId}/`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
             'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
         },
     })
-        .then(response => {
+        .then(response =>{
+            console.log(response.status)
             if (response.ok) {
-                console.log(`produto-${produtoId}`)
-                document.getElementById(`produto-${produtoId}`).remove();
-                let modal = bootstrap.Modal.getInstance(document.getElementById('confirmDeleteModal'));
-                modal.hide();
-                alert('Produto removido com sucesso!')
+                console.log(`${produtoId}`)
+                const element = document.getElementById(`${produtoId}`)
+                if(element){
+                    element.remove()
+                    let modal = bootstrap.Modal.getInstance(document.getElementById('confirmDeleteModal'));
+                    modal.hide();
+                    alert('Produto removido com sucesso!')
+                } else {
+                    alert(`Elemento com ID ${produtoId} não encontrado`)
+                }
+                
+                
             } else {
                 alert('Erro ao excluir o produto.');
             }

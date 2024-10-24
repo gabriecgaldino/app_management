@@ -80,7 +80,7 @@
             </thead>
             <tbody>
                 {% for produto in produtos %}
-                <tr data-id="{{ produto.id }}">
+                <tr id="{{ produto.id }}">
                     <td data-field="id">{{ produto.id }}</td>
                     <td class="editavel" data-field="descricao">{{ produto.descricao }}</td>
                     <td class="editavel" data-field="unidade_medida">{{ produto.unidade_medida }}</td>

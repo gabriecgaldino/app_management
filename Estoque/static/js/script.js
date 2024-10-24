@@ -1,6 +1,7 @@
 
 // Ao clicar no botão de exclusão
-var produtoId;
+let produtoId;
+
 
 // Capturar o ID do produto quando o modal for aberto
 document.getElementById('confirmDeleteModal').addEventListener('show.bs.modal', function (event) {
@@ -18,20 +19,12 @@ document.getElementById('confirmDeleteButton').addEventListener('click', async f
         },
     })
         .then(response =>{
-            console.log(response.status)
             if (response.ok) {
-                console.log(`${produtoId}`)
-                const element = document.getElementById(`${produtoId}`)
-                if(element){
-                    element.remove()
-                    let modal = bootstrap.Modal.getInstance(document.getElementById('confirmDeleteModal'));
-                    modal.hide();
-                    alert('Produto removido com sucesso!')
-                } else {
-                    alert(`Elemento com ID ${produtoId} não encontrado`)
-                }
                 
-                
+                document.getElementById(`${produtoId}`).remove()
+                let modal = bootstrap.Modal.getInstance(document.getElementById('confirmDeleteModal'));
+                modal.hide();
+                alert('Protudo removido com sucesso.')
             } else {
                 alert('Erro ao excluir o produto.');
             }
@@ -88,7 +81,7 @@ document.querySelectorAll('.btn-cancelar').forEach(button => {
 document.querySelectorAll('.btn-confirmar').forEach(button => {
     button.addEventListener('click', function () {
         const row = this.closest('tr');
-        const produtoId = row.getAttribute('data-id');
+        const produtoId = row.getAttribute('id');
         const fields = row.querySelectorAll('.editavel');
         let data = {};
 

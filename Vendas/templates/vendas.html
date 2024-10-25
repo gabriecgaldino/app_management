@@ -36,11 +36,16 @@
                         <!-- Formulário de cadastro de venda -->
                         <form action="" method="post">
                             {% csrf_token %}
-                            <div class="mb-3">
-                                <label for="cliente" class="form-label"><strong>Cliente</strong></label>
-                                <input type="text" class="form-control" name="cliente" placeholder="Buscar clientes...">
-                                <label for="data_venda" class="form-label"><strong>Data da Venda</strong></label>
-                                <input type="date" class="form-control" name="data_venda">
+                            <div class="row mb-3">
+                                <div class="col-md-5 d-flex align-items-center">
+                                    <label for="cliente" class="form-label"><strong>Cliente</strong></label>
+                                    <input type="text" class="form-control form-control-sm ms-2" name="cliente" placeholder="Buscar clientes...">
+                                </div>
+                            
+                                <div class="col-md-5 d-flex align-items-center">
+                                    <label for="data_venda" class="form-label"><strong>Data da Venda</strong></label>
+                                    <input type="date" class="form-control form-control-sm ms-2" name="data_venda">
+                                </div>
                             </div>
                             <td>
                                 
@@ -70,22 +75,24 @@
                                                 <input type="text" class="form-control" name="valor_total[]" placeholder="Valor Total">
                                             </td>
                                             <td>
-                                                <button type="button" class="btn btn-danger btn-remove-row">Remover</button>
+                                                <button type="button" class="btn btn-danger btn-remove-row">X</button>
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
-                            
-                                <strong><label for="valor_total" id="form-label">Valor Total R$: R$ <input type="text" class="form-control"></label></strong>
-                                
-                            
-                    
-                            <!-- Botão de Enviar -->
-                            <div class="d-flex justify-content-end col-md-12">
-                                <button type="button" id="addRowButton" class="btn btn-secondary">Adicionar Linha</button>
-                                <button type="submit" class="btn btn-primary ms-2">Adicionar Venda</button>
+                            <div class="d-flex justify-content-between">
+                                <div class="d-flex">
+                                    <strong>Valor Total R$: </label></strong><span class="ms-2"> 0,00 </span>
+                                </div>
+                                <!-- Botão de Enviar -->
+                                <div class="d-flex justify-content-end col-9">
+                                    <button type="button" id="addRowButton" class="btn btn-primary">Adicionar Produto</button>
+                                    <button type="submit" class="btn btn-success ms-2">Concluir Pedido</button>
+                                </div>
                             </div>
+                            
+                            
                         </form>
                     </div>
                 </div>

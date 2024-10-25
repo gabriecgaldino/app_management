@@ -26,7 +26,7 @@
 
         <!-- Modal de Cadastro de Venda -->
         <div class="modal fade mt-5" id="vendaModal" tabindex="-1" aria-labelledby="vendaModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="vendaModalLabel">Novo pedido</h5>
@@ -38,24 +38,54 @@
                             {% csrf_token %}
                             <div class="mb-3">
                                 <label for="cliente" class="form-label"><strong>Cliente</strong></label>
-                                {{form.cliente}}
+                                <input type="text" class="form-control" name="cliente" placeholder="Buscar clientes...">
                                 <label for="data_venda" class="form-label"><strong>Data da Venda</strong></label>
-                                {{form.data_venda}}
+                                <input type="date" class="form-control" name="data_venda">
                             </div>
-                            <div class="mb-3">
+                            <td>
                                 
-                            </div>
-                            <div class="mb-3">
-                                <label for="data_venda" class="form-label"><strong>Quantidade</strong></label>
-                                {{form.quantidade}}
+                            </td>
+                            <td>
+                                
+                            </td>
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Produto</th>
+                                            <th>Quantidade</th>
+                                            <th>Valor R$</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="salesTableBody">
+                                        <tr>
+                                            <td>
+                                                <input type="text" class="form-control" name="produto[]">
+                                            </td>
+                                            
+                                            <td>
+                                                <input type="number" min="0" class="form-control" name="quantidade[]" placeholder="Quantidade">
+                                            </td>
+                                            <td>
+                                                <input type="text" class="form-control" name="valor_total[]" placeholder="Valor Total">
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-danger btn-remove-row">Remover</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                             
-                            <div class="mb-3">
-                                <label for="valor_total" class="form-label"><strong>Valor Total</strong></label>
-                                {{form.valor_total}}
-                            </div>
+                                <strong><label for="valor_total" id="form-label">Valor Total R$: R$ <input type="text" class="form-control"></label></strong>
+                                
+                            
+                    
                             <!-- Botão de Enviar -->
-                            <button type="submit" class="btn btn-primary">Adicionar Venda</button>
+                            <div class="d-flex justify-content-end col-md-12">
+                                <button type="button" id="addRowButton" class="btn btn-secondary">Adicionar Linha</button>
+                                <button type="submit" class="btn btn-primary ms-2">Adicionar Venda</button>
+                            </div>
                         </form>
                     </div>
                 </div>

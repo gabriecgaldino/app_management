@@ -12,7 +12,8 @@
         <!-- Campo de pesquisa -->
         <form method="GET" action="{% url 'vendas' %}">
             <div class="input-group">
-                <input type="text" class="form-control" name="q" placeholder="Buscar pedido..." value="{{ request.GET.q }}">
+                <input type="text" class="form-control" name="q" placeholder="Buscar pedido..."
+                    value="{{ request.GET.q }}">
                 <button class="btn btn-outline-primary" type="submit">Buscar</button>
             </div>
         </form>
@@ -39,25 +40,28 @@
                             <div class="row mb-3">
                                 <div class="col-md-5 d-flex align-items-center">
                                     <label for="cliente" class="form-label"><strong>Cliente</strong></label>
-                                    <input type="text" class="form-control form-control-sm ms-2" name="cliente" placeholder="Buscar clientes...">
+                                    <input type="text" class="form-control form-control-sm ms-2" name="cliente"
+                                        placeholder="Buscar clientes...">
                                 </div>
-                            
+
                                 <div class="col-md-5 d-flex align-items-center">
                                     <label for="data_venda" class="form-label"><strong>Data da Venda</strong></label>
                                     <input type="date" class="form-control form-control-sm ms-2" name="data_venda">
                                 </div>
                             </div>
                             <td>
-                                
+
                             </td>
                             <td>
-                                
+
                             </td>
                             <div class="table-responsive">
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
+                                            <th>cód</th>
                                             <th>Produto</th>
+                                            <th>Valor Unit. </th>
                                             <th>Quantidade</th>
                                             <th>Valor R$</th>
                                         </tr>
@@ -65,14 +69,23 @@
                                     <tbody id="salesTableBody">
                                         <tr>
                                             <td>
+                                                <label for="cod">0</label>
+                                            </td>
+                                            <td>
                                                 <input type="text" class="form-control" name="produto[]">
                                             </td>
-                                            
                                             <td>
-                                                <input type="number" min="0" class="form-control" name="quantidade[]" placeholder="Quantidade">
+                                                <input type="text" class="form-control" name="valor_total[]"
+                                                    placeholder="Valor unitário">
+                                            </td>
+
+                                            <td>
+                                                <input type="number" min="0" class="form-control" name="quantidade[]"
+                                                    placeholder="Quantidade">
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control" name="valor_total[]" placeholder="Valor Total">
+                                                <input type="text" class="form-control" name="valor_total[]"
+                                                    placeholder="Valor Total">
                                             </td>
                                             <td>
                                                 <button type="button" class="btn btn-danger btn-remove-row">X</button>
@@ -87,12 +100,13 @@
                                 </div>
                                 <!-- Botão de Enviar -->
                                 <div class="d-flex justify-content-end col-9">
-                                    <button type="button" id="addRowButton" class="btn btn-primary">Adicionar Produto</button>
+                                    <button type="button" id="addRowButton" class="btn btn-primary">Adicionar
+                                        Produto</button>
                                     <button type="submit" class="btn btn-success ms-2">Concluir Pedido</button>
                                 </div>
                             </div>
-                            
-                            
+
+
                         </form>
                     </div>
                 </div>

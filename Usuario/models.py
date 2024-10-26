@@ -11,6 +11,8 @@ class Colaborador(User):
     cargo = models.CharField(u'Cargo', max_length=100)
     organizacao = models.ForeignKey(Organizações, on_delete=models.CASCADE)
     USERNAME_FIELD = 'email'
+    is_Customer = models.BooleanField(default=False)
+    is_Supplier = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
         if not self.username:

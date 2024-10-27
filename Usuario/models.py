@@ -13,6 +13,7 @@ class Colaborador(User):
     organizacao = models.ForeignKey(Organizações, on_delete=models.CASCADE)
     USERNAME_FIELD = 'email'
     
+    
 
     def save(self, *args, **kwargs):
         if not self.username:

@@ -21,6 +21,7 @@ from Usuario.views import registro, login_view, change_data_user
 from Sistema_de_Gestão_Empresarial.views import home
 from Produto.views import estoque_view, excluir_produto, editar_produto
 from Vendas.views import vendas
+from Contatos.views import buscar_contatos
 
 
 urlpatterns = [
@@ -34,5 +35,6 @@ urlpatterns = [
     path('estoque/excluir/<int:produto_id>/',
          excluir_produto, name='excluir_produto'),
     path('produto/editar/<int:produto_id>/', editar_produto, name='editar_produto'),
-    path('vendas/', vendas, name='vendas')
+    path('vendas/', vendas, name='vendas'),
+    path('buscar-contatos/', buscar_contatos, name='buscar_contatos')
 ]

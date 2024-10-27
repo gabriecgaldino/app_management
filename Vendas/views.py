@@ -1,6 +1,5 @@
 from django.shortcuts import render
 from Vendas.models import Vendas, NovaVenda
-from Usuario.models import Colaborador 
 from django.contrib import messages
 
 def vendas(request):

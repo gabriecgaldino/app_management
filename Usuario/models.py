@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from Organizações.models import Organizações
+from Agenda.models import Agenda
 
 from django.contrib.auth.forms import UserCreationForm
 
@@ -11,13 +12,14 @@ class Colaborador(User):
     cargo = models.CharField(u'Cargo', max_length=100)
     organizacao = models.ForeignKey(Organizações, on_delete=models.CASCADE)
     USERNAME_FIELD = 'email'
-    is_Customer = models.BooleanField(default=False)
-    is_Supplier = models.BooleanField(default=False)
+    
 
     def save(self, *args, **kwargs):
         if not self.username:
             self.username = self.email
         super().save(*args, **kwargs)
+        Agenda.objects.create(user=self)
+
 
     def __unicode__(self):
         return self.first_name

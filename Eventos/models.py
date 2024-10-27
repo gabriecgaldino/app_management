@@ -1,12 +1,10 @@
 from django.db import models
-from Usuario.models import Usuario
-
-# Create your models here.
+from Agenda.models import Agenda
 
 
 class Eventos(models.Model):
-    descricao = models.CharField()
+    agenda = models.ForeignKey(Agenda, on_delete=models.PROTECT)
+    descricao = models.CharField(max_length=100)
     data_evento = models.DateField()
     hora_evento = models.TimeField()
-    convidados = models.ManyToManyField(Usuario, on_delete=models.PROTECT)
     status = models.BooleanField(default=True)

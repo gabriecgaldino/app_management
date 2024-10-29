@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 from Organizações.models import Organizações
-from Agenda.models import Agenda
 
 from django.contrib.auth.forms import UserCreationForm
 
@@ -19,7 +18,6 @@ class Colaborador(User):
         if not self.username:
             self.username = self.email
         super().save(*args, **kwargs)
-        Agenda.objects.create(user=self)
 
 
     def __unicode__(self):

@@ -1,9 +1,8 @@
 from django.db import models
-from Agenda.models import Agenda
-
+from Usuario.models import Colaborador
 
 class Contatos(models.Model):
-    agenda = models.ForeignKey(Agenda, on_delete=models.PROTECT)
+    colaborador = models.ForeignKey(Colaborador, on_delete=models.CASCADE, related_name='contatos')
     nome = models.CharField(max_length=50)
     is_Customer = models.BooleanField(default=False)
     is_Partner = models.BooleanField(default=False)

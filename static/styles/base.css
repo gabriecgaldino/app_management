@@ -1,0 +1,46 @@
+.navbar-brand {
+font-size: 1.5rem;
+/* Aumenta o tamanho do texto da logo */
+font-weight: bold;
+/* Torna o texto mais grosso */
+color: white;
+text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+/* Efeito de sombra */
+}
+
+.navbar-custom {
+background-color: #343a40;
+/* Cinza Chumbo */
+}
+
+.navbar-custom .navbar-brand,
+.navbar-custom .nav-link {
+color: white;
+}
+
+.navbar-custom .nav-link:hover {
+color: #d4d4d4;
+}
+
+.user-info img {
+border-radius: 50%;
+width: 40px;
+height: 40px;
+cursor: pointer;
+}
+
+/* Estilos para o dropdown */
+.dropdown-menu {
+background-color: white;
+/* Fundo branco */
+}
+
+.dropdown-menu a {
+color: #343a40;
+/* Texto escuro */
+}
+
+.dropdown-menu a:hover {
+background-color: #f1f1f1;
+/* Fundo mais claro ao passar o mouse */
+}

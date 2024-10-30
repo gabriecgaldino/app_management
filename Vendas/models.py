@@ -6,9 +6,9 @@ from django import forms
 
 class Vendas(models.Model):
     produto = models.ManyToManyField(Produto)
-    quantidade = models.DecimalField(decimal_places=1, max_digits=100000000)
-    valor_total = models.DecimalField(decimal_places=2, max_digits=100000000)
-    data_venda = models.DateField(default=timezone.now())
+    quantidade = models.DecimalField(u'quantidade', decimal_places=1, max_digits=100000000)
+    valor_total = models.DecimalField(u'valor_total', decimal_places=2, max_digits=100000000)
+    data_venda = models.DateField(u'data_venda', default=timezone.now())
     cliente = models.ForeignKey(Organizações, on_delete=models.PROTECT)
 
 

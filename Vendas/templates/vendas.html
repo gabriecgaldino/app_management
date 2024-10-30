@@ -3,6 +3,7 @@
 
 {% block titulo %}
 <title>Vendas</title>
+<link rel="stylesheet" href="{% static 'styles/vendas.css' %}">
 {% endblock %}
 
 {% block conteudo %}
@@ -43,14 +44,6 @@
                                     <input type="text" class="form-control form-control-sm ms-2" id="buscarCliente" placeholder="Buscar clientes...">
                                     <ul id="resultadoBusca" class="list-group position-absolute" style="width: 35%; z-index: 1000; margin-top: 16%; margin-left: 7%;"></ul>
                                 </div>
-
-                                <style>
-                                    #resultadoBusca {
-                                        max-height: 100px; 
-                                        overflow-y: auto; 
-                                    }
-                                </style>
-
                                 <div class="col-md-5 d-flex align-items-center">
                                     <label for="data_venda" class="form-label"><strong>Data da Venda</strong></label>
                                     <input type="date" class="form-control form-control-sm ms-2" name="data_venda" id="buscar_produto">
@@ -79,7 +72,7 @@
                                                 <label for="cod">0</label>
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control" name="produto[]">
+                                                <input type="text" class="form-control busca-produto" name="produto[]">
                                                 <ul id="resultadoBuscaProduto" class="list-group position-absolute" style="width: 35%; z-index: 1000; margin-top: 16%; margin-left: 7%;"></ul>
                                             </td>
                                             <td>
@@ -178,6 +171,7 @@
 
 
 <script src="{% static 'js/scripts-vendas.js' %}"></script>
+<script src="{% static 'js/request-vendas.js' %}"></script>
 
 
 {% endblock %}

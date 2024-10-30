@@ -1,27 +1,14 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib import messages
+from django.shortcuts import get_object_or_404, render
 from django.http import JsonResponse
-from Produto.models import CriaProduto, Produto
-from Usuario.models import Colaborador
 import json
 
+from Produto.models import Produto
+from Usuario.models import Colaborador
 
-def estoque_view(request):
+def buscar_produto(request):
     colaborador = Colaborador.objects.get(username=request.user)
     organizacao = colaborador.organizacao
-    if request.method == 'POST':
-        form = CriaProduto(request.POST, organizacao=organizacao)
-
-        if form.is_valid():
-            form.save(commit=False)
-
-            form.save()
-            messages.success(request, 'Produto criado!')
-            return redirect('estoque')
-        else:
-            messages.info(request, 'Erro ao criar o produto, tente novamente.')
-    else:
-        form = CriaProduto(organizacao=organizacao)
+    if request.method == 'GET':
         query = request.GET.get('q')
 
         if query:
@@ -29,11 +16,9 @@ def estoque_view(request):
         else:
             produtos = Produto.objects.filter(
                 estoque_id__organizacao=organizacao)
+            
+    render(request, 'estoque.html', {'produtos': produtos})
 
-    return render(request, 'estoque.html', {
-        'form': form,
-        'produtos': produtos
-    })
 
 
 def excluir_produto(request, produto_id):

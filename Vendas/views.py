@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from Vendas.models import Vendas, NovaVenda
+from Produto.models import Estoque
 from django.contrib import messages
 
 def vendas(request):
@@ -16,4 +17,7 @@ def vendas(request):
         form = Vendas()
 
     return render(request, 'vendas.html', {'form': form})
+
+
+
 

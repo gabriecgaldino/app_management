@@ -1,9 +1,6 @@
 from django.db import models
 from Organizações.models import Organizações
 
-# Create your models here.
-
-
 class Compras(models.Model):
     produto = models.ManyToManyField()
     quantidade = models.IntegerField()

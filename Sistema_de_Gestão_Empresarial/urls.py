@@ -35,7 +35,8 @@ urlpatterns = [
     path('estoque/', estoque_view, name='estoque'),
     path('estoque/excluir/<int:produto_id>/',
          excluir_produto, name='excluir_produto'),
-    path('produto/editar/<int:produto_id>/', editar_produto, name='editar_produto'),
+    path('produto/editar/<int:produto_id>/',
+         editar_produto, name='editar_produto'),
     path('vendas/', vendas, name='vendas'),
     path('buscar-contatos/', buscar_contatos, name='buscar_contatos')
 ]

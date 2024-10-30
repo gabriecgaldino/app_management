@@ -1,7 +1,4 @@
 
-// Ao clicar no botão de exclusão
-let produtoId;
-
 
 // Capturar o ID do produto quando o modal for aberto
 document.getElementById('confirmDeleteModal').addEventListener('show.bs.modal', function (event) {
@@ -9,7 +6,6 @@ document.getElementById('confirmDeleteModal').addEventListener('show.bs.modal', 
     produtoId = button.getAttribute('data-produto-id');  // Extrai o ID do produto
 });
 
-// Enviar solicitação de exclusão quando o botão "Excluir" for clicado
 document.getElementById('confirmDeleteButton').addEventListener('click', async function () {
     await fetch(`/estoque/excluir/${produtoId}/`, {
         method: 'DELETE',
@@ -31,53 +27,7 @@ document.getElementById('confirmDeleteButton').addEventListener('click', async f
         });
 });
 
-// Lógica de edição dos produtos
-document.querySelectorAll('.btn-editar').forEach(button => {
-    button.addEventListener('click', function () {
-        const row = this.closest('tr');
-        const fields = row.querySelectorAll('.editavel');
-
-        fields.forEach(field => {
-            field.setAttribute('data-original', field.textContent.trim());
-            field.setAttribute('contenteditable', 'true');
-            field.classList.add('editable');
-        });
-
-        fields.forEach(field => {
-            field.setAttribute('contenteditable', 'true');
-            field.classList.add('editable');
-        });
-
-        row.querySelector('.btn-confirmar').classList.remove('d-none');
-        row.querySelector('.btn-cancelar').classList.remove('d-none');
-        this.classList.add('d-none'); 
-    });
-});
-
-document.querySelectorAll('.btn-cancelar').forEach(button => {
-    button.addEventListener('click', function () {
-        const row = this.closest('tr');
-        const fields = row.querySelectorAll('.editavel');
-
-        fields.forEach(field => {
-            const originalValue = field.getAttribute('data-original');
-            field.textContent = originalValue;  // Restaura o valor original
-            field.setAttribute('contenteditable', 'false');
-            field.classList.remove('editable');
-        });
-
-        fields.forEach(field => {
-            field.setAttribute('contenteditable', 'false');
-            field.classList.remove('editable');
-            field.textContent = field.getAttribute('data-original');  
-        });
-
-        row.querySelector('.btn-editar').classList.remove('d-none');
-        row.querySelector('.btn-confirmar').classList.add('d-none');
-        this.classList.add('d-none');
-    });
-});
-
+// Enviar solicitação de atualização dos dados dos produtos. 
 document.querySelectorAll('.btn-confirmar').forEach(button => {
     button.addEventListener('click', function () {
         const row = this.closest('tr');

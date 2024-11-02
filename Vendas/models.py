@@ -12,7 +12,7 @@ class Vendas(models.Model):
     cliente = models.ForeignKey(Organizações, on_delete=models.PROTECT)
 
 
-class NovaVenda(forms.ModelForm):
+class CriarPedido(forms.ModelForm):
     class Meta: 
-        models = Vendas
+        model = Vendas
         fields = ['produto', 'quantidade', 'valor_total', 'data_venda', 'cliente']

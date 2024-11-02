@@ -11,10 +11,10 @@
 <div class="container mt-5">
     <section class="d-flex justify-content-between align-items-center mb-4">
         <!-- Campo de pesquisa -->
-        <form method="GET" action="{% url 'vendas' %}">
+        <form method="" action="">
             <div class="input-group">
                 <input type="text" class="form-control" name="q" placeholder="Buscar pedido..."
-                    value="{{ request.GET.q }}">
+                    value="">
                 <button class="btn btn-outline-primary" type="submit">Buscar</button>
             </div>
         </form>
@@ -36,7 +36,7 @@
                     </div>
                     <div class="modal-body">
                         <!-- Formulário de cadastro de venda -->
-                        <form action="" method="post">
+                        <form action="{% url 'vendas' %}" method="post">
                             {% csrf_token %}
                             <div class="row mb-3">
                                 <div class="col-md-5 d-flex align-items-center">
@@ -67,23 +67,32 @@
                                         </tr>
                                     </thead>
                                     <tbody id="salesTableBody">
+                                        
                                         <tr>
                                             <td>
-                                                <label for="cod">0</label>
+                                                <label for="cod">{{produto.id}}</label>
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control busca-produto" name="produto[]">
-                                                <ul id="resultadoBuscaProduto" class="list-group position-absolute" style="width: 35%; z-index: 1000; margin-top: 16%; margin-left: 7%;"></ul>
+                                                <select name="produto" class="form-control">
+                                                    {% for produto in form.fields.produto.queryset %}
+                                                        <option 
+                                                            value="{{produto.id}}" class="form-control"
+                                                            data-unidade="{{produto.unidade_medida}}"
+                                                            data-valor="{{produto.valor}}">            
+                                                            {{produto.descricao}}</option>
+                                                    {% empty %}
+                                                        <option>Nenhum produto disponível</option>
+                                                    {% endfor %}
+                                                </select>
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control" name="valor_total[]">
-                                            </td>
-
-                                            <td>
-                                                <input type="number" min="0" class="form-control" name="quantidade[]">
+                                                <span id="unidadeMedida"></span>
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control" name="valor_total[]">
+                                                <input type="text" class="form-control">
+                                            </td>
+                                            <td>
+                                                <span id="valorTotalProduto"></span>
                                             </td>
                                             <td>
                                                 <button type="button" class="btn btn-danger btn-remove-row">X</button>

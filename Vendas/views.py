@@ -1,11 +1,13 @@
 from django.shortcuts import render
-from Vendas.models import Vendas, NovaVenda
-from Produto.models import Estoque
+from Vendas.models import Vendas, CriarPedido
+from Produto.models import Produto
+
 from django.contrib import messages
 
-def vendas(request):
+
+def vendas(request):    
     if request.method == 'POST':
-        form = NovaVenda(request.POST)
+        form = CriarPedido(request.POST)
         
         if form.is_valid():
             form.save()
@@ -14,7 +16,12 @@ def vendas(request):
             messages.info(request, 'Erro ao realizar pedido, tente novamente.')
 
     else: 
-        form = Vendas()
+        form = CriarPedido()
+        organizacao = request.user.colaborador.organizacao
+        produtos_disponiveis = Produto.objects.filter(estoque_id__organizacao=organizacao)
+        
+        
+        form.fields['produto'].queryset= produtos_disponiveis
 
     return render(request, 'vendas.html', {'form': form})
 

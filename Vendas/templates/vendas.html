@@ -65,15 +65,16 @@
                                             <th>Valor Unit. </th>
                                             <th>Quantidade</th>
                                             <th>Valor R$</th>
+                                            <th>Ações</th>
                                         </tr>
                                     </thead>
                                     <tbody id="salesTableBody">
                                         
-                                        <tr>
+                                        <tr data-row-id="1">
                                             <td class="col-1">
                                                 <input id="produtoId" class="form-control" readonly ></input>
                                             </td>
-                                            <td class="col-6">
+                                            <td class="col-3">
                                                 <select name="produto" class="form-control" id="produtoSelecionado">
                                                     {% for produto in form.fields.produto.queryset %}
                                                         <option 
@@ -94,6 +95,9 @@
                                                 <input id="valorProduto" class="form-control" readonly></input>
                                             </td>
                                             <td class="col-1">
+                                                <input type="text" class="form-control">
+                                            </td>
+                                            <td class="col-2">
                                                 <input type="text" class="form-control">
                                             </td>
                                             <td>

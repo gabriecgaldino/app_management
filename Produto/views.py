@@ -23,6 +23,27 @@ def busca_produtos(request):
 
     return produtos
 
+def busca_produtos_json(request):
+    colaborador = get_object_or_404(Colaborador, username=request.user)
+    organizacao = colaborador.organizacao
+    produtos = Produto.objects.filter(estoque_id__organizacao=organizacao)
+
+    produtos_data = []
+    
+    for produto in produtos:
+        item = {
+            'id': produto.id,
+            'descricao': produto.descricao,
+            'unidade_medida': produto.unidade_medida,
+            'valor_unitario': produto.valor
+        }
+
+        produtos_data.append(item)
+        
+
+
+    return JsonResponse({'produtos': produtos_data})
+
 
 def cadastra_produto(request):
     colaborador = get_object_or_404(Colaborador, username=request.user)

@@ -6,12 +6,36 @@ document.addEventListener("DOMContentLoaded", function() {
         const newRow = document.createElement("tr")
 
         newRow.innerHTML = `
-            <td><label class="form-control">0</label></td>
-            <td><input type="text" class="form-control busca-produto" name="produto[]"></td>
-            <td><input type="text" class="form-control" name="valor_total[]"></td>
-            <td><input type="number" class="form-control" name="quantidade[]"></td>
-            <td><input type="text" class="form-control" name="valor[]"></td>
-            <td><button type="button" class="btn btn-danger btn-remove-row">x</button></td>
+            <td class="col-1">
+                <input id="produtoId" class="form-control" readonly ></input>
+            </td>
+            <td class="col-3">
+                <select name="produto" class="form-control" id="produtoSelecionado">
+                    {% for produto in form.fields.produto.queryset %}
+                        <option 
+                            value="{{produto.id}}" class="form-control"
+                            data-unidade="{{produto.unidade_medida}}"
+                            data-valor="{{produto.valor}}"></option>
+                    {% empty %}
+                        <option>Nenhum produto disponível</option>
+                    {% endfor %}
+                </select>
+            </td>
+            <td class="col-2">
+                <input type="text" id="unidadeMedida" class="form-control" readonly></input>
+            </td>
+            <td class="col-2">
+                <input id="valorProduto" class="form-control" readonly></input>
+            </td>
+            <td class="col-1">
+                <input type="text" class="form-control">
+            </td>
+            <td class="col-2">
+                <input type="text" class="form-control">
+            </td>
+            <td>
+                <button type="button" class="btn btn-danger btn-remove-row">X</button>
+            </td>
         `
         salesTableBody.appendChild(newRow);
 

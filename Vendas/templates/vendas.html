@@ -75,6 +75,9 @@
                                                 <input id="produtoId" class="form-control" readonly ></input>
                                             </td>
                                             <td class="col-3">
+                                                <input type="text" class="form-control" id="buscaProduto">
+                                                <ul id="resultadoBuscaProduto" class="form-control"></ul>
+                                                <!--
                                                 <select name="produto" class="form-control" id="produtoSelecionado">
                                                     {% for produto in form.fields.produto.queryset %}
                                                         <option 
@@ -86,6 +89,7 @@
                                                         <option>Nenhum produto disponível</option>
                                                     {% endfor %}
                                                 </select>
+                                                -->
                                             </td>
                                             <td class="col-2">
                                                 <input type="text" id="unidadeMedida" class="form-control" readonly></input>

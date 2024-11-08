@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const addRowButton = document.getElementById("addRowButton")
     const salesTableBody = document.getElementById("salesTableBody")
 
-    addRowButton.addEventListener("click", function() {
+    addRowButton.addEventListener("change", function() {
         const newRow = document.createElement("tr")
 
         newRow.innerHTML = `
@@ -10,16 +10,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 <input id="produtoId" class="form-control" readonly ></input>
             </td>
             <td class="col-3">
-                <select name="produto" class="form-control" id="produtoSelecionado">
-                    {% for produto in form.fields.produto.queryset %}
-                        <option 
-                            value="{{produto.id}}" class="form-control"
-                            data-unidade="{{produto.unidade_medida}}"
-                            data-valor="{{produto.valor}}"></option>
-                    {% empty %}
-                        <option>Nenhum produto disponível</option>
-                    {% endfor %}
-                </select>
+                <input type="text" class="form-control" id="buscaProduto">
             </td>
             <td class="col-2">
                 <input type="text" id="unidadeMedida" class="form-control" readonly></input>
@@ -51,23 +42,33 @@ document.addEventListener("DOMContentLoaded", function() {
     })
 })
 
+document.getElementById('buscaProduto').addEventListener('input', function() {
+    const query = this.value
 
-document.addEventListener('DOMContentLoaded', ()=>{
-    const listen = document.getElementById('produtoSelecionado')
+    if (query.length < 1) {
+        document.getElementById("buscaProduto").innerHTML = "" 
+        return;
+    }
 
-    listen.addEventListener('change', function() {
-        const selectedOption = this.options[this.selectedIndex]
-    
-        // Obtendo os valores dos atributos de dados
-        const unidadeMedida = selectedOption.getAttribute('data-unidade')
-        const valorProduto = selectedOption.getAttribute('data-valor')
-        const id = selectedOption.getAttribute('value')
+    fetch(`/vendas/api-produtos/q=${query}`)
+        .then(response=> response.json())
+        .then(data=> {
+            const resultadoBusca = document.getElementById('resultadoBuscaProduto')
+            resultadoBusca.innerHTML = ''
 
-    
-        // Preenchendo os campos com os valores obtidos
-        document.getElementById('unidadeMedida').value = unidadeMedida
-        document.getElementById('valorProduto').value = valorProduto
-        document.getElementById('produtoId').value = id
-    })
+            data.forEach(produto=> {
+                const item = createElement('li')
+                item.textContent = produto.descricao
+                item.classList.add('list-group-item', 'list-group-item-action')
+                item.onclick = () =>{
+                    document.getElementById('buscaProduto').value = produto.descricao
+                    resultadoBusca.innerHTML = ''
+                }
+                resultadoBusca.appendChild(item)
+            })
+        })
+        .catch(err => console.log('Erro ao buscar produto', err))
+
+
 })
 

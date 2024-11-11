@@ -1,6 +1,5 @@
 from django.shortcuts import render
-from Vendas.models import Vendas, CriarPedido
-from Produto.models import Produto
+from Vendas.models import CriarPedido
 
 from django.contrib import messages
 
@@ -17,11 +16,6 @@ def vendas(request):
 
     else: 
         form = CriarPedido()
-        organizacao = request.user.colaborador.organizacao
-        produtos_disponiveis = Produto.objects.filter(estoque_id__organizacao=organizacao)
-        
-        
-        form.fields['produto'].queryset= produtos_disponiveis
 
     return render(request, 'vendas.html', {'form': form})
 

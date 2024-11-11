@@ -1,74 +1,50 @@
-document.addEventListener("DOMContentLoaded", function() {
-    const addRowButton = document.getElementById("addRowButton")
-    const salesTableBody = document.getElementById("salesTableBody")
+document.getElementById('addRowButton').addEventListener('click', function(){
+    const tabel = document.getElementById('tabela-pedidos').getElementsByTagName('tbody')[0]
+    const novaLinha = document.createElement('tr')
 
-    addRowButton.addEventListener("change", function() {
-        const newRow = document.createElement("tr")
 
-        newRow.innerHTML = `
-            <td class="col-1">
-                <input id="produtoId" class="form-control" readonly ></input>
-            </td>
-            <td class="col-3">
-                <input type="text" class="form-control" id="buscaProduto">
-            </td>
-            <td class="col-2">
-                <input type="text" id="unidadeMedida" class="form-control" readonly></input>
-            </td>
-            <td class="col-2">
-                <input id="valorProduto" class="form-control" readonly></input>
-            </td>
-            <td class="col-1">
-                <input type="text" class="form-control">
-            </td>
-            <td class="col-2">
-                <input type="text" class="form-control">
-            </td>
-            <td>
-                <button type="button" class="btn btn-danger btn-remove-row">X</button>
-            </td>
-        `
-        salesTableBody.appendChild(newRow);
+    novaLinha.innerHTML = `
+    <td class='codigo'> </td>
+    <td>
+            <input type="text" class="form-control buscar-produto" placeholder="Buscar produto...">
+            <div class="resultado-busca" style="position: relative;"></div>
+    </td>
+    <td class="unidade"></td>
+    <td class="valor-unitario"></td>
+    <td><input type="number" class="form-control quantidade" min="1" value="1"></td>
+    <td class="subtotal"></td>
+    <td><button class="btn btn-danger remover-linha">Remover</button></td>
+    `
 
-        newRow.querySelector(".btn-remove-row").addEventListener("click", function() {
-            newRow.remove();
-        })
-    });
+    tabel.appendChild(novaLinha)
 
-    document.querySelectorAll(".btn-remove-row").forEach(button => {
-        button.addEventListener("click", function() {
-            this.closest("tr").remove();
-        })
-    })
+    configBuscaProduto(novaLinha)
 })
 
-document.getElementById('buscaProduto').addEventListener('input', function() {
-    const query = this.value
+function configBuscaProduto(linha){
+    const campoBusca = linha.querySelector('.buscar-produto')
+    const resultadoBusca = linha.querySelector('.resultado-busca')
 
-    if (query.length < 1) {
-        document.getElementById("buscaProduto").innerHTML = "" 
-        return;
-    }
-
-    fetch(`/vendas/api-produtos/q=${query}`)
-        .then(response=> response.json())
-        .then(data=> {
-            const resultadoBusca = document.getElementById('resultadoBuscaProduto')
-            resultadoBusca.innerHTML = ''
-
-            data.forEach(produto=> {
-                const item = createElement('li')
-                item.textContent = produto.descricao
-                item.classList.add('list-group-item', 'list-group-item-action')
-                item.onclick = () =>{
-                    document.getElementById('buscaProduto').value = produto.descricao
+    campoBusca.addEventListener('input', async function(){
+        const query = campoBusca.value
+        if (query.length < 2){
+            fetch(`/vendas/api-produtos/?q=${query}`)
+                .then(response => response.json())
+                .then(data => {
                     resultadoBusca.innerHTML = ''
-                }
-                resultadoBusca.appendChild(item)
-            })
-        })
-        .catch(err => console.log('Erro ao buscar produto', err))
-
-
-})
-
+                    data.produtos.forEach(produto => {
+                        const item = document.createElement('div')
+                        item.classList.add('list-group-item')
+                        item.textContent = produto.descricao
+                        item.addEventListener('click', function(){
+                            campoBusca.value = produto.descricao
+                            linha.querySelector(".unidade").textContent = produto.unidade_medida
+                            linha.querySelector(".valor-unitario").textContent = produto.valor_unitario
+                            resultadoBusca.innerHTML = ""
+                        })
+                        resultadoBusca.appendChild(item)
+                    })
+                })
+        }
+    })
+}

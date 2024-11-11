@@ -24,38 +24,21 @@ def busca_produtos(request):
     return produtos
 
 def busca_produtos_json(request):
+    query = request.GET.get('q', '')
     produtos_data = []
 
-    if request.method == 'GET':
-        colaborador = get_object_or_404(Colaborador, username=request.user)
-        organizacao = colaborador.organizacao
+    if query:
+        produtos = Produto.objects.filter(descricao__icontains=query)
 
-        query = request.GET.get('q', '')
+        produtos_data = [{
+            'id': produto.id,
+            'descricao': produto.descricao,
+            'unidade_medida': produto.unidade_medida,
+            'valor_unitario': produto.valor,
 
-        if query:
-            produtos_data = busca_produtos(request)
-            print(produtos_data)
-            produtos = Produto.objects.filter(
-                descricao__icontains=query, estoque_id__organizacao=organizacao
-            )
-        else:
-            produtos = Produto.objects.filter(estoque_id__organizacao=organizacao)
+        } for produto in produtos]
 
-            print(produtos)
-
-            for produto in produtos:
-                item = {
-                    'id': produto.id,
-                    'descricao': produto.descricao,
-                    'unidade_medida': produto.unidade_medida,
-                    'valor_unitario': produto.valor
-                }
-                print(item)
-
-        # Retorna produtos encontrados ou uma lista vazia
-        return JsonResponse({'produtos': produtos_data}, safe=False)
-    else:
-        return JsonResponse({'message': 'Método não permitido'}, status=405)
+        return JsonResponse({ 'produtos': produtos_data })
 
 
 def cadastra_produto(request):

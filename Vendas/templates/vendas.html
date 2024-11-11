@@ -56,7 +56,7 @@
 
                             </td>
                             <div class="table-responsive">
-                                <table class="table table-bordered">
+                                <table class="table table-bordered" id="tabela-pedidos">
                                     <thead>
                                         <tr>
                                             <th>cód</th>
@@ -69,45 +69,6 @@
                                         </tr>
                                     </thead>
                                     <tbody id="salesTableBody">
-                                        
-                                        <tr data-row-id="1">
-                                            <td class="col-1">
-                                                <input id="produtoId" class="form-control" readonly ></input>
-                                            </td>
-                                            <td class="col-3">
-                                                <input type="text" class="form-control" id="buscaProduto">
-                                                <ul id="resultadoBuscaProduto" class="form-control"></ul>
-                                                <!--
-                                                <select name="produto" class="form-control" id="produtoSelecionado">
-                                                    {% for produto in form.fields.produto.queryset %}
-                                                        <option 
-                                                            value="{{produto.id}}" class="form-control"
-                                                            data-unidade="{{produto.unidade_medida}}"
-                                                            data-valor="{{produto.valor}}">            
-                                                            {{produto.descricao}}</option>
-                                                    {% empty %}
-                                                        <option>Nenhum produto disponível</option>
-                                                    {% endfor %}
-                                                </select>
-                                                -->
-                                            </td>
-                                            <td class="col-2">
-                                                <input type="text" id="unidadeMedida" class="form-control" readonly></input>
-                                            </td>
-                                            
-                                            <td class="col-2">
-                                                <input id="valorProduto" class="form-control" readonly></input>
-                                            </td>
-                                            <td class="col-1">
-                                                <input type="text" class="form-control">
-                                            </td>
-                                            <td class="col-2">
-                                                <input type="text" class="form-control">
-                                            </td>
-                                            <td>
-                                                <button type="button" class="btn btn-danger btn-remove-row">X</button>
-                                            </td>
-                                        </tr>
                                     </tbody>
                                 </table>
                             </div>

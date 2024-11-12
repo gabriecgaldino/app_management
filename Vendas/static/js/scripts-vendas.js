@@ -18,8 +18,28 @@ document.getElementById('addRowButton').addEventListener('click', function(){
 
     tabel.appendChild(novaLinha)
 
+    document.querySelectorAll('.quantidade').forEach(item=> {
+        item.addEventListener('change', function(){
+            var quantidadeInput = novaLinha.querySelector('.quantidade')
+            quantidadeInput = novaLinha.addEventListener('input', atualizarSubTotalELinha(quantidadeInput))
+            atualizarValorTotal()
+        })
+
+    })
+    
+    var valorUnitarioInput = novaLinha.querySelector('.valor-unitario')
+
+    
+    valorUnitarioInput = novaLinha.addEventListener('input', atualizarSubTotalELinha(valorUnitarioInput))
+
+    novaLinha.querySelector('.remover-linha').addEventListener('click', function(){
+        novaLinha.remove()
+        atualizarValorTotal()
+    })
+
     configBuscaProduto(novaLinha)
 })
+
 
 function configBuscaProduto(linha){
     const campoBusca = linha.querySelector('.buscar-produto')
@@ -40,6 +60,10 @@ function configBuscaProduto(linha){
                             campoBusca.value = produto.descricao
                             linha.querySelector(".unidade").textContent = produto.unidade_medida
                             linha.querySelector(".valor-unitario").textContent = produto.valor_unitario
+                            linha.querySelector('.valor-unitario').value = produto.valor_unitario
+                            linha.querySelector(".codigo").textContent = produto.id
+
+                            linha.querySelector('.subtotal').textContent = linha.querySelector('.valor-unitario').value * linha.querySelector(".quantidade").value
                             resultadoBusca.innerHTML = ""
                         })
                         resultadoBusca.appendChild(item)
@@ -47,4 +71,27 @@ function configBuscaProduto(linha){
                 })
         }
     })
+}
+
+function atualizarSubTotalELinha(element) {
+    const linha = element.closest('tr')
+    let quantidade = parseFloat(linha.querySelector('.quantidade').value) || 0
+    let valorUnitario = parseFloat(linha.querySelector('.valor-unitario').value) || 0
+    let subtotal = quantidade * valorUnitario
+
+    linha.querySelector('.subtotal').textContent = subtotal.toFixed(2)
+    atualizarValorTotal()
+}
+
+function atualizarValorTotal() {
+    let total = 0 
+    const subtotais = document.querySelectorAll('.subtotal') || 0
+
+
+    subtotais.forEach(subtotal => {
+        const subTotal = parseFloat(subtotal.textContent) || 0
+        total+= subTotal
+    })
+
+    document.querySelector('.valor-total').textContent = total.toFixed(2)
 }

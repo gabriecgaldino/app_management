@@ -6,13 +6,15 @@ from django import forms
 
 class Vendas(models.Model):
     produto = models.ManyToManyField(Produto)
-    quantidade = models.DecimalField(u'quantidade', decimal_places=1, max_digits=100000000)
     valor_total = models.DecimalField(u'valor_total', decimal_places=2, max_digits=100000000)
     data_venda = models.DateField(u'data_venda', default=timezone.now())
     cliente = models.ForeignKey(Organizações, on_delete=models.PROTECT)
+
+    def __str__(self):
+        return f"{self.id}"
 
 
 class CriarPedido(forms.ModelForm):
     class Meta: 
         model = Vendas
-        fields = ['produto', 'quantidade', 'valor_total', 'data_venda', 'cliente']
+        fields = ['produto', 'valor_total', 'data_venda', 'cliente']

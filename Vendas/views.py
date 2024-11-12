@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from Vendas.models import CriarPedido
+from Vendas.models import CriarPedido, Vendas
 
 from django.contrib import messages
 
@@ -17,7 +17,9 @@ def vendas(request):
     else: 
         form = CriarPedido()
 
-    return render(request, 'vendas.html', {'form': form})
+    vendas = Vendas.objects.all()
+
+    return render(request, 'vendas.html', {'form': form, 'vendas': vendas})
 
 
 

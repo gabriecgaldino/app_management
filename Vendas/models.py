@@ -1,20 +1,22 @@
 from django.db import models
-from Produto.models import Produto
-from Organizações.models import Organizações
 from django.utils import timezone
-from django import forms
 
 class Vendas(models.Model):
-    produto = models.ManyToManyField(Produto)
-    valor_total = models.DecimalField(u'valor_total', decimal_places=2, max_digits=100000000)
-    data_venda = models.DateField(u'data_venda', default=timezone.now())
-    cliente = models.ForeignKey(Organizações, on_delete=models.PROTECT)
+    numero_pedido = models.OneToOneField('Pedidos.Pedidos', on_delete=models.PROTECT)
+    cliente = models.ForeignKey('Contatos.Contatos', on_delete=models.PROTECT)
+    data_venda = models.DateField(default=timezone.now())
+    valor_total = models.DecimalField(max_digits=10, decimal_places=2, editable=False)
+    status = models.CharField(max_length=50, choices=[('Pendente',  'Pendente'), ('Pago', 'Pago'), ('Cancelado', 'Cancelado')])
 
     def __str__(self):
-        return f"{self.id}"
+        return f'Venda #{self.id} - {self.cliente}'
+    
+    def calcular_total(self):
+        total = self.pedido.calcular_total() if self.pedido else 0
+        self.valor_total = total
 
-
-class CriarPedido(forms.ModelForm):
-    class Meta: 
-        model = Vendas
-        fields = ['produto', 'valor_total', 'data_venda', 'cliente']
+        return total
+    
+    def save(self, *args, **kwargs):
+        self.calcular_total()
+        super().save(**args, **kwargs)

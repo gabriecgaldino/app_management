@@ -69,6 +69,19 @@
                                         </tr>
                                     </thead>
                                     <tbody id="salesTableBody">
+                                        <tr id="linha-template" style="display: none;">
+                                            <th class="codigo"></th>
+                                            <th data-produto-id="{{form.id}}", 
+                                                data-produto-um="{{form.unidade_medida}}",
+                                                data-produto-valor_unit="{{form.valor_unit}}",
+                                                data-produto-subotal="{{form.subtotal}}"
+                                                >{{form.produto}}</th>
+                                            <th class="unidade_medida"></th>
+                                            <th class="valor_unit"></th>
+                                            <th class="form-control">{{form.quantidade}}</th>
+                                            <th class="valor_total"></th>
+                                            <th></th>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>

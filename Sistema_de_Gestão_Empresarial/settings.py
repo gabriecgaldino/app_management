@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     'Vendas',
     'Agenda',
     'Contatos',
-    'Eventos'
+    'Eventos',
+    'Pedidos'
 ]
 
 MIDDLEWARE = [
@@ -131,7 +132,8 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static',
     BASE_DIR / 'Estoque/static',
     BASE_DIR / 'Vendas/static',
-    BASE_DIR / 'Usuario/static'
+    BASE_DIR / 'Usuario/static',
+    BASE_DIR / 'Pedidos/static'
 ]
 
 # Default primary key field type

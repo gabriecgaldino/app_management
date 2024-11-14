@@ -12,7 +12,7 @@ def vendas(request):
         if form.is_valid():
             nova_venda = Vendas(form)
             nova_venda.save()
-            print(nova_venda)
+            print(form)
             messages.success(request, 'Pedido criada com sucesso!')
         else: 
             print(form)

@@ -31,7 +31,7 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="vendaModalLabel">Novo pedido</h5>
+                        <h5 class="modal-title" id="vendaModalLabel">Novo pedido {{form.numero_pedido}}</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -41,20 +41,14 @@
                             <div class="row mb-3">
                                 <div class="col-md-5 d-flex align-items-center">
                                     <label for="cliente" class="form-label"><strong>Cliente</strong></label>
-                                    <input type="text" class="form-control form-control-sm ms-2" id="buscarCliente" placeholder="Buscar clientes...">
+                                    {{form.cliente}}
                                     <ul id="resultadoBusca" class="list-group position-absolute" style="width: 35%; z-index: 1000; margin-top: 16%; margin-left: 7%;"></ul>
                                 </div>
                                 <div class="col-md-5 d-flex align-items-center">
                                     <label for="data_venda" class="form-label"><strong>Data da Venda</strong></label>
-                                    <input type="date" class="form-control form-control-sm ms-2" name="data_venda" id="buscar_produto">
+                                    {{form.data_pedido}}
                                 </div>
                             </div>
-                            <td>
-
-                            </td>
-                            <td>
-
-                            </td>
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="tabela-pedidos">
                                     <thead>
@@ -69,15 +63,11 @@
                                         </tr>
                                     </thead>
                                     <tbody id="salesTableBody">
-                                        <tr id="linha-template" style="display: none;">
+                                        <tr id="linha-template">
                                             <th class="codigo"></th>
-                                            <th 
-                                                id="produto"
-                                                data-produto-id="{{form.id}}", 
-                                                data-produto-um="{{form.unidade_medida}}",
-                                                data-produto-valor_unit="{{form.valor_unit}}",
-                                                data-produto-subotal="{{form.subtotal}}",
+                                            <th
                                                 class="produto"
+                                                data-produto-id="{{form.produto.codigo}}"
                                                 >{{form.produto}}</th>
                                             <th class="unidade_medida"></th>
                                             <th class="valor_unit"></th>

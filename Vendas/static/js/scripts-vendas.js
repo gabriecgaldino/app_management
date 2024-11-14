@@ -9,11 +9,5 @@ document.getElementById('addRowButton').addEventListener('click', function(){
 
 document.querySelectorAll('th[data-produto-id]').forEach(th=> {
     document.getElementById('produto').addEventListener('click', function(){
-        const produtoId = th.dataset.produtoId;
-        const unidadeMedida = th.dataset.produtoUm;
-        const valorUnitario = th.dataset.produtoValorUnit;
-        const subtotal = th.dataset.produtoSubtotal;
-        
-        console.log(`Produto ID: ${produtoId}, Unidade: ${unidadeMedida}, Valor Unitário: ${valorUnitario}, Subtotal: ${subtotal}`);
     })  
 })

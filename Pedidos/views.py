@@ -1,7 +1,7 @@
-from .models import NovoPedido
+from .models import PedidoProdutoForm
 
 def criar_pedido(request):
-    form = NovoPedido(request.POST or None)
+    form = PedidoProdutoForm(request.POST or None)
     if request.method == 'POST':
         if form.is_valid():
             form.save()

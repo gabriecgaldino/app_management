@@ -2,7 +2,7 @@ from django.db import models
 from django.forms import ModelForm
 from django import forms
 from Estoque.models import Estoque
-from django.utils.timezone import now
+from django.utils import timezone
 
 
 class Produto(models.Model):
@@ -22,7 +22,7 @@ class Produto(models.Model):
     estoque_id = models.ForeignKey(
         Estoque, on_delete=models.CASCADE, related_name='produtos')
     data_joined = models.DateField(
-        max_length=now(), default=now())
+        max_length=timezone.now, default=timezone.now)
 
     def __str__(self):
         return self.descricao

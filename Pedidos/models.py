@@ -1,39 +1,33 @@
 from django.db import models
-from Produto.models import Produto
-from Organizações.models import Organizações  
-from django import forms
 from django.utils import timezone
+from Produto.models import Produto
 
-# Modelo de Pedido
-class Pedidos(models.Model):
-    data_pedido = models.DateField(default=timezone.now)
-    cliente = models.ForeignKey(Organizações, on_delete=models.PROTECT)
-    produtos = models.ManyToManyField(Produto, through='PedidoProduto')
-    numero_pedido = models.CharField(max_length=5)
+class Produtos_do_Pedido(models.Model):
+    produto = models.ForeignKey(Produto, on_delete=models.PROTECT)
+    quantidade = models.IntegerField()
+
+    def sub_total(self): 
+        return self.produto.valor * self.quantidade
 
     def __str__(self):
-        return f"Pedido #{self.numero_pedido}"
+        return f"{self.produto.descricao} - {self.quantidade}"
 
-    def calcular_total(self):
-        return sum(item.calcular_subtotal() for item in self.pedidoproduto_set.all())
+class Pedidos_de_Venda(models.Model):
+    STATUS_PEDIDO = [
+        ('Aberto', 'Aberto'),
+        ('Em andamento', 'Em andamento'),
+        ('Concluído', 'Concluído'),
+    ]
 
-# Modelo Intermediário PedidoProduto
-class PedidoProduto(models.Model):
-    pedido = models.ForeignKey(Pedidos, on_delete=models.PROTECT)
-    produto = models.ForeignKey(Produto, on_delete=models.PROTECT)
-    quantidade = models.PositiveIntegerField()
-    preco = models.DecimalField(max_digits=10, decimal_places=2)
+    numero_pedido = models.CharField(max_length=10)
+    status_pedido = models.CharField(
+        max_length=20,
+        choices=STATUS_PEDIDO,
+        default='Aberto'
+    )
+    data_pedido = models.DateField(default=timezone.now)
+    valor_total = models.DecimalField(max_digits=10, decimal_places=2)
+    produtos = models.ManyToManyField(Produtos_do_Pedido)
 
-    def calcular_subtotal(self):
-        return self.quantidade * self.preco
-
-class PedidoProdutoForm(forms.ModelForm):
-    data_pedido = forms.DateField(widget=forms.DateInput(attrs={'class': 'form-control'}))
-    cliente = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Buscar Cliente...'}))
-    numero_pedido = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
-    quantidade = forms.IntegerField(widget=forms.NumberInput(attrs={'class': 'form-control'}))
-    preco = forms.DecimalField(max_digits=10, decimal_places=2, widget=forms.NumberInput(attrs={'class': 'form-control'}))
-
-    class Meta:
-        model = PedidoProduto
-        fields = ['produto', 'quantidade', 'preco']  
+    def __str__(self):
+        return f"Pedido {self.numero_pedido} - {self.status_pedido}"

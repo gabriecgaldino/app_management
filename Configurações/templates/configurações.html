@@ -82,6 +82,26 @@
                                 Alterar telefone
                             </li>
                             {% include 'modais/modal_alteração_telefone_organização.html' %}
+                        </ul>
+                    </div>
+                </div>
+                <!-- Configurações de Administração -->
+                <div class="card settings-card mb-4">
+                    <div class="card-header">
+                        <h5>Configurações de Administração</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group">
+                            <li class="list-group-item" data-bs-toggle="modal" data-bs-target="#modalAdicionarSetor">
+                                <i class="bi bi-building"></i>
+                                Gerenciar Setores
+                            </li>
+                            {% include 'modais/modal_adição_setor.html' %}
+                            <li class="list-group-item" data-bs-toggle="modal" data-bs-target="#modalAdicionarCargo">
+                                <i class="bi bi-briefcase"></i>
+                                Gerenciar Cargos
+                            </li>
+                            {% include 'modais/modal_adição_cargos.html' %}
                             <li class="list-group-item">
                                 <a class="nav-link" href="{% url 'colaboradores' %}">
                                     <i class="bi bi-person-check me-2"></i>
@@ -115,6 +135,8 @@
 
     <!-- Scripts do Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+
 </body>
 
 </html>

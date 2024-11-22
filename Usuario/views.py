@@ -1,38 +1,20 @@
 from django.shortcuts import render, redirect
-from Usuario.models import CriaColaborador
+from django.contrib.auth import login, logout
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
-from django.contrib.auth import authenticate, login
-
-def registro(request):
-    if request.method == 'POST':
-        form = CriaColaborador(request.POST)
-
-        if form.is_valid():
-            form.save()
-            messages.success(
-                request, 'Usuário criado com sucesso, realize o login!')
-        else: 
-            messages.error(request, "Erro ao criar o usuário. Verifique os dados.")
-    else:
-        form = CriaColaborador()
-
-    return render(request, 'registro.html', {'form': form})
 
 
 def login_view(request):
     if request.method == 'POST':
-        email = request.POST.get('email')
-        password = request.POST.get('password')
-
-        user = authenticate(request, username=email, password=password)
-
-        if user is not None:
+        form_login = AuthenticationForm(request, data=request.POST)
+        if form_login.is_valid():
+            user = form_login.get_user()
             login(request, user)
+            messages(request, f'Bem, vindo {user.username}!')
             return redirect('home')
-        else:
-            messages.info(request, 'E-mail ou senha inválidos')
+        else: 
+            messages.error(request, 'Credenciais inválidas!')
+    else:
+        form_login = AuthenticationForm()
 
-    return render(request, 'login.html')
-
-def change_data_user(request): 
-    return render(request, 'change_data_user.html')
+    return render(request, 'login.html', {'form_login': form_login})

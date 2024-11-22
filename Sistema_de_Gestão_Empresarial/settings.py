@@ -124,8 +124,7 @@ AUTH_USER_MODEL = 'Usuario.Colaborador'
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    BASE_DIR / 'static',
-    BASE_DIR / 'Usuario/static'
+    BASE_DIR / 'static'
 ]
 
 # Default primary key field type

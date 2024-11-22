@@ -1,6 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +10,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Ícones do Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="{% static 'styles/configurações.css'%}" rel="stylesheet">
 </head>
+
 <body class="bg-light">
     <!-- Navbar -->
     {% include 'navigation_bar.html' %}
@@ -19,75 +22,91 @@
         <div class="row">
             <!-- Opções de Configuração -->
             <div class="col-lg-8">
-                <div class="card settings-card mb-4"> <!-- Adicionando margem inferior -->
+                <div class="card settings-card mb-4">
                     <div class="card-header">
                         <h5>Configurações Pessoais</h5>
                     </div>
                     <div class="card-body">
                         <ul class="list-group">
-                            <li class="list-group-item">
+                            <li class="list-group-item" data-bs-toggle="modal" data-bs-target="#modalAlterarNome">
                                 <i class="bi bi-person-circle"></i>
                                 Alterar nome de usuário
                             </li>
-                            <li class="list-group-item">
+                            {% include 'modais/modal_alteração_nome_colaborador.html' %}
+                            <li class="list-group-item" data-bs-toggle="modal" data-bs-target="#modalAlterarEmail">
                                 <i class="bi bi-envelope"></i>
                                 Alterar e-mail
                             </li>
-                            <li class="list-group-item">
+                            {% include 'modais/modal_alteração_email.html' %}
+                            <li class="list-group-item" data-bs-toggle="modal" data-bs-target="#modalAlterarSenha">
                                 <i class="bi bi-lock"></i>
                                 Alterar senha
                             </li>
-                            <li class="list-group-item">
+                            {% include 'modais/modal_alteração_senha.html' %}
+                            <li class="list-group-item" data-bs-toggle="modal" data-bs-target="#modalAlterarIdioma">
                                 <i class="bi bi-globe"></i>
                                 Alterar idioma
                             </li>
-                            <li class="list-group-item">
+                            {% include 'modais/modal_alteração_idioma.html' %}
+                            <li class="list-group-item" data-bs-toggle="modal"
+                                data-bs-target="#modalAlterarNotificacoes">
                                 <i class="bi bi-bell"></i>
                                 Notificações
                             </li>
+                            {% include 'modais/modal_alteração_notificações.html' %}
                         </ul>
                     </div>
                 </div>
-                
+
                 <!-- Opções de Configuração de Organização -->
-                <div class="card settings-card mb-4"> <!-- Adicionando margem inferior -->
+                <div class="card settings-card mb-4">
                     <div class="card-header">
                         <h5>Configurações da Organização</h5>
                     </div>
+
                     <div class="card-body">
                         <ul class="list-group">
-                            <li class="list-group-item">
+                            <li class="list-group-item" data-bs-toggle="modal"
+                                data-bs-target="#modalAlterarNomeOrganizacao">
                                 <i class="bi bi-building"></i>
                                 Alterar nome da organização
                             </li>
-                            <li class="list-group-item">
+                            {% include 'modais/modal_alteração_nome_organização.html' %}
+                            <li class="list-group-item" data-bs-toggle="modal" data-bs-target="#modalAlterarEndereco">
                                 <i class="bi bi-house-door"></i>
                                 Alterar endereço
                             </li>
-                            <li class="list-group-item">
+                            {% include 'modais/modal_alteração_endereço_organização.html' %}
+                            <li class="list-group-item" data-bs-toggle="modal" data-bs-target="#modalAlterarTelefone">
                                 <i class="bi bi-phone"></i>
                                 Alterar telefone
                             </li>
+                            {% include 'modais/modal_alteração_telefone_organização.html' %}
                             <li class="list-group-item">
-                                <i class="bi bi-person-check"></i>
-                                Gerenciar colaboradores
+                                <a class="nav-link" href="{% url 'colaboradores' %}">
+                                    <i class="bi bi-person-check me-2"></i>
+                                    Gerenciar colaboradores
+                                </a>
                             </li>
                         </ul>
                     </div>
                 </div>
-            </div>                
+            </div>
 
             <!-- Coluna para o botão de cadastrar nova organização -->
             <div class="col-lg-4">
                 <div class="card settings-card">
                     <div class="card-header">
-                        <h5>Cadastrar Nova Organização</h5>
+                        <h5>Nova Organização</h5>
                     </div>
                     <div class="card-body">
-                        <p class="card-text">Caso você precise criar uma nova organização, clique no botão abaixo para iniciar o cadastro.</p>
-                        <a href="#" class="btn btn-primary w-100">
+                        <p class="card-text">Caso você precise criar uma nova organização, clique no botão abaixo para
+                            iniciar o cadastro.</p>
+                        <a href="#" class="btn btn-primary w-100" data-bs-toggle="modal"
+                            data-bs-target="#modalCadastrarOrganizacao">
                             <i class="bi bi-plus-circle"></i> Cadastrar Nova Organização
                         </a>
+                        {% include 'modais/modal_nova_organização.html' %}
                     </div>
                 </div>
             </div>
@@ -97,4 +116,5 @@
     <!-- Scripts do Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

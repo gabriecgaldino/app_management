@@ -20,3 +20,7 @@ def atualizar_perfil_view(request):
         user.colaborador.save()
         messages.success(request, 'Perfil atualizado com sucesso!')
         return redirect('perfil')
+
+
+def colaboradores_view(request):
+    return render(request, 'colaboradores.html')

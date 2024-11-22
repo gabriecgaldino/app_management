@@ -1,0 +1,53 @@
+<div class="modal fade" id="modalAlterarNotificacoes" tabindex="-1" aria-labelledby="modalAlterarNotificacoesLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalAlterarNotificacoesLabel">Alterar Notificações</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="" method="POST">
+                    {% csrf_token %}
+
+                    <div class="mb-3">
+                        <label for="notificacao_email" class="form-label">Notificações por E-mail</label>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="notificacao_email"
+                                name="notificacao_email" {% if usuario.notificacao_email %}checked{% endif %}>
+                            <label class="form-check-label" for="notificacao_email">
+                                Receber notificações por e-mail
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="notificacao_sms" class="form-label">Notificações por SMS</label>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="notificacao_sms" name="notificacao_sms"
+                                {% if usuario.notificacao_sms %}checked{% endif %}>
+                            <label class="form-check-label" for="notificacao_sms">
+                                Receber notificações por SMS
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="notificacao_push" class="form-label">Notificações Push</label>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="notificacao_push"
+                                name="notificacao_push" {% if usuario.notificacao_push %}checked{% endif %}>
+                            <label class="form-check-label" for="notificacao_push">
+                                Receber notificações push no app
+                            </label>
+                        </div>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,31 @@
+<!-- Modal de Alteração de E-mail -->
+<div class="modal fade" id="modalAlterarEmail" tabindex="-1" aria-labelledby="modalAlterarEmailLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalAlterarEmailLabel">Alterar E-mail</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="novoEmail" class="form-label">Novo E-mail</label>
+                        <input type="email" class="form-control" id="novoEmail" name="novo_email"
+                            placeholder="Digite o novo e-mail" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="confirmarEmail" class="form-label">Confirmar E-mail</label>
+                        <input type="email" class="form-control" id="confirmarEmail" name="confirmar_email"
+                            placeholder="Confirme o novo e-mail" required>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>

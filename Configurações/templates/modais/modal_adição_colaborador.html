@@ -1,0 +1,124 @@
+<!-- Modal de Cadastro de Colaborador -->
+<div class="modal fade" id="modalCadastroColaborador" tabindex="-1" aria-labelledby="modalCadastroColaboradorLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalCadastroColaboradorLabel">Cadastrar Colaborador</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="post" action="">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <!-- Dados Pessoais -->
+                    <h6 class="mb-3">Dados Pessoais</h6>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="id_nome" class="form-label">Nome</label>
+                                <input type="text" class="form-control" id="id_nome" name="nome" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="id_sobrenome" class="form-label">Sobrenome</label>
+                                <input type="text" class="form-control" id="id_sobrenome" name="sobrenome" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="id_cpf" class="form-label">CPF</label>
+                                <input type="text" class="form-control" id="id_cpf" name="cpf" maxlength="11" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="id_email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="id_email" name="email" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="id_telefone" class="form-label">Telefone</label>
+                                <input type="text" class="form-control" id="id_telefone" name="telefone">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="id_endereco" class="form-label">Endereço</label>
+                                <textarea class="form-control" id="id_endereco" name="endereco"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="id_data_nascimento" class="form-label">Data de Nascimento</label>
+                                <input type="date" class="form-control" id="id_data_nascimento" name="data_nascimento">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dados Profissionais -->
+                    <h6 class="mb-3">Dados Profissionais</h6>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="id_setor" class="form-label">Setor</label>
+                                <input type="text" class="form-control" id="id_setor" name="setor" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="id_cargo" class="form-label">Cargo</label>
+                                <input type="text" class="form-control" id="id_cargo" name="cargo" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="id_matricula" class="form-label">Matrícula</label>
+                                <input type="text" class="form-control" id="id_matricula" name="matricula"
+                                    maxlength="20" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="id_data_entrada" class="form-label">Data de Entrada</label>
+                                <input type="date" class="form-control" id="id_data_entrada" name="data_entrada"
+                                    value="{{ today }}" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dados de Acesso -->
+                    <h6 class="mb-3">Dados de Acesso</h6>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="id_is_active" class="form-label">Ativo</label>
+                                <select class="form-control" id="id_is_active" name="is_active">
+                                    <option value="True">Sim</option>
+                                    <option value="False">Não</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

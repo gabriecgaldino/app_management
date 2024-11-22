@@ -1,0 +1,40 @@
+<div class="modal fade" id="modalAlterarTelefone" tabindex="-1" aria-labelledby="modalAlterarTelefoneLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalAlterarTelefoneLabel">Alterar Telefone da Organização</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="POST" action="">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <!-- Campo para o telefone atual -->
+                    <div class="mb-3">
+                        <label for="telefone_atual" class="form-label">Telefone Atual</label>
+                        <input type="text" class="form-control" id="telefone_atual" name="telefone_atual"
+                            value="{{ telefone_atual }}" readonly>
+                    </div>
+
+                    <!-- Campo para o novo telefone -->
+                    <div class="mb-3">
+                        <label for="telefone_novo" class="form-label">Novo Telefone</label>
+                        <input type="text" class="form-control" id="telefone_novo" name="telefone_novo" required>
+                    </div>
+
+                    <!-- Confirmar novo telefone -->
+                    <div class="mb-3">
+                        <label for="telefone_novo_confirmar" class="form-label">Confirmar Novo Telefone</label>
+                        <input type="text" class="form-control" id="telefone_novo_confirmar"
+                            name="telefone_novo_confirmar" required>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

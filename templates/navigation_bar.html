@@ -8,7 +8,6 @@
             aria-controls="offcanvasMenu">
             ☰
         </button>
-
         <!-- Menu Lateral -->
         <div 
             class="offcanvas offcanvas-start offcanvas-custom" 
@@ -23,7 +22,7 @@
                 <ul class="list-group">
                     <li class="list-group-item"><a href="#" class="text-decoration-none text-white">Página Inicial</a></li>
                     <li class="list-group-item"><a href="#" class="text-decoration-none text-white">Sobre</a></li>
-                    <li class="list-group-item"><a href="#" class="text-decoration-none text-white">Configurações</a></li>
+                    <li class="list-group-item"><a href="{% url 'configurações' %}" class="text-decoration-none text-white">Configurações</a></li>
                     <li class="list-group-item"><a href="#" class="text-decoration-none text-white">Sair</a></li>
                 </ul>
             </div>
@@ -49,7 +48,7 @@
             </button>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                 <li><a class="dropdown-item" href="#">Perfil</a></li>
-                <li><a class="dropdown-item" href="#">Configurações</a></li>
+                <li><a class="dropdown-item" href="{% url 'configurações' %}">Configurações</a></li>
                 <li><hr class="dropdown-divider"></li>
                 <li><a class="dropdown-item" href="#">Sair</a></li>
             </ul>

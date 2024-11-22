@@ -2,7 +2,7 @@
 .btn-custom {
     background-color: #343a40; /* Cinza Chumbo */
     color: #ffffff; /* Texto Branco */
-    border-radius: 8px; /* Bordas arredondadas */
+    border-radius: 8px;
     border: none;
 }
 .btn-custom:hover {
@@ -26,3 +26,5 @@
     font-weight: bold;
     font-size: 1.5rem;
 }
+
+

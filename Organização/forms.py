@@ -1,0 +1,66 @@
+from django import forms
+from .models import Empresa
+
+class EmpresaForm(forms.ModelForm):
+    class Meta:
+        model = Empresa
+        fields = [
+            "razao_social",
+            "nome_fantasia",
+            "cnpj",
+            "ie",
+            "im",
+            "endereco",
+            "telefone",
+            "email",
+            "type_organizacao",
+        ]
+        widgets = {
+            'razao_social': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Razão Social',
+                'required': True,
+                'id': 'razao_social'
+            }),
+            'cnpj': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'CNPJ',
+                'required': True,
+                'id': 'cnpj'
+            }),
+            'endereco': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Endereço',
+                'required': True,
+                'id': 'endereco'
+            }),
+            'ie': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Inscrição Estadual',
+                'required': True,
+                'id': 'ie'
+            }),
+            'im': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Inscrição Munícipal',
+                'required': True,
+                'id': 'im'
+            }),
+            'telefone': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': '(00) 00000-0000',
+                'required': True,
+                'id': 'telefone'
+            }),
+            'email': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'exemple@mail.com',
+                'required': True,
+                'id': 'email'
+            }),
+            'type_organizacao': forms.Select(attrs={
+                'class': 'form-control',
+                'required': True,
+                'id': 'tipo'
+            }),
+        }

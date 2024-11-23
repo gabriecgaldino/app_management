@@ -80,10 +80,11 @@
                 </div>
                 <div class="card-body">
                     <ul class="list-group">
-                        <li class="list-group-item">
+                        <li class="list-group-item" data-bs-toggle="modal" data-bs-target="#modalAlterarSenha">
                             <i class="bi bi-lock"></i>
-                            <a href="" class="text-decoration-none">Alterar Senha</a>
+                            Alterar Senha
                         </li>
+                        {% include 'modais/modal_alteração_senha.html' %}
                         <li class="list-group-item">
                             <i class="bi bi-person-check"></i>
                             <a href="" class="text-decoration-none">Gerenciar

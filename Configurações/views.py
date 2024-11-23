@@ -1,9 +1,18 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from Organização.forms import EmpresaForm
+from Organização.models import Empresa
 
 
 def configuracoes_view(request):
-    return render(request, 'configurações.html')
+        if request.method == 'POST': 
+            form = EmpresaForm(request.POST)
+            if form.is_valid():
+                Empresa(form).save()
+                return redirect('configurações')
+        else:
+             form = EmpresaForm()
+        return render(request, 'configurações.html', {'form':form})
 
 
 def perfil_view(request):

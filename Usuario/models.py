@@ -39,5 +39,7 @@ class CustomFormLoginColaborador(forms.ModelForm):
         if username == "admin":
             raise ValidationError("Este nome de usuário não é permitido!")
         return username
+    
+
 
 

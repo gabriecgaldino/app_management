@@ -2,12 +2,13 @@
 {% extends 'index.html' %}
 {% block content %}
 <div class="container mt-4">
-    <h2>Gerenciamento de Colaboradores</h2>
+    
 
     <!-- Botão para adicionar novo colaborador -->
-    <div class="mb-3">
-        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalCadastroColaborador">Adicionar
-            Novo Colaborador</button>
+    <div class="d-flex justify-content-end mb-3">
+        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalCadastroColaborador">
+            <i class="bi bi-plus"></i>
+        </button>
     </div>
     {% include 'modais/modal_adição_colaborador.html' %}
 

@@ -1,14 +1,13 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from Organização.forms import EmpresaForm
-from Organização.models import Empresa
 
 
 def configuracoes_view(request):
         if request.method == 'POST': 
             form = EmpresaForm(request.POST)
             if form.is_valid():
-                Empresa(form).save()
+                form.save()
                 return redirect('configurações')
         else:
              form = EmpresaForm()

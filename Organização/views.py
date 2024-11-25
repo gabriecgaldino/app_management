@@ -1,6 +1,4 @@
-from django.shortcuts import redirect, render
-from .forms import EmpresaForm
-from django.contrib import messages
+from .forms import EmpresaForm, SetorForm
 
 
 def cria_empresa_view(request):
@@ -13,3 +11,16 @@ def cria_empresa_view(request):
     else:
         form = EmpresaForm()
         return form
+
+
+def cria_setor(request):
+
+    form_setor = SetorForm(request)
+    if form_setor.is_valid():
+
+        form_setor.save()
+
+    else:
+        form = SetorForm()
+
+    return form

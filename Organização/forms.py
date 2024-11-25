@@ -1,5 +1,5 @@
 from django import forms
-from .models import Empresa
+from .models import Empresa, Setor
 
 
 class EmpresaForm(forms.ModelForm):
@@ -70,4 +70,16 @@ class EmpresaForm(forms.ModelForm):
                 'required': True,
                 'id': 'tipo'
             }),
+        }
+
+
+class SetorForm(forms.ModelForm):
+    class Meta:
+        model = Setor
+        fields = ['nome_setor']
+        widgets = {
+            'nome_setor': forms.TextInput(attrs={
+                'class': 'form-control',
+                'id': 'nome_setor'
+            })
         }

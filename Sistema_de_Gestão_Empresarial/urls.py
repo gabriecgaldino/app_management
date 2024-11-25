@@ -3,6 +3,7 @@ from django.urls import path
 from Usuario.views import login_view
 from .views import index
 from Configurações.views import configuracoes_view, perfil_view, atualizar_perfil_view, colaboradores_view
+from Organização.views import cria_setor
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('login/', login_view, name='login'),
@@ -11,4 +12,5 @@ urlpatterns = [
     path('perfil/', perfil_view, name='perfil'),
     path('atualizar-perfil/', atualizar_perfil_view, name='atualizar_perfil'),
     path('colaboradores/', colaboradores_view, name='colaboradores'),
+    path('novo-setor/', cria_setor, name='novo-setor')
 ]

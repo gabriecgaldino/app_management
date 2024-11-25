@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
+from .forms import ColaboradorForm
 
 
 def login_view(request):
@@ -12,7 +13,7 @@ def login_view(request):
             login(request, user)
             messages(request, f'Bem, vindo {user.username}!')
             return redirect('home')
-        else: 
+        else:
             messages.error(request, 'Credenciais inválidas!')
     else:
         form_login = AuthenticationForm()

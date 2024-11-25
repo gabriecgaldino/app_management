@@ -1,16 +1,23 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from Organização.views import cria_empresa_view
-from Organização.forms import EmpresaForm
+from Organização.views import cria_empresa_view, cria_setor
+from Organização.forms import EmpresaForm, SetorForm
 
 
 def configuracoes_view(request):
     if request.method == 'POST':
         form = cria_empresa_view(request.POST)
-        return render(request, 'configurações.html', {'form': form})
+        form_setor = cria_setor(request.POST)
+
+        return render(request, 'configurações.html', {
+            'form': form,
+            'form_setor': form_setor
+
+        })
 
     else:
         form = EmpresaForm()
+        form_setor = SetorForm()
 
         return render(request, 'configurações.html', {'form': form})
 

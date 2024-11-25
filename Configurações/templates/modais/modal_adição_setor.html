@@ -1,16 +1,17 @@
-<div class="modal fade" id="modalAdicionarSetor" tabindex="-1" aria-labelledby="modalAdicionarSetorLabel" aria-hidden="true">
+<div class="modal fade" id="modalAdicionarSetor" tabindex="-1" aria-labelledby="modalAdicionarSetorLabel"
+    aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="modalAdicionarSetorLabel">Adicionar Setor</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form method="post" action="">
+            <form method="post" action="{% url 'configurações' %}">
                 {% csrf_token %}
                 <div class="modal-body">
                     <div class="mb-3">
                         <label for="id_nome_setor" class="form-label">Nome do Setor</label>
-                        <input type="text" class="form-control" id="id_nome_setor" name="nome_setor" required>
+                        {{form_setor.nome_setor}}
                     </div>
                 </div>
                 <div class="modal-footer">

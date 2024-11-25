@@ -12,8 +12,12 @@
                     {% csrf_token %}
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label for="nome_organizacao" class="form-label">Nome da Organização</label>
+                            <label for="nome_organizacao" class="form-label">Razão Social</label>
                             {{ form.razao_social }}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="nome_organizacao" class="form-label">Nome Fantasia</label>
+                            {{ form.nome_fantasia }}
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="cnpj" class="form-label">CNPJ</label>
@@ -33,8 +37,7 @@
                     <div class="row col-md-3">
                         <div class="col-md-12 mb-3">
                             <label for="cep" class="form-label">CEP</label>
-                            <input type="text" class="form-control" id="CEP" placeholder="00000-000"
-                                    required>
+                            <input type="text" class="form-control" id="CEP" placeholder="00000-000" required>
                         </div>
                     </div>
                     <div class="row">
@@ -54,7 +57,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        
+
                         <div class="col-md-6 mb-3">
                             <label for="tipo_organizacao" class="form-label">Tipo de Organização</label>
                             {{ form.type_organizacao }}
@@ -62,9 +65,9 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                        <button type="submit" class="btn btn-primary">Cadastrar</button> 
+                        <button type="submit" class="btn btn-primary">Cadastrar</button>
                     </div>
-                    
+
                 </form>
                 <!--
                 <form>

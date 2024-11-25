@@ -1,17 +1,18 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from Organização.views import cria_empresa_view
 from Organização.forms import EmpresaForm
 
 
 def configuracoes_view(request):
-        if request.method == 'POST': 
-            form = EmpresaForm(request.POST)
-            if form.is_valid():
-                form.save()
-                return redirect('configurações')
-        else:
-             form = EmpresaForm()
-        return render(request, 'configurações.html', {'form':form})
+    if request.method == 'POST':
+        form = cria_empresa_view(request.POST)
+        return render(request, 'configurações.html', {'form': form})
+
+    else:
+        form = EmpresaForm()
+
+        return render(request, 'configurações.html', {'form': form})
 
 
 def perfil_view(request):

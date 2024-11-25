@@ -1,6 +1,7 @@
 from django import forms
 from .models import Empresa
 
+
 class EmpresaForm(forms.ModelForm):
     class Meta:
         model = Empresa
@@ -21,6 +22,12 @@ class EmpresaForm(forms.ModelForm):
                 'placeholder': 'Razão Social',
                 'required': True,
                 'id': 'razao_social'
+            }),
+            'nome_fantasia': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'nome_fantasia',
+                'required': True,
+                'id': 'nome_fantasia'
             }),
             'cnpj': forms.TextInput(attrs={
                 'class': 'form-control',

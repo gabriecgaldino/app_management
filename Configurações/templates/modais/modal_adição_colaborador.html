@@ -16,13 +16,13 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="id_nome" class="form-label">Nome</label>
-                                <input type="text" class="form-control" id="id_nome" name="nome" required>
+                                {{form_colaborador.first_name}}
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="id_sobrenome" class="form-label">Sobrenome</label>
-                                <input type="text" class="form-control" id="id_sobrenome" name="sobrenome" required>
+                                {{form_colaborador.last_name}}
                             </div>
                         </div>
                     </div>
@@ -31,13 +31,13 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="id_cpf" class="form-label">CPF</label>
-                                <input type="text" class="form-control" id="id_cpf" name="cpf" maxlength="11" required>
+                                {{form_colaborador.cpf}}
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="id_email" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="id_email" name="email" required>
+                                {{form_colaborador.email}}
                             </div>
                         </div>
                     </div>
@@ -46,13 +46,13 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="id_telefone" class="form-label">Telefone</label>
-                                <input type="text" class="form-control" id="id_telefone" name="telefone">
+                                {{form_colaborador.telefone}}
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="id_endereco" class="form-label">Endereço</label>
-                                <textarea class="form-control" id="id_endereco" name="endereco"></textarea>
+                                {{form_colaborador.endereco}}
                             </div>
                         </div>
                     </div>
@@ -61,7 +61,7 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="id_data_nascimento" class="form-label">Data de Nascimento</label>
-                                <input type="date" class="form-control" id="id_data_nascimento" name="data_nascimento">
+                                {{form_colaborador.data_nascimento}}
                             </div>
                         </div>
                     </div>
@@ -72,13 +72,13 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="id_setor" class="form-label">Setor</label>
-                                <input type="text" class="form-control" id="id_setor" name="setor" required>
+                                {{form_colaborador.setor}}
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="id_cargo" class="form-label">Cargo</label>
-                                <input type="text" class="form-control" id="id_cargo" name="cargo" required>
+                                {{form_colaborador.cargo}}
                             </div>
                         </div>
                     </div>
@@ -87,15 +87,7 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="id_matricula" class="form-label">Matrícula</label>
-                                <input type="text" class="form-control" id="id_matricula" name="matricula"
-                                    maxlength="20" required>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="id_data_entrada" class="form-label">Data de Entrada</label>
-                                <input type="date" class="form-control" id="id_data_entrada" name="data_entrada"
-                                    value="{{ today }}" required>
+                                {{form_colaborador.matricula}}
                             </div>
                         </div>
                     </div>
@@ -106,10 +98,7 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="id_is_active" class="form-label">Ativo</label>
-                                <select class="form-control" id="id_is_active" name="is_active">
-                                    <option value="True">Sim</option>
-                                    <option value="False">Não</option>
-                                </select>
+                                {{form_colaborador.is_active}}
                             </div>
                         </div>
                     </div>
@@ -119,6 +108,9 @@
                     <button type="submit" class="btn btn-primary">Salvar</button>
                 </div>
             </form>
+            {% for message in message %}
+            <p> {{ message }}</p>
+            {% endfor %}
         </div>
     </div>
 </div>

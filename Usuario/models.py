@@ -2,7 +2,7 @@ from django import forms
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import AbstractUser
-from django.core.exceptions import ValidationError
+from Organização.models import Empresa
 
 
 class Colaborador(AbstractUser):
@@ -17,26 +17,19 @@ class Colaborador(AbstractUser):
     setor = models.CharField(max_length=50, blank=True)
     cargo = models.CharField(max_length=20, blank=True)
     matricula = models.CharField(max_length=20, unique=True)
-    data_entrada = models.DateField(default=timezone.now)
     data_demissao = models.DateField(blank=True, null=True)
+
 
     # Dados de acesso
     is_active = models.BooleanField(default=True)
-    ultimo_login = models.DateTimeField(blank=True, null=True)
+
+    USERNAME_FIELD = 'username'
+
+    def save(self, *args, **kwargs): 
+        if not self.username:
+            self.username = self.cpf
+            self.set_password(self.cpf[:6])
+            super().save(*args, **kwargs)
 
 
-class CustomFormLoginColaborador(forms.ModelForm):
-    username = forms.CharField(widget=forms.TextInput(
-        attrs={'class': "form-control form-control-lg", 'placeholder': "Digite seu nome de usuário"}))
-    password = forms.CharField(widget=forms.PasswordInput(
-        attrs={'class': 'form-control form-control-lg', 'placeholder': 'Digite sua senha'}))
 
-    class Meta:
-        model = AbstractUser
-        fields = ['username', 'password']
-
-    def clean_username(self):
-        username = self.cleaned_data['username']
-        if username == "admin":
-            raise ValidationError("Este nome de usuário não é permitido!")
-        return username

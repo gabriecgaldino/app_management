@@ -8,15 +8,33 @@ from .forms import ColaboradorForm, LoginForm
 def login_view(request):
     if request.method == 'POST':
         form_login = LoginForm(request, data=request.POST)
-        if not form_login.is_valid():
-            user = form_login.get_user()
-            if user:
+
+        user = authenticate(username='47693697861', password='41674973@Gc')
+        print("Usuário autenticado:", user)
+
+
+
+
+
+        if form_login.is_valid():
+            username = form_login.cleaned_data['username']
+            password = form_login.cleaned_data['password']
+
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
                 login(request, user)
                 return redirect('index')
+            else:
+                messages.error(request, 'Credenciais inválidas!')
         else:
-            messages.error(request, 'Credenciais inválidas!')
+            messages.error(request, 'Preencha todos os campos corretamente!')
+
+
     else:
         form_login = LoginForm()
+
+
+        
 
     return render(request, 'login.html', {'form_login': form_login})
 

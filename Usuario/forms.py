@@ -1,28 +1,24 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 from .models import Colaborador
-from Organização.models import Empresa
-
 
 class LoginForm(AuthenticationForm):
-    class Meta:
-        model = Colaborador
-        fields = [ 'username', 'password']
-        widgets = {
-            'username': forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Digite o nome de usuário',
-                'required': True,
-                'id': 'username'
-            }),
-            'password': forms.PasswordInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Digite sua senha',
-                'required': True,
-                'id': 'pass'
-            }),
+    username = forms.CharField(
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Digite seu nome de usuário',
+            'autofocus': 'autofocus',
+            'name': 'username'
+        })
+    )
 
-        }
+    password = forms.CharField(
+        widget=forms.PasswordInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Digite sua senha',
+            'name': 'password'
+        })
+    )
         
 class ColaboradorForm(forms.ModelForm):
     class Meta:

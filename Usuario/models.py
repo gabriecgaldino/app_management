@@ -1,8 +1,7 @@
-from django import forms
 from django.db import models
-from django.utils import timezone
+from django.contrib import admin
 from django.contrib.auth.models import AbstractUser
-from Organização.models import Empresa
+from django.contrib.auth import get_user_model
 
 
 class Colaborador(AbstractUser):
@@ -28,8 +27,12 @@ class Colaborador(AbstractUser):
     def save(self, *args, **kwargs): 
         if not self.username:
             self.username = self.cpf
-            self.set_password(self.cpf[:6])
-            super().save(*args, **kwargs)
+        if not self.password:
+            self.password1 = self.set_password(self.cpf[:8])
+            self.password2 = self.set_password(self.cpf[:8])
+            
+            
+        super().save(*args, **kwargs)
 
 
 

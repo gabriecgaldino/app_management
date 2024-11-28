@@ -44,7 +44,7 @@ function validarCPF(cpf) {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-    const form = document.getElementById("loginForm");
+    const form = document.getElementById("formCadastroColaborador");
     const cpfInput = document.getElementById("cpf");
     const errorSpan = document.getElementById("cpfError");
 

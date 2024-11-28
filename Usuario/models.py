@@ -7,7 +7,7 @@ class Endereco(models.Model):
     cidade = models.CharField(max_length=100, blank=False)
     estado = models.CharField(max_length=100, blank=False)
     pais = models.CharField(max_length=100, blank=False)
-    cep = models.CharField(max_length=8, blank=False)
+    cep = models.CharField(max_length=9, blank=False)
     numero = models.CharField(max_length=10)
     
 class Colaborador(AbstractUser):

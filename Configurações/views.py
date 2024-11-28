@@ -56,6 +56,10 @@ def colaboradores_view(request):
 
                 colaborador.save()
             return redirect('colaboradores')
+        else: 
+            print(form_colaborador.errors)
+            for error in form_endereco.error_class:
+                print(error)
     else: 
         form_colaborador = ColaboradorForm()
         form_endereco = EnderecoForm()

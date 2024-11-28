@@ -5,7 +5,7 @@ from .models import Colaborador, Endereco
 class EnderecoForm(forms.ModelForm):
     class Meta:
         model = Endereco
-        fields = ['rua', 'bairro', 'cidade', 'estado', 'cep', 'numero']
+        fields = ['rua', 'bairro', 'cidade', 'estado', 'cep', 'numero', 'pais']
         widgets = {
             'rua': forms.TextInput(attrs={
                 'class': 'form-control',

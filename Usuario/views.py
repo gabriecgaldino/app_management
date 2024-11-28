@@ -1,8 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
-from django.contrib.auth.decorators import login_required
-from .forms import ColaboradorForm, LoginForm, EnderecoForm
-
+from .forms import LoginForm
 
 def login_view(request):
     form_login = LoginForm(request, data=request.POST or None)
@@ -21,22 +19,3 @@ def login_view(request):
     
 
     return render(request, 'login.html', {'form_login': form_login})
-
-
-@login_required
-def cria_colaborador_view(request):
-    form_colaborador = ColaboradorForm(request)
-    if form_colaborador.is_valid():
-        form_colaborador.save()
-
-    return form_colaborador
-
-@login_required
-def cria_endereco_view(request):
-    if request.method == 'POST':
-        form_endereco = EnderecoForm(request)
-        return form_endereco
-    if form_endereco.is_valid():
-        form_endereco.save(commit=False)
-
-    return form_endereco

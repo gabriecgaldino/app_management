@@ -47,47 +47,65 @@
                                 {{form_colaborador.telefone}}
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="id_data_nascimento" class="form-label">Data de Nascimento</label>
+                                    {{form_colaborador.data_nascimento}}
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                    <h6 class="mb-3">Endereço</h6>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label for="id_cep">CEP</label>
-                                {{form_endereco.cep}}
+                                <div class="mb-3">
+                                    <label for="id_cep">CEP</label>
+                                    {{form_endereco.cep}}
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
-                            <label for="id_rua">Rua</label>
-                            {{form_endereco.rua}}
+                            <div class="mb-3">
+                                <label for="id_rua">Rua</label>
+                                {{form_endereco.rua}}
+                            </div>
                         </div>
                         <div class="col-md-6">
-                            <label for="id_numero">N°</label>
-                            {{form_endereco.numero}}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label for="id_estado">Estado</label>
-                            {{form_endereco.estado}}
-                        </div>
-                        <div class="col-md-6">
-                            <label for="id_cidade">Cidade</label>
-                            {{form_endereco.cidade}}
-                        </div>
-                        <div class="col-md-6">
-                            <label for="id_pais">Pais</label>
-                            {{form_endereco.pais}}
+                            <div class="mb-3">
+                                <label for="id_numero">N°</label>
+                                {{form_endereco.numero}}
+                            </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label for="id_data_nascimento" class="form-label">Data de Nascimento</label>
-                                {{form_colaborador.data_nascimento}}
+                                <label for="id_estado">Estado</label>
+                                {{form_endereco.estado}}
+                            </div>
+                            <div class="mb-3">
+                                <label for="id_bairro">Bairro</label>
+                                {{form_endereco.bairro}}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="id_cidade">Cidade</label>
+                                {{form_endereco.cidade}}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="id_pais">Pais</label>
+                                {{form_endereco.pais}}
                             </div>
                         </div>
                     </div>
+                    
 
                     <!-- Dados Profissionais -->
                     <h6 class="mb-3">Dados Profissionais</h6>
@@ -137,3 +155,30 @@
         </div>
     </div>
 </div>
+
+<script>
+$(document).ready(function() {
+    $('#cep').mask('00000-000');  // Aplica a máscara no campo de CEP
+});
+document.getElementById('cep').addEventListener('blur', function () {
+    const cep = this.value.replace(/\D/g, ''); // Remove caracteres não numéricos
+    if (cep.length === 8) {
+        fetch(`https://viacep.com.br/ws/${cep}/json/`)
+            .then(response => response.json())
+            .then(data => {
+                if (!data.erro) {
+                    document.getElementById('rua').value = data.logradouro || '';
+                    document.getElementById('bairro').value = data.bairro || '';
+                    document.getElementById('cidade').value = data.localidade || '';
+                    document.getElementById('estado').value = data.uf || '';
+                    document.getElementById('pais').value = data.country || 'Brasil';
+                } else {
+                    alert('CEP não encontrado!');
+                }
+            })
+            .catch(error => console.error('Erro ao buscar o CEP:', error));
+    } else {
+        alert('CEP inválido!');
+    }
+});
+</script>

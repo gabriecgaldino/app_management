@@ -1,4 +1,5 @@
 <!-- Modal de Cadastro de Colaborador -->
+
 <div class="modal fade" id="modalCadastroColaborador" tabindex="-1" aria-labelledby="modalCadastroColaboradorLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -40,23 +41,45 @@
                                 {{form_colaborador.email}}
                             </div>
                         </div>
-                    </div>
-
-                    <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="id_telefone" class="form-label">Telefone</label>
                                 {{form_colaborador.telefone}}
                             </div>
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label for="id_endereco" class="form-label">Endereço</label>
-                                {{form_colaborador.endereco}}
+                                <label for="id_cep">CEP</label>
+                                {{form_endereco.cep}}
                             </div>
                         </div>
                     </div>
-
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="id_rua">Rua</label>
+                            {{form_endereco.rua}}
+                        </div>
+                        <div class="col-md-6">
+                            <label for="id_numero">N°</label>
+                            {{form_endereco.numero}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="id_estado">Estado</label>
+                            {{form_endereco.estado}}
+                        </div>
+                        <div class="col-md-6">
+                            <label for="id_cidade">Cidade</label>
+                            {{form_endereco.cidade}}
+                        </div>
+                        <div class="col-md-6">
+                            <label for="id_pais">Pais</label>
+                            {{form_endereco.pais}}
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">

@@ -13,7 +13,23 @@
 </head>
 <body>
   <div class="login-container">
+    <!-- Exibição de erros fora do formulário -->
+
     <div class="login-card">
+      {% if form_login.errors %}
+      <div class="alert alert-danger" role="alert">
+          <ul class="mb-0">
+              {% for field, errors in form_login.errors.items %}
+                  {% for error in errors %}
+                      <li>{{ error }}</li>
+                  {% endfor %}
+              {% endfor %}
+              {% for error in form_login.non_field_errors %}
+                  <li>{{ error }}</li>
+              {% endfor %}
+          </ul>
+      </div>
+  {% endif %}
       <h2>Bem-vindo!</h2>
 
       <!-- Formulário de Login -->
@@ -32,7 +48,6 @@
           <input type="checkbox" class="form-check-input" id="rememberMe">
           <label class="form-check-label" for="rememberMe">Lembrar de mim</label>
         </div>
-
         <button type="submit" class="btn btn-lg w-100">Entrar</button>
       </form>
 

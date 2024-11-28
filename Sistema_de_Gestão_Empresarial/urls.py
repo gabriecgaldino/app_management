@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path
-from Usuario.views import login_view
+from Usuario.views import login_view, cria_endereco_view
 from .views import index
 from Configurações.views import configuracoes_view, perfil_view, atualizar_perfil_view, colaboradores_view
 from Organização.views import cria_setor

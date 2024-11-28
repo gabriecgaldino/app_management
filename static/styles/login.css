@@ -58,3 +58,34 @@ button[type="submit"]:hover {
     color: #ffffff;
     color: #ff8d21;
 }
+
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #842029;
+    border-color: #f5c2c7;
+    border-radius: 0.5rem;
+    font-size: 0.95rem;
+    padding: 1rem;
+
+    animation: fadeIn 0.5s ease-out;
+}
+.alert-danger ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.alert-danger li {
+    margin-bottom: 0.5rem;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

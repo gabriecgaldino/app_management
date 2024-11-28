@@ -1,6 +1,53 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
-from .models import Colaborador
+from .models import Colaborador, Endereco
+
+class EnderecoForm(forms.ModelForm):
+    class Meta:
+        model = Endereco
+        fields = ['rua', 'bairro', 'cidade', 'estado', 'cep', 'numero']
+        widgets = {
+            'rua': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Rua',
+                'disabled': True,
+                'id': 'rua'
+            }),
+            'bairro': forms.TextInput(attrs={
+                'class': 'form-control', 
+                'placeholder': 'Bairro',
+                'disabled': True,
+                'id': 'bairro'
+            }),
+            'cidade': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Cidade',
+                'disabled': True,
+                'id': 'cidade'
+            }),
+            'estado': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Estado',
+                'disabled': True,
+                'id': 'estado'
+            }),
+            'pais': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Pais',
+                'disabled': True,
+                'id': 'pais'
+            }),
+            'cep': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': '00000-000',
+                'id': 'cep',
+            }),
+            'numero': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Número',
+                'id': 'numero'
+            }),
+        }
 
 class LoginForm(AuthenticationForm):
     username = forms.CharField(

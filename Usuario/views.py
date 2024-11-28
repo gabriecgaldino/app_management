@@ -1,48 +1,42 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
-from django.contrib import messages
-from .forms import ColaboradorForm, LoginForm
+from .forms import ColaboradorForm, LoginForm, EnderecoForm
 
 
 def login_view(request):
+    form_login = LoginForm(request, data=request.POST or None)
+
     if request.method == 'POST':
-        form_login = LoginForm(request, data=request.POST)
-
-        user = authenticate(username='47693697861', password='41674973@Gc')
-        print("Usuário autenticado:", user)
-
-
-
-
-
         if form_login.is_valid():
-            username = form_login.cleaned_data['username']
-            password = form_login.cleaned_data['password']
+            # Pega os dados validados
+            username = form_login.cleaned_data.get('username')
+            password = form_login.cleaned_data.get('password')
 
+            # Autentica o usuário
             user = authenticate(request, username=username, password=password)
-            if user is not None:
+            if user:
                 login(request, user)
                 return redirect('index')
-            else:
-                messages.error(request, 'Credenciais inválidas!')
-        else:
-            messages.error(request, 'Preencha todos os campos corretamente!')
-
-
-    else:
-        form_login = LoginForm()
-
-
-        
+    
 
     return render(request, 'login.html', {'form_login': form_login})
 
 
-
+@login_required
 def cria_colaborador_view(request):
     form_colaborador = ColaboradorForm(request)
     if form_colaborador.is_valid():
         form_colaborador.save()
 
     return form_colaborador
+
+@login_required
+def cria_endereco_view(request):
+    if request.method == 'POST':
+        form_endereco = EnderecoForm(request)
+        return form_endereco
+    if form_endereco.is_valid():
+        form_endereco.save(commit=False)
+
+    return form_endereco

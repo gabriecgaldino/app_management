@@ -28,9 +28,17 @@ class Empresa(models.Model):
 
 class Setor(models.Model):
     nome_setor = models.CharField('Setor', max_length=100)
-    empresa = models.ForeignKey(Empresa, on_delete=models.CASCADE)
+    empresa = models.ForeignKey(Empresa, on_delete=models.CASCADE, related_name='setores')
 
 
 class Cargo(models.Model):
     nome_cargo = models.CharField('Cargo', max_length=100)
-    setor = models.ForeignKey(Setor, on_delete=models.CASCADE)
+    setor = models.ForeignKey(Setor, on_delete=models.CASCADE, related_name='cargos')
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.get('user', None)
+        super().__init__(*args, **kwargs)
+
+        if user:
+            setores_usuario = Setor.objects.filter(empresa__usuario=user)
+            self.fields['setor'].queryset = setores_usuario

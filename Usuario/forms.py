@@ -71,7 +71,7 @@ class ColaboradorForm(forms.ModelForm):
         model = Colaborador
         fields = ['first_name', 'last_name', 'cpf',
                   'email', 'telefone', 'endereco', 'data_nascimento',
-                  'setor', 'cargo', 'matricula', 'is_active']
+                  'empresa', 'setor', 'cargo', 'matricula', 'is_active']
         widgets = {
             'first_name': forms.TextInput(attrs={
                 'class': 'form-control',
@@ -112,6 +112,11 @@ class ColaboradorForm(forms.ModelForm):
                 'class': 'form-control',
                 'id': 'data_nascimento',
                 'placeholder': '00/00/0000'
+            }),
+            'empresa': forms.Select(attrs={
+                'class': 'form-control',
+                'id': 'empresa',
+                'default': 'Selecione a empresa'
             }),
             'setor': forms.TextInput(attrs={
                 'class': 'form-control',

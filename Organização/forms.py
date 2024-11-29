@@ -1,5 +1,5 @@
 from django import forms
-from .models import Empresa, Setor
+from .models import Empresa, Setor, Cargo
 
 
 class EmpresaForm(forms.ModelForm):
@@ -76,10 +76,29 @@ class EmpresaForm(forms.ModelForm):
 class SetorForm(forms.ModelForm):
     class Meta:
         model = Setor
-        fields = ['nome_setor']
+        fields = ['nome_setor', 'empresa']
         widgets = {
             'nome_setor': forms.TextInput(attrs={
                 'class': 'form-control',
                 'id': 'nome_setor'
+            }),
+            'empresa': forms.Select(attrs={
+                'class': 'form-control',
+                'id': 'empresa'
+            })
+        }
+
+class CargoForm(forms.ModelForm):
+    class Meta:
+        model = Cargo
+        fields = ['nome_cargo', 'setor']
+        widgets = {
+            'nome_cargo': forms.TextInput(attrs={
+                'class': 'form-control',
+                'id': 'nome_cargo'
+            }),
+            'setor': forms.Select(attrs={
+                'class': 'form-control',
+                'id': 'setor'
             })
         }

@@ -3,27 +3,32 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
 
-from Organização.views import cria_empresa_view, cria_setor
-from Organização.forms import EmpresaForm, SetorForm
+from Organização.views import cria_empresa_view, cria_setor, cria_cargo
+from Organização.forms import EmpresaForm, SetorForm, CargoForm
 from Usuario.forms import ColaboradorForm, EnderecoForm
 
 @login_required
 def configuracoes_view(request):
     if request.method == 'POST':
         form = cria_empresa_view(request.POST)
-        form_setor = cria_setor(request.POST)
+        form_setor = cria_setor(request)
+        form_cargo = cria_cargo(request)
 
         return render(request, 'configurações.html', {
             'form': form,
-            'form_setor': form_setor
-
+            'form_setor': form_setor,
+            'form_cargo': form_cargo
         })
 
     else:
-        form = EmpresaForm()
-        form_setor = SetorForm()
-
-        return render(request, 'configurações.html', {'form': form})
+        form = cria_empresa_view()
+        form_setor = SetorForm(commit=False)
+        form_cargo = cria_cargo(commit=False)
+        return render(request, 'configurações.html', {
+            'form': form,
+            'form_setor': form_setor,
+            'form_cargo': form_cargo
+        })
 
 @login_required
 def perfil_view(request):

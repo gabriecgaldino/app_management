@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from Organização.models import Empresa
 
 class Endereco(models.Model):
     rua = models.CharField(max_length=100, blank=False)
@@ -19,6 +20,7 @@ class Colaborador(AbstractUser):
     data_nascimento = models.DateField(blank=True, null=True)
 
     # Dados profissionais
+    empresa = models.ForeignKey(Empresa, on_delete=models.PROTECT, blank=True, null=True, related_name='colaboradores')
     setor = models.CharField(max_length=50, blank=True)
     cargo = models.CharField(max_length=20, blank=True)
     matricula = models.CharField(max_length=20, unique=True)
@@ -37,7 +39,15 @@ class Colaborador(AbstractUser):
         if not self.password:
             self.password1 = self.set_password(self.cpf[:8])
             self.password2 = self.set_password(self.cpf[:8])
+
+        user = kwargs.pop('user', None)
+
+        if user:
+            self.fields['empresa'].queryset = Empresa.objects.filter(gestor=user)
         super().save(*args, **kwargs)
+
+
+        
 
 
 

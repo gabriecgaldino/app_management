@@ -22,7 +22,7 @@ def cria_setor(request):
         if form_setor.is_valid():
             setor = form_setor.save(commit=False)
             setor.save()
-            return redirect('configurações')
+            return SetorForm()
     else: 
         form_setor = SetorForm()
 

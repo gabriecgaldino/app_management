@@ -17,7 +17,12 @@
                 <div class="modal-body">
                     <div class="mb-3">
                         <label for="id_nome_setor" class="form-label">Nome do Setor</label>
-                        {{form_setor.nome_setor}}
+                        {{ form_setor.nome_setor }}
+                        {% if form_setor.nome_setor.errors %}
+                            <div class="text-danger">
+                                {{ form_setor.nome_setor.errors }}
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
                 <div class="modal-footer">

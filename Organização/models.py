@@ -27,18 +27,23 @@ class Empresa(models.Model):
 
 
 class Setor(models.Model):
-    nome_setor = models.CharField('Setor', max_length=100)
+    nome_setor = models.CharField('Setor', max_length=100, unique=True)
     empresa = models.ForeignKey(Empresa, on_delete=models.CASCADE, related_name='setores')
+
+    def __str__(self):
+        return self.nome_setor
 
 
 class Cargo(models.Model):
-    nome_cargo = models.CharField('Cargo', max_length=100)
-    setor = models.ForeignKey(Setor, on_delete=models.CASCADE, related_name='cargos')
+    nome_cargo = models.CharField('Cargo', max_length=100, unique=True)
+    setor = models.ManyToManyField(Setor, related_name='cargos')
 
     def __init__(self, *args, **kwargs):
         user = kwargs.get('user', None)
         super().__init__(*args, **kwargs)
 
         if user:
-            setores_usuario = Setor.objects.filter(empresa__usuario=user)
-            self.fields['setor'].queryset = setores_usuario
+            setores_usuario = Setor.objects.filter(usuario__empresa=user)
+            self.fields['nome_setor'].queryset = setores_usuario
+
+    

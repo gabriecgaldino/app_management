@@ -43,8 +43,9 @@ def atualizar_perfil_view(request):
 
 @login_required
 def colaboradores_view(request):
+    setor_id = request.GET.get('setor_id')
     if request.method == 'POST':
-        form_colaborador = ColaboradorForm(request.POST)
+        form_colaborador = ColaboradorForm(request.POST, setor_id=setor_id)
         form_endereco = EnderecoForm(request.POST)
 
         if form_colaborador.is_valid() and form_endereco.is_valid():

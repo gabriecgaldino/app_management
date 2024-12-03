@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
-from .models import Colaborador, Endereco
+from .models import Colaborador, Endereco, Cargo
 
 class EnderecoForm(forms.ModelForm):
     class Meta:
@@ -114,17 +114,17 @@ class ColaboradorForm(forms.ModelForm):
                 'placeholder': '00/00/0000'
             }),
             'empresa': forms.Select(attrs={
-                'class': 'form-control',
+                'class': 'form-select',
                 'id': 'empresa',
                 'default': 'Selecione a empresa'
             }),
-            'setor': forms.TextInput(attrs={
-                'class': 'form-control',
+            'setor': forms.Select(attrs={
+                'class': 'form-select',
                 'placeholder': 'Informe o setor...',
                 'id': 'setor'
             }),
-            'cargo': forms.TextInput(attrs={
-                'class': 'form-control',
+            'cargo': forms.Select(attrs={
+                'class': 'form-select',
                 'placeholder': 'Informe um cargo...',
                 'id': 'cargo'
             }),
@@ -139,3 +139,13 @@ class ColaboradorForm(forms.ModelForm):
                 'disabled': True
             }),
         }
+        def __init__(self, *args, **kwargs):
+        # Captura o argumento extra setor_id
+            setor_id = kwargs.pop('setor_id', None)
+            super().__init__(*args, **kwargs)
+
+            # Filtra os cargos com base no setor, se setor_id for fornecido
+            if setor_id:
+                self.fields['cargo'].queryset = Cargo.objects.filter(setor_id=setor_id)
+            else:
+                self.fields['cargo'].queryset = Cargo.objects.none()

@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from Organização.models import Empresa
+from Organização.models import Empresa, Setor, Cargo
 
 class Endereco(models.Model):
     rua = models.CharField(max_length=100, blank=False)
@@ -21,8 +21,8 @@ class Colaborador(AbstractUser):
 
     # Dados profissionais
     empresa = models.ForeignKey(Empresa, on_delete=models.PROTECT, blank=True, null=True, related_name='colaboradores')
-    setor = models.CharField(max_length=50, blank=True)
-    cargo = models.CharField(max_length=20, blank=True)
+    setor = models.ForeignKey(Setor, on_delete=models.PROTECT, blank=True, null=True, related_name='colaboradores')
+    cargo = models.ForeignKey(Cargo, on_delete=models.PROTECT, blank=True, null=True, related_name='colaboradores')
     matricula = models.CharField(max_length=20, unique=True)
     data_demissao = models.DateField(blank=True, null=True)
 
@@ -31,6 +31,8 @@ class Colaborador(AbstractUser):
     is_active = models.BooleanField(default=1)
 
     USERNAME_FIELD = 'username'
+
+    
 
     def save(self, *args, **kwargs): 
         self.is_active = 1

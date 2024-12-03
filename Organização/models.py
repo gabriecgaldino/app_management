@@ -36,7 +36,10 @@ class Setor(models.Model):
 
 class Cargo(models.Model):
     nome_cargo = models.CharField('Cargo', max_length=100, unique=True)
-    setor = models.ManyToManyField(Setor, related_name='cargos')
+    setor = models.ForeignKey(Setor, on_delete=models.CASCADE, related_name='cargos')
+
+    def __str__(self):
+        return self.nome_cargo
 
     def __init__(self, *args, **kwargs):
         user = kwargs.get('user', None)

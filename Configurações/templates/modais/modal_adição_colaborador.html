@@ -129,7 +129,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
 
                     <!-- Dados Profissionais -->
                     <h6 class="mb-3">Dados Profissionais</h6>
@@ -155,20 +155,6 @@
                             </div>
                         </div>
                     </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="id_matricula" class="form-label">Matrícula</label>
-                                {{form_colaborador.matricula}}
-                                {% if form_colaborador.matricula.errors %}
-                                <div class="text-danger">
-                                    {{ form_colaborador.matricula.errors|join:" " }}
-                                </div>
-                                {% endif %}
-                            </div>
-                        </div>
-                    </div>
                     <!-- Dados de Acesso -->
                     <h6 class="mb-3">Dados de Acesso</h6>
                     <div class="row">
@@ -190,51 +176,51 @@
 </div>
 
 <script>
-$(document).ready(function() {
-    $('#cep').mask('00000-000');  // Aplica a máscara no campo de CEP
-});
-document.getElementById('cep').addEventListener('blur', function () {
-    const cep = this.value.replace(/\D/g, ''); // Remove caracteres não numéricos
-    if (cep.length === 8) {
-        fetch(`https://viacep.com.br/ws/${cep}/json/`)
+    $(document).ready(function () {
+        $('#cep').mask('00000-000');  // Aplica a máscara no campo de CEP
+    });
+    document.getElementById('cep').addEventListener('blur', function () {
+        const cep = this.value.replace(/\D/g, ''); // Remove caracteres não numéricos
+        if (cep.length === 8) {
+            fetch(`https://viacep.com.br/ws/${cep}/json/`)
+                .then(response => response.json())
+                .then(data => {
+                    if (!data.erro) {
+                        document.getElementById('rua').value = data.logradouro || '';
+                        document.getElementById('bairro').value = data.bairro || '';
+                        document.getElementById('cidade').value = data.localidade || '';
+                        document.getElementById('estado').value = data.uf || '';
+                        document.getElementById('pais').value = data.country || 'Brasil';
+                    } else {
+                        alert('CEP não encontrado!');
+                    }
+                })
+                .catch(error => console.error('Erro ao buscar o CEP:', error));
+        } else {
+            alert('CEP inválido!');
+        }
+    });
+
+    document.getElementById('setor').addEventListener('change', function () {
+        const setorId = this.value;
+
+        // Fazer uma requisição para buscar os cargos filtrados
+        fetch(`/api/cargos/?setor_id=${setorId}`)
             .then(response => response.json())
             .then(data => {
-                if (!data.erro) {
-                    document.getElementById('rua').value = data.logradouro || '';
-                    document.getElementById('bairro').value = data.bairro || '';
-                    document.getElementById('cidade').value = data.localidade || '';
-                    document.getElementById('estado').value = data.uf || '';
-                    document.getElementById('pais').value = data.country || 'Brasil';
-                } else {
-                    alert('CEP não encontrado!');
+                const cargoField = document.getElementById('cargo');
+                cargoField.innerHTML = ''; // Limpar opções anteriores
+
+                if (!data.cargo || data.cargo.length == 0) {
+                    return alert('Nenhum cargo cadastrado para o setor informado, realize o cadastro do cargo antes de seguir.');
                 }
-            })
-            .catch(error => console.error('Erro ao buscar o CEP:', error));
-    } else {
-        alert('CEP inválido!');
-    }
-});
 
-document.getElementById('setor').addEventListener('change', function() {
-    const setorId = this.value;
-
-    // Fazer uma requisição para buscar os cargos filtrados
-    fetch(`/api/cargos/?setor_id=${setorId}`)
-        .then(response => response.json())
-        .then(data => {
-            const cargoField = document.getElementById('cargo');
-            cargoField.innerHTML = ''; // Limpar opções anteriores
-
-            if (!data.cargo || data.cargo.length == 0) {
-                return alert('Nenhum cargo cadastrado para o setor informado, realize o cadastro do cargo antes de seguir.');
-            }
-
-            data.forEach(cargo => {
-                const option = document.createElement('option');
-                option.value = cargo.id;
-                option.textContent = cargo.nome;
-                cargoField.appendChild(option);
+                data.forEach(cargo => {
+                    const option = document.createElement('option');
+                    option.value = cargo.id;
+                    option.textContent = cargo.nome;
+                    cargoField.appendChild(option);
+                });
             });
-        });
-});
+    });
 </script>

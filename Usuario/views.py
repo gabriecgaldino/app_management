@@ -16,6 +16,8 @@ def login_view(request):
             if user:
                 login(request, user)
                 return redirect('index')
+            
+            return redirect('index')
     
 
     return render(request, 'login.html', {'form_login': form_login})

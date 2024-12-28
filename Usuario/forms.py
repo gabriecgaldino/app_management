@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 from .models import Colaborador, Endereco, Cargo
 
+
 class EnderecoForm(forms.ModelForm):
     class Meta:
         model = Endereco
@@ -62,12 +63,8 @@ class LoginForm(AuthenticationForm):
         })
     )
         
-class ColaboradorForm(forms.ModelForm):
+class ColaboradorForm(forms.ModelForm): 
     class Meta:
-        OPTIONS = [
-            'SIM',
-            'NÃO'
-        ]
         model = Colaborador
         fields = ['first_name', 'last_name', 'cpf',
                   'email', 'telefone', 'endereco', 'data_nascimento',
@@ -133,12 +130,12 @@ class ColaboradorForm(forms.ModelForm):
                 'placeholder': 'AB00123',
                 'id': 'matricula'
             }),
-            'is_active': forms.TextInput(attrs={
-                'class': 'form-control',
+            'is_active': forms.CheckboxInput(attrs={
+                'class': 'form-check-input',
                 'id': 'is_active',
-                'disabled': True
-            }),
+            })
         }
+        
         def __init__(self, *args, **kwargs):
         # Captura o argumento extra setor_id
             setor_id = kwargs.pop('setor_id', None)
@@ -146,6 +143,6 @@ class ColaboradorForm(forms.ModelForm):
 
             # Filtra os cargos com base no setor, se setor_id for fornecido
             if setor_id:
-                self.fields['cargo'].queryset = Cargo.objects.filter(setor_id=setor_id)
+                self.cargo.queryset = Cargo.objects.filter(setor_id=setor_id)
             else:
-                self.fields['cargo'].queryset = Cargo.objects.none()
+                self.cargo.queryset = Cargo.objects.none()

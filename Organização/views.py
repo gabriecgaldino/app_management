@@ -46,7 +46,7 @@ def listar_cargos(request):
     if setor_id is not None:
         try:
             # Filtra pelo setor usando o campo da chave estrangeira
-            cargos = Cargo.objects.filter(setor__id=setor_id).values('id', 'nome_cargo')
+            cargos = Cargo.objects.filter(setor__icontains=setor_id).values('id', 'nome_cargo')
             return JsonResponse({'cargos': list(cargos)}, safe=False)
         except ValueError:
             return JsonResponse({'error': 'setor_id inválido'}, status=400)

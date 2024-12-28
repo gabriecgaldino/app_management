@@ -202,25 +202,33 @@
     });
 
     document.getElementById('setor').addEventListener('change', function () {
-        const setorId = this.value;
+        const cargo = document.getElementById('cargo')
+        while (cargo.firstChild) {
+            cargo.removeChild(cargo.firstChild)
+        }
+        const setorId = this.value
 
         // Fazer uma requisição para buscar os cargos filtrados
-        fetch(`/api/cargos/?setor_id=${setorId}`)
+        try {
+            fetch(`/api/cargos/?setor_id=${setorId}`)
             .then(response => response.json())
             .then(data => {
-                const cargoField = document.getElementById('cargo');
-                cargoField.innerHTML = ''; // Limpar opções anteriores
+                const cargoField = document.getElementById('cargo')
+                cargoField.innerHTML = '' // Limpar opções anteriores
 
                 if (!data.cargo || data.cargo.length == 0) {
-                    return alert('Nenhum cargo cadastrado para o setor informado, realize o cadastro do cargo antes de seguir.');
+                    return alert('Nenhum cargo cadastrado para o setor informado, realize o cadastro do cargo antes de seguir.')
                 }
 
                 data.forEach(cargo => {
-                    const option = document.createElement('option');
-                    option.value = cargo.id;
-                    option.textContent = cargo.nome;
-                    cargoField.appendChild(option);
-                });
-            });
-    });
+                    const option = document.createElement('option')
+                    option.value = cargo.id
+                    option.textContent = cargo.nome
+                    cargoField.appendChild(option)
+                })
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    })
 </script>

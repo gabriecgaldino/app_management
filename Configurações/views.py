@@ -7,7 +7,6 @@ from Organização.views import cria_empresa_view, cria_setor, cria_cargo
 from Organização.forms import EmpresaForm, SetorForm, CargoForm
 from Usuario.forms import ColaboradorForm, EnderecoForm
 
-@login_required
 def configuracoes_view(request):
     if request.method == 'POST':
         form = cria_empresa_view(request.POST)
@@ -24,11 +23,9 @@ def configuracoes_view(request):
         'form_cargo': form_cargo,
     })
 
-@login_required
 def perfil_view(request):
     return render(request, 'perfil.html')
 
-@login_required
 def atualizar_perfil_view(request):
     if request.method == 'POST':
         user = request.user
@@ -41,7 +38,6 @@ def atualizar_perfil_view(request):
         return redirect('perfil')
 
 
-@login_required
 def colaboradores_view(request):
     setor_id = request.GET.get('setor_id')
     if request.method == 'POST':

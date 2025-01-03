@@ -14,6 +14,8 @@ from pathlib import Path
 import os
 import logging
 
+from django.contrib.messages import constants as messages
+
 logging.basicConfig(level=logging.DEBUG)
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -86,6 +88,10 @@ DATABASES = {
     }
 }
 
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger',
+}
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -137,5 +143,5 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_URL = '/login'
-LOGOUT_REDIRECT_URL = '/login'
+LOGIN_URL = '/login/'
+LOGOUT_REDIRECT_URL = '/login/'

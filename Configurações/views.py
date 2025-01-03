@@ -6,6 +6,7 @@ from django.db import transaction
 from Organização.views import cria_empresa_view, cria_setor, cria_cargo
 from Organização.forms import EmpresaForm, SetorForm, CargoForm
 from Usuario.forms import ColaboradorForm, EnderecoForm
+from Usuario.models import Colaborador
 
 def configuracoes_view(request):
     if request.method == 'POST':
@@ -39,9 +40,8 @@ def atualizar_perfil_view(request):
 
 
 def colaboradores_view(request):
-    setor_id = request.GET.get('setor_id')
     if request.method == 'POST':
-        form_colaborador = ColaboradorForm(request.POST, setor_id=setor_id)
+        form_colaborador = ColaboradorForm(request.POST)
         form_endereco = EnderecoForm(request.POST)
 
         if form_colaborador.is_valid() and form_endereco.is_valid():

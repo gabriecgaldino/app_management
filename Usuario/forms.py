@@ -68,7 +68,7 @@ class ColaboradorForm(forms.ModelForm):
         model = Colaborador
         fields = ['first_name', 'last_name', 'cpf',
                   'email', 'telefone', 'endereco', 'data_nascimento',
-                  'empresa', 'setor', 'cargo', 'matricula', 'is_active']
+                  'empresa', 'setor', 'cargo', 'is_active']
         widgets = {
             'first_name': forms.TextInput(attrs={
                 'class': 'form-control',

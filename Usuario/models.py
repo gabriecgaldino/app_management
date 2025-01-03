@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractUser
 from Organização.models import Empresa, Setor, Cargo
 from django.core.exceptions import ValidationError
 from validate_docbr import CPF
+import re
 
 
 class Endereco(models.Model):
@@ -49,6 +50,7 @@ class Colaborador(AbstractUser):
 
     def save(self, *args, **kwargs):
         self.is_active = 1
+        self.cpf = re.sub(r'\D', '', self.cpf)
         if not self.username:
             self.username = self.cpf
 
@@ -61,12 +63,8 @@ class Colaborador(AbstractUser):
             numero = str(Colaborador.objects.filter(
                 empresa=self.empresa).count() + 1).zfill(5)
             self.matricula = f'{prefixo}{numero}'
-
-        user = kwargs.pop('user', None)
-
-        if user:
-            self.fields['empresa'].queryset = Empresa.objects.filter(
-                gestor=user)
+            
+        
 
         super().save(*args, **kwargs)
         

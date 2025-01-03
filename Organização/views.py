@@ -1,5 +1,5 @@
 from .forms import EmpresaForm, SetorForm, CargoForm
-from .models import Cargo
+from .models import Cargo, Setor
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 
@@ -41,12 +41,22 @@ def cria_cargo(request):
 
     return form_cargo
 
-def listar_cargos(request):
+def listar_setores_api(request):
+    empresa_id = request.GET.get('empresa_id')
+    if empresa_id is not None:
+        try:
+            setores = Setor.objects.filter(empresa=empresa_id).values('id', 'nome_setor')
+            return JsonResponse({'setores': list(setores)}, safe=False)
+        except ValueError:
+            return JsonResponse({'error': 'empresa_id inválido'}, status=400)
+    return JsonResponse({'error': 'empresa_id não fornecido'}, status=400)
+
+def listar_cargos_api(request):
     setor_id = request.GET.get('setor_id')
     if setor_id is not None:
         try:
             # Filtra pelo setor usando o campo da chave estrangeira
-            cargos = Cargo.objects.filter(setor__icontains=setor_id).values('id', 'nome_cargo')
+            cargos = Cargo.objects.filter(setor=setor_id).values('id', 'nome_cargo')
             return JsonResponse({'cargos': list(cargos)}, safe=False)
         except ValueError:
             return JsonResponse({'error': 'setor_id inválido'}, status=400)

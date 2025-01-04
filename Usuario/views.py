@@ -1,38 +1,31 @@
 from django.shortcuts import render, redirect
-from Usuario.models import CriaColaborador
+from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
-from django.contrib.auth import authenticate, login
+from .forms import LoginForm
+import logging
 
-def registro(request):
-    if request.method == 'POST':
-        form = CriaColaborador(request.POST)
-
-        if form.is_valid():
-            form.save()
-            messages.success(
-                request, 'Usuário criado com sucesso, realize o login!')
-        else: 
-            messages.error(request, "Erro ao criar o usuário. Verifique os dados.")
-    else:
-        form = CriaColaborador()
-
-    return render(request, 'registro.html', {'form': form})
-
+logger = logging.getLogger(__name__)
 
 def login_view(request):
+    form_login = LoginForm(request, data=request.POST or None)
+
     if request.method == 'POST':
-        email = request.POST.get('email')
-        password = request.POST.get('password')
+        if form_login.is_valid():
+            username = form_login.cleaned_data.get('username')
+            password = form_login.cleaned_data.get('password')
 
-        user = authenticate(request, username=email, password=password)
-
-        if user is not None:
-            login(request, user)
-            return redirect('home')
+            user = authenticate(request, username=username, password=password)
+            if user:
+                login(request, user)
+                logger.info(f"Usuário {username} autenticado com sucesso.")
+                return redirect('index')
+            else:
+                logger.warning(f"Tentativa de login falhou para o usuário {username}.")
+                messages.error(request, "Usuário ou senha incorretos.")
         else:
-            messages.info(request, 'E-mail ou senha inválidos')
+            logger.error(f"Erro no formulário de login: {form_login.errors}")
+            messages.error(request, "Erro no preenchimento do formulário.")
 
-    return render(request, 'login.html')
+    return render(request, 'login.html', {'form_login': form_login})
 
-def change_data_user(request): 
-    return render(request, 'change_data_user.html')
+

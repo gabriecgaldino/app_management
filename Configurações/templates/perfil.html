@@ -1,0 +1,99 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <!-- Informações Básicas do Perfil -->
+        <div class="col-lg-4 mb-4">
+            <div class="card">
+                <div class="card-header text-center">
+                    <h5>Perfil</h5>
+                </div>
+                <div class="card-body text-center">
+                    <!-- Foto do Perfil -->
+                    <div class="mb-3">
+                        <img src="{% static 'assets/perfil_avatar.png' %}" alt="Foto do Perfil"
+                            class="rounded-circle img-fluid" style="width: 150px; height: 150px; object-fit: cover;">
+                    </div>
+
+                    <button class="btn btn-outline-primary btn-sm mb-3">
+                        Alterar Foto
+                    </button>
+
+                    <!-- Nome do Usuário -->
+                    <h6>{{ user.username }}</h6>
+
+                    <!-- Organização -->
+                    <p class="text-muted">Organização: {{ user.colaborador.organizacao.nome_fantasia }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Formulário de Alteração de Dados -->
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Dados Cadastrais</h5>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="{% url 'atualizar_perfil' %}">
+                        {% csrf_token %}
+                        <!-- Nome -->
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Nome de Usuário</label>
+                            <input type="text" class="form-control bg-light" id="username" name="username"
+                                value="{{ user.username }}" readonly>
+                        </div>
+
+                        <!-- E-mail -->
+                        <div class="mb-3">
+                            <label for="email" class="form-label">E-mail</label>
+                            <input type="email" class="form-control bg-light" id="email" name="email"
+                                value="{{ user.email }}" readonly>
+                        </div>
+
+                        <!-- Telefone -->
+                        <div class="mb-3">
+                            <label for="telefone" class="form-label">Telefone</label>
+                            <input type="text" class="form-control bg-light" id="telefone" name="telefone"
+                                value="{{ user.colaborador.telefone }}" readonly>
+                        </div>
+
+                        <!-- Botão de Salvar -->
+                        <div class="d-flex justify-content-end">
+                            <div>
+                                <button type="submit" class="btn btn-primary mx-3">Salvar Alterações</button>
+                            </div>
+                            <div>
+                                <button type="button" class="btn btn-success">Editar</button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+            <!-- Outras Configurações -->
+            <div class="card mt-4">
+                <div class="card-header">
+                    <h5>Configurações</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        <li class="list-group-item" data-bs-toggle="modal" data-bs-target="#modalAlterarSenha">
+                            <i class="bi bi-lock"></i>
+                            Alterar Senha
+                        </li>
+                        {% include 'modais/modal_alteração_senha.html' %}
+                        <li class="list-group-item">
+                            <i class="bi bi-person-check"></i>
+                            <a href="" class="text-decoration-none">Gerenciar
+                                Organização</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

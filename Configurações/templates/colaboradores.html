@@ -1,0 +1,51 @@
+<!-- Página de Gerenciamento de Colaboradores -->
+{% extends 'index.html' %}
+{% block content %}
+<div class="container mt-4">
+    
+
+    <!-- Botão para adicionar novo colaborador -->
+    <div class="d-flex justify-content-end mb-3">
+        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalCadastroColaborador">
+            <i class="bi bi-plus"></i>
+        </button>
+    </div>
+    {% include 'modais/modal_adição_colaborador.html' %}
+
+    <!-- Tabela de Colaboradores -->
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Cód.</th>
+                    <th>Nome</th>
+                    <th>Setor</th>
+                    <th>Cargo</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for colaborador in colaboradores %}
+                <tr>
+                    <td>{{ colaborador.matricula }}</td>
+                    <td>{{ colaborador.nome }}</td>
+                    <td>{{ colaborador.setor }}</td>
+                    <td>{{ colaborador.cargo }}</td>
+                    <td>
+                        <!-- Adicionar ações como editar ou excluir -->
+                        <a href="{% url 'editar_colaborador' colaborador.id %}" class="btn btn-primary">Editar</a>
+                        <a href="{% url 'excluir_colaborador' colaborador.id %}" class="btn btn-danger">Excluir</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" class="text-center">Nenhum colaborador encontrado.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+{% endblock %}

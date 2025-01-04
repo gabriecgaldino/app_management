@@ -1,0 +1,94 @@
+<div class="modal fade" id="modalCadastrarOrganizacao" tabindex="-1" aria-labelledby="modalCadastrarOrganizacaoLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalCadastrarOrganizacaoLabel">Cadastrar Nova Organização</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Formulário de Cadastro -->
+                <form method="post" id="novaOrganizacaoForm" action="{% url 'configurações' %}">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="nome_organizacao" class="form-label">Razão Social</label>
+                            {{ form.razao_social }}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="nome_organizacao" class="form-label">Nome Fantasia</label>
+                            {{ form.nome_fantasia }}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="cnpj" class="form-label">CNPJ</label>
+                            {{ form.cnpj }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="ie" class="form-label">I.E</label>
+                            {{ form.ie }}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="im" class="form-label">I.M</label>
+                            {{ form.im }}
+                        </div>
+                    </div>
+                    <div class="row col-md-3">
+                        <div class="col-md-12 mb-3">
+                            <label for="cep" class="form-label">CEP</label>
+                            <input type="text" class="form-control" id="CEP" placeholder="00000-000" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="endereco" class="form-label">Endereço</label>
+                            {{ form.endereco }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="telefone" class="form-label">Telefone</label>
+                            {{ form.telefone }}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="email" class="form-label">E-mail</label>
+                            {{ form.email }}
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        <div class="col-md-6 mb-3">
+                            <label for="tipo_organizacao" class="form-label">Tipo de Organização</label>
+                            {{ form.type_organizacao }}
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                        <button type="submit" class="btn btn-primary">Cadastrar</button>
+                    </div>
+
+                </form>
+                <!--
+                <form>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="ceo" class="form-label">CEO</label>
+                            <input type="text" class="form-control" id="ceo" placeholder="Nome do CEO" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="diretor" class="form-label">Diretor</label>
+                            <input type="text" class="form-control" id="diretor" placeholder="Nome do Diretor" required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="descricao" class="form-label">Descrição</label>
+                        <textarea class="form-control" id="descricao" rows="3"
+                            placeholder="Descreva brevemente a organização" required></textarea>
+                    </div>
+                </form>
+                -->
+            </div>
+        </div>
+    </div>
+</div>

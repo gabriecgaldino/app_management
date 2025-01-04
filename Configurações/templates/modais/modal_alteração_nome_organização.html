@@ -1,0 +1,26 @@
+<div class="modal fade" id="modalAlterarNomeOrganizacao" tabindex="-1"
+    aria-labelledby="modalAlterarNomeOrganizacaoLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalAlterarNomeOrganizacaoLabel">Alterar Nome da Organização</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="" method="POST">
+                    {% csrf_token %}
+
+                    <div class="mb-3">
+                        <label for="novo_nome_organizacao" class="form-label">Novo Nome da Organização</label>
+                        <input type="text" class="form-control" id="novo_nome_organizacao" name="novo_nome_organizacao"
+                            placeholder="Digite o novo nome" value="{{ usuario.organizacao.nome }}" required>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>

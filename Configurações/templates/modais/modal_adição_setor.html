@@ -1,0 +1,35 @@
+<div class="modal fade" id="modalAdicionarSetor" tabindex="-1" aria-labelledby="modalAdicionarSetorLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalAdicionarSetorLabel">Adicionar Setor</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="post" action="{% url 'configurações' %}">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="id_nome_setor" class="form-label">Empresa</label>
+                        {{form_setor.empresa}}
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="id_nome_setor" class="form-label">Nome do Setor</label>
+                        {{ form_setor.nome_setor }}
+                        {% if form_setor.nome_setor.errors %}
+                            <div class="text-danger">
+                                {{ form_setor.nome_setor.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

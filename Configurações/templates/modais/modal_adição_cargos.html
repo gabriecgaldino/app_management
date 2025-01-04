@@ -1,0 +1,28 @@
+<div class="modal fade" id="modalAdicionarCargo" tabindex="-1" aria-labelledby="modalAdicionarCargoLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalAdicionarCargoLabel">Adicionar Cargo</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="post" action="{% url 'configurações' %}">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="id_nome_cargo" class="form-label">Nome do Cargo</label>
+                        {{form_cargo.setor}}
+                    </div>
+                    <div class="mb-3">
+                        <label for="id_nome_cargo" class="form-label">Nome do Cargo</label>
+                        {{form_cargo.nome_cargo}}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

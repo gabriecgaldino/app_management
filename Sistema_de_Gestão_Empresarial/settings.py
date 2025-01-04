@@ -14,6 +14,8 @@ from pathlib import Path
 import os
 import logging
 
+from django.contrib.messages import constants as messages
+
 logging.basicConfig(level=logging.DEBUG)
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -41,14 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'Usuario',
-    'Organizações',
-    'Produto',
-    'Estoque',
-    'Vendas',
-    'Agenda',
-    'Contatos',
-    'Eventos',
-    'Pedidos'
+    'Configurações',
+    'Organização'
 ]
 
 MIDDLEWARE = [
@@ -92,6 +88,10 @@ DATABASES = {
     }
 }
 
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger',
+}
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -111,6 +111,10 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+]
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
@@ -123,16 +127,15 @@ USE_I18N = True
 
 USE_TZ = True
 
+AUTH_USER_MODEL = 'Usuario.Colaborador'
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    BASE_DIR / 'static',
-    BASE_DIR / 'Estoque/static',
-    BASE_DIR / 'Vendas/static',
-    BASE_DIR / 'Usuario/static'
+    BASE_DIR / 'static'
 ]
 
 # Default primary key field type
@@ -140,5 +143,5 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_URL = '/'
-LOGOUT_REDIRECT_URL = '/'
+LOGIN_URL = '/login/'
+LOGOUT_REDIRECT_URL = '/login/'

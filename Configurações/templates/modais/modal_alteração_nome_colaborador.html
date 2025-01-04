@@ -1,0 +1,37 @@
+<!-- Modal de Alteração de Nome do Usuário -->
+<div class="modal fade" id="modalAlterarNome" tabindex="-1" aria-labelledby="modalAlterarNomeLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalAlterarNomeLabel">Alterar Nome do Usuário</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="post" action="">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <!-- Dados do Nome -->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="id_primeiro_nome" class="form-label">Primeiro Nome</label>
+                                <input type="text" class="form-control" id="id_primeiro_nome" name="primeiro_nome"
+                                    value="{{ usuario.nome }}" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="id_sobrenome" class="form-label">Sobrenome</label>
+                                <input type="text" class="form-control" id="id_sobrenome" name="sobrenome"
+                                    value="{{ usuario.sobrenome }}" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

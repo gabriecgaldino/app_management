@@ -59,7 +59,9 @@ def colaboradores_view(request):
     else: 
         form_colaborador = ColaboradorForm()
         form_endereco = EnderecoForm()
+        colaboradores = Colaborador.objects.filter(empresa=request.user.empresa_id)
     return render(request, 'colaboradores.html', {
         'form_colaborador': form_colaborador,
-        'form_endereco': form_endereco
+        'form_endereco': form_endereco,
+        'colaboradores': colaboradores
         })

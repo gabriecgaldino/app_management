@@ -21,6 +21,8 @@
                     <th>Nome</th>
                     <th>Setor</th>
                     <th>Cargo</th>
+                    <th>Admissão</th>
+                    <th>Ativo</th>
                     <th>Ações</th>
                 </tr>
             </thead>
@@ -28,13 +30,15 @@
                 {% for colaborador in colaboradores %}
                 <tr>
                     <td>{{ colaborador.matricula }}</td>
-                    <td>{{ colaborador.nome }}</td>
+                    <td>{{ colaborador.first_name }} {{ colaborador.last_name }}</td>
                     <td>{{ colaborador.setor }}</td>
                     <td>{{ colaborador.cargo }}</td>
+                    <td>{{ colaborador.date_joined }}</td>
+                    <td>{{ colaborador.is_active }}</td>
                     <td>
                         <!-- Adicionar ações como editar ou excluir -->
-                        <a href="{% url 'editar_colaborador' colaborador.id %}" class="btn btn-primary">Editar</a>
-                        <a href="{% url 'excluir_colaborador' colaborador.id %}" class="btn btn-danger">Excluir</a>
+                        <a href="" class="btn btn-primary">Editar</a>
+                        <a href="" class="btn btn-danger">Excluir</a>
                     </td>
                 </tr>
                 {% empty %}

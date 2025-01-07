@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path
 from django.contrib.auth.views import LogoutView
-from Usuario.views import login_view
+from Usuario.views import login_view, busca_colaborador_api
 from Configurações.views import configuracoes_view, perfil_view, atualizar_perfil_view, colaboradores_view
 from Organização.views import cria_setor, listar_cargos_api, listar_setores_api
 from . import views
@@ -16,5 +16,6 @@ urlpatterns = [
     path('colaboradores/', colaboradores_view, name='colaboradores'),
     path('novo-setor/', cria_setor, name='novo-setor'),
     path('api/cargos/', listar_cargos_api, name='listar_cargos'),
-    path('api/setores/', listar_setores_api, name='listar_setores')
+    path('api/setores/', listar_setores_api, name='listar_setores'),
+    path('api/colaboradores/', busca_colaborador_api, name='busca_colaborador')
 ]

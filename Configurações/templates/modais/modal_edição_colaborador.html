@@ -1,0 +1,67 @@
+<!-- Modal de Edição de Colaborador -->
+<div class="modal fade" id="editColaboradorModal" tabindex="-1" aria-labelledby="editColaboradorLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editColaboradorLabel">Editar Dados do Colaborador</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form id="editColaboradorForm" method="POST" action="">
+          {% csrf_token %}
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="nome" class="form-label">Nome</label>
+                <input type="text" class="form-control" id="nome" name="nome" value="{{ colaborador.nome }}" required>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="sobrenome" class="form-label">Sobrenome</label>
+                <input type="text" class="form-control" id="sobrenome" value="{{ colaborador.last_name }}">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="email" class="form-label">E-mail</label>
+                <input type="email" class="form-control" id="email" name="email" value="{{ colaborador.email }}" required>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="cpf" class="form-label">CPF</label>
+                <input type="text" class="form-control" id="cpf" name="cpf" value="{{ colaborador.cpf }}" readonly>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="telefone" class="form-label">Telefone</label>
+                <input type="text" class="form-control" id="telefone" name="telefone" value="{{ colaborador.telefone }}">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="cargo" class="form-label">Cargo</label>
+                <select class="form-select" id="cargo" name="cargo" required>
+                  {% for cargo in cargos %}
+                  <option value="{{ cargo.id }}" {% if colaborador.cargo.id == cargo.id %}selected{% endif %}>
+                    {{ cargo.nome }}
+                  </option>
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="setor" class="form-label">Setor</label>
+                <select class="form-select" id="setor" name="setor" required>
+                  {% for setor in setores %}
+                  <option value="{{ setor.id }}" {% if colaborador.setor.id == setor.id %}selected{% endif %}>
+                    {{ setor.nome }}
+                  </option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+

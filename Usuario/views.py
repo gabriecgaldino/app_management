@@ -1,8 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
+from django.http import JsonResponse
 from .forms import LoginForm
 import logging
+
+from Usuario.models import Colaborador
 
 logger = logging.getLogger(__name__)
 
@@ -27,5 +30,21 @@ def login_view(request):
             messages.error(request, "Erro no preenchimento do formulário.")
 
     return render(request, 'login.html', {'form_login': form_login})
+
+def busca_colaborador_api(request):
+    colaboradorId = request.GET.get('colaboradorId')
+    
+    if colaboradorId is not None:
+        try:
+            colaborador = Colaborador.objects.filter(matricula__icontains=colaboradorId).values(
+                'first_name', 'last_name', 'is_staff', 'cpf', 'email', 'telefone', 'data_nascimento',
+                'empresa', 'setor', 'cargo'
+                )
+            return JsonResponse({'colaborador': list(colaborador)}, safe=False)
+        except ValueError:
+            return JsonResponse({'Erro ao localizar o colaborador informado, tente novamente.'}, status=400) 
+    else:
+        return JsonResponse({'O Colaborador informado não está cadastrado.'})
+        
 
 

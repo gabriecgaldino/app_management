@@ -1,3 +1,4 @@
+// Mascara para CEP
 $(document).ready(function () {
     $('#cep').mask('00000-000');
 });
@@ -92,3 +93,5 @@ document.getElementById('setor').addEventListener('change', function () {
         alert(error)
     }
 })
+
+

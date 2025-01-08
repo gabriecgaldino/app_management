@@ -37,8 +37,10 @@ def busca_colaborador_api(request):
     if colaboradorId is not None:
         try:
             colaborador = Colaborador.objects.filter(matricula__icontains=colaboradorId).values(
-                'first_name', 'last_name', 'is_staff', 'cpf', 'email', 'telefone', 'data_nascimento',
-                'empresa', 'setor', 'cargo'
+                'first_name', 'last_name', 'is_active', 'is_staff', 'cpf', 'email', 'telefone', 'data_nascimento',
+                'empresa__nome_fantasia', 'setor__nome_setor', 'cargo__nome_cargo',
+                'endereco__cep', 'endereco__rua', 'endereco__numero',  'endereco__estado', 'endereco__cidade', 
+                'endereco__bairro', 'endereco__pais'
                 )
             return JsonResponse({'colaborador': list(colaborador)}, safe=False)
         except ValueError:

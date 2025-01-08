@@ -5,12 +5,14 @@
     
 
     <!-- Botão para adicionar novo colaborador -->
-    <div class="d-flex justify-content-between col-2 mb-3">
+    <div class="d-flex justify-content-end mb-3">
         <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalCadastroColaborador">
             Novo
         </button>
+        <div class="me-3"></div>
         <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalImportaçãoColaborador">
             Importação
+            <i class="bi bi-upload"></i>
         </button>
     </div>
     {% include 'modais/modal_adição_colaborador.html' %}
@@ -32,12 +34,17 @@
             <tbody>
                 {% for colaborador in colaboradores %}
                 <tr>
-                    <td>{{ colaborador.matricula }}</td>
-                    <td>{{ colaborador.first_name }} {{ colaborador.last_name }}</td>
-                    <td>{{ colaborador.setor }}</td>
-                    <td>{{ colaborador.cargo }}</td>
-                    <td>{{ colaborador.date_joined }}</td>
-                    <td>{{ colaborador.is_active }}</td>
+                    <td class="align-middle">{{ colaborador.matricula }}</td>
+                    <td class="align-middle">{{ colaborador.first_name }} {{ colaborador.last_name }}</td>
+                    <td class="align-middle">{{ colaborador.setor }}</td>
+                    <td class="align-middle">{{ colaborador.cargo }}</td>
+                    <td class="align-middle">{{ colaborador.date_joined }}</td>
+                    {% if colaborador.is_active %}
+                        <td class="align-middle"><i class="bi bi-check-circle"></i></td>
+                    {% else %}
+                        <td class="align-middle"><i class="bi bi-x-circle"></i></td>
+                    {% endif %}
+
                     <td>
                         <!-- Adicionar ações como editar ou excluir -->
                         <a class="btn btn-primary view-details" data-bs-toggle="modal" data-bs-target="#editColaboradorModal" data-id="{{colaborador.matricula}}">

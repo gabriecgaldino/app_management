@@ -41,14 +41,6 @@ document.querySelectorAll('.view-details').forEach(button=> {
                 } else {
                     document.getElementById('is_staff_edit').checked = false
                 }
-
-                
-
-                
-                
-
-
-                
             })
         } catch(err) {
             alert('Não foi possível concluir a busca, tente novamente.', err)

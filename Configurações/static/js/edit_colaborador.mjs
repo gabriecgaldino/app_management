@@ -71,34 +71,14 @@ document.getElementById('edit').addEventListener('click', function(event) {
     const setorField = document.getElementById('setor_edit')
     const empresaId = document.getElementById('empresa_notEditable').value
     try {
-        fetch(`/api/setores/?empresa_id=${empresaId}`)
-            .then(response=> response.json())
-            .then(data=> {
-                setorField.innerHTML = ''
-
-                if(!data) {
-                    return alert('Nenhum setor cadastrado para a empresa, realize o cadastro antes de seguir com o cadastro do colaborador.')
-                }
-
-                data.setores.forEach(setor=> {
-                    const option = document.createElement('option')
-
-                    option.value = setor.id
-                    option.textContent = setor.nome_setor
-
-                    setorField.appendChild(option)
-                })
-            })
+        // lista_setor_api()
     } catch (e){
         console.log(e)
     }
 
     // Listagem dos cargos
     document.getElementById('setor_edit').addEventListener('change', function(){
-        const cargoField = document.getElementById('cargo_edit')
-
-        return listar_cargos_api(setorField, cargoField)
-
+        // lista_cargo_api()
     })
     
     // 4° remover a propriedade disabled

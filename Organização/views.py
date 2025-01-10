@@ -5,8 +5,8 @@ from django.http import JsonResponse
 
 
 
-def cria_empresa_view(request):
 
+def cria_empresa_view(request):
     form = EmpresaForm(request)
 
     if form.is_valid():
@@ -43,10 +43,16 @@ def cria_cargo(request):
 
 def listar_setores_api(request):
     empresa_id = request.GET.get('empresa_id')
+    
     if empresa_id is not None:
         try:
-            setores = Setor.objects.filter(empresa=empresa_id).values('id', 'nome_setor')
-            return JsonResponse({'setores': list(setores)}, safe=False)
+            if empresa_id.isdigit():
+                setores = Setor.objects.filter(empresa=empresa_id).values('id', 'nome_setor')
+                return JsonResponse({'setores': list(setores)}, safe=False)
+            else: 
+                setores = Setor.objects.filter(empresa__nome_fantasia=empresa_id).values('id', 'nome_setor')
+            ##setores = Setor.objects.filter(empresa=empresa_id).values('id', 'nome_setor')
+                return JsonResponse({'setores': list(setores)}, safe=False)
         except ValueError:
             return JsonResponse({'error': 'empresa_id inválido'}, status=400)
     return JsonResponse({'error': 'empresa_id não fornecido'}, status=400)

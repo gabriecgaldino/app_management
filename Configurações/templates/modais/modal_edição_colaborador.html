@@ -11,102 +11,102 @@
           <div class="modal-body">
             <div class="row">
               <div class="col-md-6 mb-3">
-                <strong><label for="matricula">Matricula: </strong><p id="matricula" name="matricula"></p></label>
-                
+                <strong><label for="matricula" class="form-label">Matricula: </strong>{{ form_atualizar.matricula }}</label>
               </div>
               <h6 class="mb-3">Dados Pessoais</h6>
               <div class="col-md-6 mb-3">
                 <label for="nome_edit" class="form-label">Nome</label>
-                <input type="text" id="nome_edit" name="nome" class="form-control" disabled>
+                {{ form_atualizar.first_name }}
               </div>
               <div class="col-md-6 mb-3">
                 <label for="sobrenome_edit" class="form-label">Sobrenome</label>
-                <input type="text" class="form-control" id="sobrenome_edit" name="sobrenome" disabled>
+                {{ form_atualizar.last_name }}
               </div>
             </div>
             <div class="row">
               <div class="col-md-6 mb-3">
                 <label for="cpf_edit" class="form-label">CPF</label>
-                <input type="text" class="form-control" id="cpf_edit" name="cpf" disabled>
+                {{ form_atualizar.cpf }}
               </div>
               <div class="col-md-6 mb-3">
                 <label for="email_edit" class="form-label">E-mail</label>
-                <input type="email" class="form-control" id="email_edit" name="email" disabled>
+                {{ form_atualizar.email }}
               </div>
             </div>
             <div class="col-md-6 mb-3">
               <label for="telefone_edit" class="form-label">Telefone</label>
-              <input type="text" id="telefone_edit" name="telefone" class="form-control" disabled>
+              {{ form_atualizar.telefone }}
             </div>
             <div class="col-md-6 mb-3">
               <label for="data_nascimento_edit" class="form-label">Data de Nascimento</label>
-              <input type="text" id="data_nascimento_edit" name="data_nascimento" class="form-control" disabled>
+              {{ form_atualizar.data_nascimento }}
             </div>
             <h6 class="mb-3 mt-5">Endereço</h6>
             <div class="col-md-6 mb-3">
               <label for="cep_edit" class="form-label">CEP</label>
-              <input type="text" id="cep_edit" name="cep" class="form-control" disabled>
+              {{ form_endereco.cep }}
             </div>
             <div class="row">
               <div class="col-md-6 mb-3">
                 <label for="rua_edit" class="form-label">Rua</label>
-                <input type="text" name="rua" id="rua_edit" class="form-control" disabled>
+                {{ form_endereco.rua }}
               </div>
               <div class="col-md-6 mb3">
                 <label for="n_edit" class="form-label">N°</label>
-                <input type="text" name="n" id="n_edit" class="form-control" disabled>
+                {{ form_endereco.numero }}
               </div>
             </div>
             <div class="row">
               <div class="col-md-6 mb-3">
                 <label for="estado_edit" class="form-label">Estado</label>
-                <input type="text" name="estado" id="estado_edit" class="form-control" disabled>
+                {{ form_endereco.estado }}
               </div>
               <div class="col-md-6 mb-3">
                 <label for="cidade_edit" class="form-label">Cidade</label>
-                <input type="text" name="cidade" id="cidade_edit" class="form-control" disabled>
+                {{ form_endereco.cidade }}
               </div>
             </div>
             <div class="col-md-6 mb-3">
               <label for="bairro_edit" class="form-label">Bairro</label>
-              <input type="text" name="bairro" id="bairro_edit" class="form-control" disabled>
+              {{ form_endereco.bairro }}
             </div>
             <div class="col-md-6 mb-3">
               <label for="pais_edit" class="form-label">Pais</label>
-              <input type="text" name="pais" id="pais_edit" class="form-control" disabled>
+              {{ form_endereco.pais }}
             </div>
             <h6 class="mb-3 mt-5">Dados profissionais</h6>
             <div class="col-md-6 mb-3">
               <label for="empresa_notEditable" class="form-label">Empresa</label>
-              <input type="text" class="form-control" name="empresa" id="empresa_notEditable" value="" disabled>
+              {{ form_atualizar.empresa }}
             </div>
             <div class="row">
               <div class="col-md-6 mb-3">
                 <label for="setor_edit" class="form-label">Setor</label>
-                <select name="setor" id="setor_edit" class="form-control" disabled></select>
+                {{ form_atualizar.setor }}
               </div>
               <div class="col-md-6 mb-3">
                 <label for="cargo" class="form-label">Cargo</label>
-                <select name="cargo" id="cargo_edit" class="form-control" disabled></select>
+                {{ form_atualizar.cargo }}
               </div>
             </div>
             
             <div class="mb-3 align-middle">
               <label for="is_active_edit" class="form-label">Ativo?</label>
-              <input type="checkbox" name="is_active" id="is_active_edit" disabled>
+              {{ form_atualizar.is_active }}
             </div>
             <div class="mb-3">
               <label for="is_staff_edit" class="form-label">Staff?</label>
-              <input type="checkbox" name="is_staff" id="is_staff_edit" disabled>
+              {{ form_atualizar.is_staff }}
             </div>
-            
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="close">Fechar</button>
-            <button type="button" class="btn btn-primary" id="edit">Editar</button>
+            <button type="button" class="btn btn-primary" id="edit" name="atualizar">Editar</button>
           </div>
         </form>
       </div>
     </div>
   </div>
+
+ 
 

@@ -1,10 +1,9 @@
 from .forms import EmpresaForm, SetorForm, CargoForm
 from .models import Cargo, Setor
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
-
-
-
+from Usuario.models import Colaborador
+from Usuario.forms import ColaboradorForm
 
 def cria_empresa_view(request):
     form = EmpresaForm(request)
@@ -40,30 +39,3 @@ def cria_cargo(request):
             form_cargo = CargoForm()
 
     return form_cargo
-
-def listar_setores_api(request):
-    empresa_id = request.GET.get('empresa_id')
-    
-    if empresa_id is not None:
-        try:
-            if empresa_id.isdigit():
-                setores = Setor.objects.filter(empresa=empresa_id).values('id', 'nome_setor')
-                return JsonResponse({'setores': list(setores)}, safe=False)
-            else: 
-                setores = Setor.objects.filter(empresa__nome_fantasia=empresa_id).values('id', 'nome_setor')
-            ##setores = Setor.objects.filter(empresa=empresa_id).values('id', 'nome_setor')
-                return JsonResponse({'setores': list(setores)}, safe=False)
-        except ValueError:
-            return JsonResponse({'error': 'empresa_id inválido'}, status=400)
-    return JsonResponse({'error': 'empresa_id não fornecido'}, status=400)
-
-def listar_cargos_api(request):
-    setor_id = request.GET.get('setor_id')
-    if setor_id is not None:
-        try:
-            # Filtra pelo setor usando o campo da chave estrangeira
-            cargos = Cargo.objects.filter(setor=setor_id).values('id', 'nome_cargo')
-            return JsonResponse({'cargos': list(cargos)}, safe=False)
-        except ValueError:
-            return JsonResponse({'error': 'setor_id inválido'}, status=400)
-    return JsonResponse({'error': 'setor_id não fornecido'}, status=400)

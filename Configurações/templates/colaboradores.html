@@ -47,9 +47,11 @@
 
                     <td>
                         <!-- Adicionar ações como editar ou excluir -->
-                        <a class="btn btn-primary view-details" data-bs-toggle="modal" data-bs-target="#editColaboradorModal" data-id="{{colaborador.matricula}}">
+                    
+                        <a href="{% url 'colaboradores' %}?matricula={{ colaborador.matricula }}" class="btn btn-primary view-details">
                             <i class="bi bi-eye"></i>
                         </a>
+                    
                         {% include 'modais/modal_edição_colaborador.html' %}
                     </td>
                 </tr>

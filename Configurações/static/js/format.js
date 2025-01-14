@@ -66,10 +66,8 @@ document.addEventListener("DOMContentLoaded", function () {
     dobInput.addEventListener("input", function () {
         let value = dobInput.value.replace(/\D/g, "");
 
-        // Limita o campo a 8 dígitos numéricos (DDMMAAAA)
         if (value.length > 8) value = value.slice(0, 8);
 
-        // Adiciona a formatação (DD/MM/AAAA)
         if (value.length > 4) {
             value = value.replace(/(\d{2})(\d{2})(\d{1,4})/, "$1/$2/$3");
         } else if (value.length > 2) {
@@ -79,4 +77,19 @@ document.addEventListener("DOMContentLoaded", function () {
         dobInput.value = value;
     });
 });
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const urlParams = new URLSearchParams(window.location.search);
+    const matricula = urlParams.get('matricula');
+
+    if (matricula) {
+        const modal = new bootstrap.Modal(document.getElementById('editColaboradorModal'));
+        modal.show();
+    }
+});
+
+document.getElementById('close').addEventListener('click', ()=> {
+    window.location.href('/colaboradores/')
+})
 

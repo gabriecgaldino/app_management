@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
@@ -40,33 +40,35 @@ def atualizar_perfil_view(request):
 
 
 def colaboradores_view(request):
+    matricula = request.GET.get('matricula')
     colaboradores = Colaborador.objects.filter(empresa=request.user.empresa_id)
+    colaborador = get_object_or_404(Colaborador, matricula=matricula)
     
-    # Inicialização dos formulários
+    if matricula:
+        
+        form_atualizar = ColaboradorForm(instance=colaborador)
+    else:
+        form_atualizar = None
+        colaborador = None
+        
     form_colaborador = ColaboradorForm()
     form_endereco = EnderecoForm()
-    form_atualizar = None
+
 
     if request.method == 'POST':
-        if 'atualizar' in request.POST:
-            form_atualizar = ColaboradorForm(request.POST)
-            form_atualizar_endereco = EnderecoForm(request.POST)
-            
-            campos_atualizar = [
-                'first_name', 'last_name', 'is_active', 'is_staff', 'cpf', 'email', 'telefone', 'data_nascimento',
-                'empresa', 'setor', 'cargo'
-            ]
-            for campo in list(form_atualizar.fields.keys()):
-                if campo not in campos_atualizar:
-                    form_atualizar.fields.pop(campo)
-            
-            if form_atualizar.is_valid() and form_atualizar_endereco.is_valid():
+        if 'atualizar' in request.POST and colaborador:
+            # Atualização do colaborador
+            form_atualizar = ColaboradorForm(request.POST, instance=colaborador)
+            form_endereco = EnderecoForm(request.POST, instance=colaborador.endereco)
+
+            if form_atualizar.is_valid() and form_endereco.is_valid():
                 with transaction.atomic():
-                    endereco = form_atualizar_endereco.save()
-                    form_atualizar.save = ()
-                form_atualizar.save()
+                    endereco = form_endereco.save()
+                    colaborador_atualizado = form_atualizar.save(commit=False)
+                    colaborador_atualizado.endereco = endereco
+                    colaborador_atualizado.save()
                 return redirect('colaboradores')
-            
+
         elif 'criar' in request.POST:
             form_colaborador = ColaboradorForm(request.POST)
             form_endereco = EnderecoForm(request.POST)
@@ -74,14 +76,14 @@ def colaboradores_view(request):
             if form_colaborador.is_valid() and form_endereco.is_valid():
                 with transaction.atomic():
                     endereco = form_endereco.save()
-                    colaborador = form_colaborador.save(commit=False)
-                    colaborador.endereco = endereco
-                    colaborador.save()
+                    novo_colaborador = form_colaborador.save(commit=False)
+                    novo_colaborador.endereco = endereco
+                    novo_colaborador.save()
                 return redirect('colaboradores')
-    
+
     return render(request, 'colaboradores.html', {
-        'form_colaborador': form_colaborador,
-        'form_endereco': form_endereco,
-        'form_atualizar': form_atualizar or ColaboradorForm(),
-        'colaboradores': colaboradores,
+        'colaboradores': colaboradores,          
+        'form_colaborador': form_colaborador,    
+        'form_endereco': form_endereco,          
+        'form_atualizar': form_atualizar,        
     })

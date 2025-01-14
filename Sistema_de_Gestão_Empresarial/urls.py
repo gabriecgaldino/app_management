@@ -13,6 +13,7 @@ urlpatterns = [
     path('configurações/', configuracoes_view, name='configurações'),
     path('perfil/', perfil_view, name='perfil'),
     path('atualizar-perfil/', atualizar_perfil_view, name='atualizar_perfil'),
+    path('novo-setor/', cria_setor, name='novo-setor'),
     path('colaboradores/', colaboradores_view, name='colaboradores'),
-    path('novo-setor/', cria_setor, name='novo-setor')
+    path('colaboradores/<str:matricula>/', colaboradores_view, name='colaboradores'),
 ]

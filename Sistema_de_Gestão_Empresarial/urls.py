@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import path
 from django.contrib.auth.views import LogoutView
 from Usuario.views import login_view
-from Configurações.views import configuracoes_view, perfil_view, atualizar_perfil_view, colaboradores_view
+from Configurações.views import configuracoes_view, perfil_view, atualizar_perfil_view, colaboradores_view, baixar_template, importar_funcionarios
 from Organização.views import cria_setor
 from . import views
 urlpatterns = [
@@ -16,4 +16,6 @@ urlpatterns = [
     path('novo-setor/', cria_setor, name='novo-setor'),
     path('colaboradores/', colaboradores_view, name='colaboradores'),
     path('colaboradores/<str:matricula>/', colaboradores_view, name='colaboradores'),
+    path('/colaboradores/baixar-template/', baixar_template, name='baixar_template'),
+    path('/colaboradores/importar/', importar_funcionarios, name='importar_funcionarios'),
 ]

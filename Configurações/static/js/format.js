@@ -108,6 +108,39 @@ function validarCPF(cpf) {
     return resto === parseInt(cpf[10]);
 }
 
+document.getElementById('btn_import').addEventListener('click', function(){
+    document.getElementById('csvFile').addEventListener('change', function() {
+        const fileName = this.files[0] ? this.files[0].name : 'Selecione um arquivo...';
+        document.getElementById('fileName').value = fileName;
+    })
+})
+
+document.getElementById('uploadBtn').addEventListener('click', function() {
+    const fileInput = document.getElementById('csvFile');
+    if (fileInput.files.length === 0) {
+      alert('Por favor, carregue um arquivo CSV.');
+      return;
+    }
+    $('#importModal').modal('hide');
+    $('#confirmModal').modal('show');
+  });
+
+  document.getElementById('confirmUploadBtn').addEventListener('click', function() {
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = '{% url "importar_funcionarios" %}';
+    const fileInput = document.getElementById('csvFile');
+    const file = fileInput.files[0];
+    const inputFile = document.createElement('input');
+    inputFile.type = 'file';
+    inputFile.name = 'csvFile';
+    inputFile.files = fileInput.files;
+    form.appendChild(inputFile);
+    document.body.appendChild(form);
+    form.submit();
+  });
+
+
 
 
 

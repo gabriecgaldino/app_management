@@ -1,0 +1,46 @@
+<!-- Modal de Importação -->
+<div class="modal fade" id="importModal" tabindex="-1" role="dialog" aria-labelledby="importModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="importModalLabel">Importar Funcionários</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form action="{% url 'importar_funcionarios' %}" method="POST">
+            {% csrf_token %}
+            <p>Escolha uma das opções:</p>
+            <div class="input-group mb-3">
+              <!-- Campo para exibir o nome do arquivo -->
+              <input type="text" id="fileName" class="form-control" placeholder="Selecione um arquivo..." readonly>
+              <!-- Botão de upload invisível -->
+              <div class="input-group-append">
+                <label for="csvFile" class="btn btn-secondary mb-0">Buscar Arquivo</label>
+                <input type="file" id="csvFile" class="d-none">
+              </div>
+            </div>
+            <a href="{% url 'baixar_template' %}" class="btn btn-info">Baixar Template</a>
+            <button class="btn btn-success" id="uploadBtn">Enviar</button>
+        </form>
+            
+        </div>
+      </div>
+    </div>
+</div>
+  
+  <!-- Modal de Confirmação de Envio -->
+<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="confirmModalLabel">Confirmar Envio</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Você tem certeza que deseja enviar os dados?</p>
+          <button type="button" class="btn btn-danger" id="confirmUploadBtn">Confirmar</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        </div>
+      </div>
+    </div>
+</div>

@@ -10,10 +10,11 @@
             Novo
         </button>
         <div class="me-3"></div>
-        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalImportaçãoColaborador">
+        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#importModal" id="btn_import">
             Importação
             <i class="bi bi-upload"></i>
         </button>
+        {% include 'modais/modal_importação_colaboradores.html' %}
     </div>
     {% include 'modais/modal_adição_colaborador.html' %}
 

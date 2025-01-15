@@ -1,7 +1,13 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
+from django.http import HttpResponse
+
+
+import csv
+import logging
+import datetime
 
 from Organização.views import cria_empresa_view, cria_setor, cria_cargo
 from Organização.forms import EmpresaForm, SetorForm, CargoForm
@@ -37,10 +43,6 @@ def atualizar_perfil_view(request):
         user.colaborador.save()
         messages.success(request, 'Perfil atualizado com sucesso!')
         return redirect('perfil')
-
-
-from django.shortcuts import render, redirect, get_object_or_404
-from django.db import transaction
 
 def colaboradores_view(request):
     matricula = request.GET.get('matricula')
@@ -109,3 +111,55 @@ def colaboradores_view(request):
         'form_endereco': form_endereco,
         'form_atualizar': form_atualizar,
     })
+
+def baixar_template(request):
+    # Criação de um CSV para download
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="template.csv"'
+
+    writer = csv.writer(response)
+    writer.writerow(['id',"password","last_login","is_superuser","username","first_name","last_name","is_staff","date_joined","cpf","email","telefone","endereco_id","data_nascimento","cargo_id","matricula","data_demissao","is_active","empresa_id","setor_id"])
+
+    return response
+
+
+logger = logging.getLogger(__name__)
+
+def importar_funcionarios(request):
+    if request.method == 'POST' and request.FILES['csvFile']:
+        csv_file = request.FILES['csvFile']
+        
+        # Verificação se o arquivo é um CSV
+        if not csv_file.name.endswith('.csv'):
+            messages.error(request, 'O arquivo deve ser um CSV.')
+            return render(request, 'importacao.html')
+
+        # Processar o CSV
+        errors = []
+        csv_data = csv_file.read().decode('utf-8').splitlines()
+        csv_reader = csv.reader(csv_data)
+
+        for row in csv_reader:
+            try:
+                # Lógica de validação dos dados do CSV
+                nome, cargo, data_admissao, departamento = row
+                if not nome or not cargo or not data_admissao or not departamento:
+                    errors.append(f'Linha com dados faltantes: {row}')
+                # Validação da data de admissão
+                # Exemplo de validação de formato de data (pode ser customizado conforme necessidade)
+                try:
+                    datetime.strptime(data_admissao, '%Y-%m-%d')
+                except ValueError:
+                    errors.append(f'Formato de data inválido na linha: {row}')
+            except Exception as e:
+                errors.append(f'Erro ao processar linha: {row} | Erro: {str(e)}')
+
+        if errors:
+            logger.error("Erros encontrados durante a importação: %s", errors)
+            messages.error(request, f'Houve erros ao processar o arquivo: {", ".join(errors)}')
+            return render(request, 'importacao.html')
+
+        # Caso os dados sejam válidos, exiba o modal de confirmação
+        return render(request, 'confirmacao_envio.html', {'file': csv_file})
+
+    return render(request, 'importacao.html')

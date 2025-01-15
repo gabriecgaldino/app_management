@@ -19,6 +19,71 @@ document.addEventListener("DOMContentLoaded", function () {
 
         cpfInput.value = value;
     });
+
+
+
+    const form = document.getElementById("formCadastroColaborador");
+    const errorSpan = document.getElementById("cpfError");
+
+    form.addEventListener("submit", function (event) {
+        const cpf = cpfInput.value;
+        if (!validarCPF(cpf)) {
+            event.preventDefault();
+            errorSpan.textContent = "CPF inválido. Por favor, insira um CPF válido.";
+            errorSpan.classList.add("text-danger");
+        } else {
+            errorSpan.textContent = ""; 
+        }
+
+        
+    });
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const matricula = urlParams.get('matricula');
+
+    if (matricula) {
+        const modal = new bootstrap.Modal(document.getElementById('editColaboradorModal'));
+        modal.show();
+    }
+
+    const formEdit = document.getElementById('editColaboradorForm')
+    inputs = formEdit.querySelectorAll('input')
+    selects = formEdit.querySelectorAll('select')
+    checkboxs = formEdit.querySelectorAll('checkbox')
+
+    let options = [inputs, selects, checkboxs]
+
+    options.forEach(option=> {
+        option.forEach(item=> {
+            item.disabled = true
+        })
+    })
+
+    document.getElementById('edit').addEventListener('click', function() {
+        const form = document.getElementById('editColaboradorForm');
+    
+        const inputs = form.querySelectorAll('input, select, input[type="checkbox"]');
+        inputs.forEach(item => {
+            item.disabled = false;
+        });
+
+        // alteração dos botões do formulário
+        document.getElementById('edit').remove()
+
+        const buttonSave = document.createElement('button')
+
+        buttonSave.setAttribute('id', 'save')
+        buttonSave.setAttribute('class', 'btn btn-success')
+        buttonSave.textContent = 'Salvar'
+        buttonSave.setAttribute('name', 'atualizar')
+
+        document.getElementById('footerModal').appendChild(buttonSave)
+        buttonSave.addEventListener('click', function() {
+            const form = document.getElementById('editColaboradorForm');
+            console.log('formulário enviado')
+            form.submit();
+        }); 
+    });
 });
 
 function validarCPF(cpf) {
@@ -43,53 +108,8 @@ function validarCPF(cpf) {
     return resto === parseInt(cpf[10]);
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-    const form = document.getElementById("formCadastroColaborador");
-    const cpfInput = document.getElementById("cpf");
-    const errorSpan = document.getElementById("cpfError");
-
-    form.addEventListener("submit", function (event) {
-        const cpf = cpfInput.value;
-        if (!validarCPF(cpf)) {
-            event.preventDefault();
-            errorSpan.textContent = "CPF inválido. Por favor, insira um CPF válido.";
-            errorSpan.classList.add("text-danger");
-        } else {
-            errorSpan.textContent = ""; 
-        }
-    });
-});
-
-document.addEventListener("DOMContentLoaded", function () {
-    const dobInput = document.getElementById("data_nascimento");
-
-    dobInput.addEventListener("input", function () {
-        let value = dobInput.value.replace(/\D/g, "");
-
-        if (value.length > 8) value = value.slice(0, 8);
-
-        if (value.length > 4) {
-            value = value.replace(/(\d{2})(\d{2})(\d{1,4})/, "$1/$2/$3");
-        } else if (value.length > 2) {
-            value = value.replace(/(\d{2})(\d{1,2})/, "$1/$2");
-        }
-
-        dobInput.value = value;
-    });
-});
 
 
-document.addEventListener("DOMContentLoaded", function () {
-    const urlParams = new URLSearchParams(window.location.search);
-    const matricula = urlParams.get('matricula');
 
-    if (matricula) {
-        const modal = new bootstrap.Modal(document.getElementById('editColaboradorModal'));
-        modal.show();
-    }
-});
 
-document.getElementById('close').addEventListener('click', ()=> {
-    window.location.href('/colaboradores/')
-})
 

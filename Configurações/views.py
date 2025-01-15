@@ -39,26 +39,38 @@ def atualizar_perfil_view(request):
         return redirect('perfil')
 
 
+from django.shortcuts import render, redirect, get_object_or_404
+from django.db import transaction
+
 def colaboradores_view(request):
     matricula = request.GET.get('matricula')
     colaboradores = Colaborador.objects.filter(empresa=request.user.empresa_id)
-    colaborador = get_object_or_404(Colaborador, matricula=matricula)
-    
-    if matricula:
-        
-        form_atualizar = ColaboradorForm(instance=colaborador)
-    else:
-        form_atualizar = None
-        colaborador = None
-        
-    form_colaborador = ColaboradorForm()
+
+    colaborador = None
+    form_atualizar = None
     form_endereco = EnderecoForm()
+    form_colaborador = ColaboradorForm()
+
+    if matricula:
+        try:
+            colaborador = Colaborador.objects.get(matricula=matricula)
+            form_atualizar = ColaboradorForm(instance=colaborador)
+            if colaborador.endereco:
+                form_endereco = EnderecoForm(instance=colaborador.endereco)
+        except Colaborador.DoesNotExist:
+            print(f"Colaborador com matrícula {matricula} não encontrado.")
+            colaborador = None
+
 
 
     if request.method == 'POST':
         if 'atualizar' in request.POST and colaborador:
             # Atualização do colaborador
+            print(form_atualizar)
             form_atualizar = ColaboradorForm(request.POST, instance=colaborador)
+            
+            
+            
             form_endereco = EnderecoForm(request.POST, instance=colaborador.endereco)
 
             if form_atualizar.is_valid() and form_endereco.is_valid():
@@ -67,7 +79,12 @@ def colaboradores_view(request):
                     colaborador_atualizado = form_atualizar.save(commit=False)
                     colaborador_atualizado.endereco = endereco
                     colaborador_atualizado.save()
+                print("Colaborador atualizado com sucesso.")
                 return redirect('colaboradores')
+            else:
+                print("Erros ao atualizar colaborador:")
+                print(form_atualizar.errors)
+                print(form_endereco.errors)
 
         elif 'criar' in request.POST:
             form_colaborador = ColaboradorForm(request.POST)
@@ -79,11 +96,16 @@ def colaboradores_view(request):
                     novo_colaborador = form_colaborador.save(commit=False)
                     novo_colaborador.endereco = endereco
                     novo_colaborador.save()
+                print("Novo colaborador criado com sucesso.")
                 return redirect('colaboradores')
+            else:
+                print("Erros ao criar colaborador:")
+                print(form_colaborador.errors)
+                print(form_endereco.errors)
 
     return render(request, 'colaboradores.html', {
-        'colaboradores': colaboradores,          
-        'form_colaborador': form_colaborador,    
-        'form_endereco': form_endereco,          
-        'form_atualizar': form_atualizar,        
+        'colaboradores': colaboradores,
+        'form_colaborador': form_colaborador,
+        'form_endereco': form_endereco,
+        'form_atualizar': form_atualizar,
     })

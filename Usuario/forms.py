@@ -67,7 +67,7 @@ class ColaboradorForm(forms.ModelForm):
     class Meta:
         model = Colaborador
         fields = ['first_name', 'last_name', 'cpf',
-                  'email', 'telefone', 'endereco', 'data_nascimento',
+                  'email', 'telefone', 'data_nascimento',
                   'empresa', 'setor', 'cargo', 'is_active']
         widgets = {
             'first_name': forms.TextInput(attrs={
@@ -98,12 +98,6 @@ class ColaboradorForm(forms.ModelForm):
                 'class': 'form-control',
                 'placeholder': '(00) 00000-0000',
                 'id': 'telefone'
-            }),
-            'endereco': forms.Textarea(attrs={
-                'class': 'form-control', 
-                'placeholder': 'Endereço', 
-                'id': 'endereco',
-                'style': 'height: 40px'
             }),
             'data_nascimento': forms.DateInput(attrs={
                 'class': 'form-control',

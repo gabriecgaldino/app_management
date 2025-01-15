@@ -6,7 +6,7 @@
           <h5 class="modal-title" id="editColaboradorLabel">Editar Dados do Colaborador</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <form id="editColaboradorForm" action="#">
+        <form id="editColaboradorForm" method="post">
           {% csrf_token %}
           <div class="modal-body">
             <div class="row">
@@ -99,8 +99,8 @@
               {{ form_atualizar.is_staff }}
             </div>
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="close">Fechar</button>
+          <div class="modal-footer" id="footerModal">
+            <a type="button" class="btn btn-danger" data-bs-dismiss="modal" id="close">Fechar</a>
             <button type="button" class="btn btn-primary" id="edit" name="atualizar">Editar</button>
           </div>
         </form>

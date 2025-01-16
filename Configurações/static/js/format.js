@@ -123,9 +123,9 @@ document.getElementById('uploadBtn').addEventListener('click', function() {
     }
     $('#importModal').modal('hide');
     $('#confirmModal').modal('show');
-  });
+});
 
-  document.getElementById('confirmUploadBtn').addEventListener('click', function() {
+document.getElementById('confirmUploadBtn').addEventListener('click', function() {
     const form = document.createElement('form');
     form.method = 'POST';
     form.action = '{% url "importar_funcionarios" %}';
@@ -138,11 +138,37 @@ document.getElementById('uploadBtn').addEventListener('click', function() {
     form.appendChild(inputFile);
     document.body.appendChild(form);
     form.submit();
-  });
+});
 
+document.querySelector('#import-modal').addEventListener('submit', async function(event){
+    event.preventDefault()
+    const formData = new FormData(this)
 
+    try {
+        const response = await fetch(this.action, {
+            method: 'POST',
+            body: formData
+        })
 
-
-
-
-
+        if(!response.ok) {
+            const data = await response.json();
+            if (data.errors) {
+                // Insere os erros no modal e exibe
+                const errorList = document.querySelector('#error-list');
+                errorList.innerHTML = '';
+                data.errors.forEach(error => {
+                    const li = document.createElement('li');
+                    li.textContent = error;
+                    errorList.appendChild(li);
+                });
+                // Exibe o modal
+                const modal = new bootstrap.Modal(document.querySelector('#errorModal'));
+                modal.show();
+            } else {
+                alert('Importação concluída com sucesso!');
+            }
+        }
+    } catch (error) {
+        console.error('Erro ao enviar a requisição:', error);
+    }
+})

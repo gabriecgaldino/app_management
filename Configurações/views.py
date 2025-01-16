@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 
 
 import csv
@@ -132,7 +132,7 @@ def importar_funcionarios(request):
         # Verificação se o arquivo é um CSV
         if not csv_file.name.endswith('.csv'):
             messages.error(request, 'O arquivo deve ser um CSV.')
-            return render(request, 'importacao.html')
+            return render(request, 'colaboradores.html', {'errors': []})
 
         # Processar o CSV
         errors = []
@@ -157,9 +157,9 @@ def importar_funcionarios(request):
         if errors:
             logger.error("Erros encontrados durante a importação: %s", errors)
             messages.error(request, f'Houve erros ao processar o arquivo: {", ".join(errors)}')
-            return render(request, 'importacao.html')
+            return JsonResponse({'errors': errors}, status=400)
 
         # Caso os dados sejam válidos, exiba o modal de confirmação
-        return render(request, 'confirmacao_envio.html', {'file': csv_file})
+        return JsonResponse({'message': 'Importação concluída com sucesso!'})
 
-    return render(request, 'importacao.html')
+    return JsonResponse({'error': 'Requisição inválida'}, status=400)

@@ -172,3 +172,14 @@ document.querySelector('#import-modal').addEventListener('submit', async functio
         console.error('Erro ao enviar a requisição:', error);
     }
 })
+
+document.addEventListener('DOMContentLoaded', function(){
+    const errorModal = document.querySelector('#errorModal')
+
+
+    if(errorModal){
+        errorModal.addEventListener('hidden.bs.modal', function(){
+            window.location.href = '/colaboradores/'
+        })
+    }
+})

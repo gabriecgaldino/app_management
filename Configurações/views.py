@@ -125,6 +125,10 @@ def baixar_template(request):
 
 logger = logging.getLogger(__name__)
 
+fields = ['first_name', 'last_name', 'is_staff', 'date_joined', 'cpf', 
+          'email', 'telefone', 'data_nascimento', 'cargo_id', 'matricula', 
+          'is_active', 'empresa_id', 'setor_id']
+
 def importar_funcionarios(request):
     if request.method == 'POST' and request.FILES['csvFile']:
         csv_file = request.FILES['csvFile']
@@ -132,34 +136,63 @@ def importar_funcionarios(request):
         # Verificação se o arquivo é um CSV
         if not csv_file.name.endswith('.csv'):
             messages.error(request, 'O arquivo deve ser um CSV.')
-            return render(request, 'colaboradores.html', {'errors': []})
+            return JsonResponse({'error': 'O formato do arquivo é inválido.'})
 
         # Processar o CSV
         errors = []
-        csv_data = csv_file.read().decode('utf-8').splitlines()
-        csv_reader = csv.reader(csv_data)
-
-        for row in csv_reader:
-            try:
-                # Lógica de validação dos dados do CSV
-                nome, cargo, data_admissao, departamento = row
-                if not nome or not cargo or not data_admissao or not departamento:
-                    errors.append(f'Linha com dados faltantes: {row}')
-                # Validação da data de admissão
-                # Exemplo de validação de formato de data (pode ser customizado conforme necessidade)
+    
+        try:
+            decoded_file = csv_file.read().decode('utf-8').splitlines()
+            reader = csv.DictReader(decoded_file, delimiter=';')
+            
+            # Verifica se as colunas do CSV correspondem às esperadas
+            if reader.fieldnames != fields:
+                errors.append('Campos inválidos! Colunas esperadas: ' + ', '.join(fields))
+            
+            for i, row in enumerate(reader, start=1):
+                if not row.get('first_name'):
+                    print(row.get('first_name'))
+                    errors.append(f"Linha {i}: O campo 'nome', está vazio.")
+                if not row.get('last_name'):
+                    errors.append(f"Linha {i}: O campo 'sobrenome', está vazio. ")
+                if not row.get('is_staff'):
+                    errors.append(f"Linha {i}: O campo 'is_staff', está vazio. ")
+                if not row.get('data_joined'):
+                    errors.append(f"Linha {i}: O campo 'data_joined', está vazio.")
+                if not row.get('cpf'):
+                    errors.append(f"Linha {i}: O campo 'cpf', está vazio. ")
+                if not row.get('email'):
+                    errors.append(f"Linha {i}: O campo 'email', está vazio. ")
+                if '@' not in row.get('email', ''):
+                    errors.append(f"Linha {i}: Forneça um e-mail válido para o campo 'email'. ")
+                if not row.get('telefone'):
+                    errors.append(f"Linha {i}: O campo 'telefone', está vazio. ")
+                if not row.get('data_nascimento'):
+                    errors.append(f"Linha {i}: O campo 'data_nascimento', está vazio. ")
                 try:
-                    datetime.strptime(data_admissao, '%Y-%m-%d')
+                    idade = int(row.get('data_nascimento', ''))
+                    if idade <= 0:
+                        errors.append(f"Linha {i}: O campo 'data_nascimento' deve ser maior que 0. ")
                 except ValueError:
-                    errors.append(f'Formato de data inválido na linha: {row}')
-            except Exception as e:
-                errors.append(f'Erro ao processar linha: {row} | Erro: {str(e)}')
+                    errors.append(f"Linha {i}: Idade {row.get('data_nascimento', '')}, não é um número válido")
+                if not row.get('cargo_id'):
+                    errors.append(f"Linha {i}: O campo 'cargo_id', está vazio. ")
+                if not row.get('matricula'):
+                    errors.append(f"Linha {i}: O campo 'matricula', está vazio. ")
+                if not row.get('is_active'):
+                    errors.append(f"Linha {i}: O campo 'is_active', está vazio. ")
+                if not row.get('empresa_id'):
+                    errors.append(f"Linha {i}: O campo 'empresa_id', está vazio. ")
+                if not row.get('setor_id'):
+                    errors.append(f"Linha {i}: O campo 'setor_id', está vazio. ")
+        except ValueError:
+            errors.append('Erro ao abrir o arquivo enviado, tente novamente!')
 
         if errors:
             logger.error("Erros encontrados durante a importação: %s", errors)
             messages.error(request, f'Houve erros ao processar o arquivo: {", ".join(errors)}')
             return JsonResponse({'errors': errors}, status=400)
 
-        # Caso os dados sejam válidos, exiba o modal de confirmação
         return JsonResponse({'message': 'Importação concluída com sucesso!'})
 
     return JsonResponse({'error': 'Requisição inválida'}, status=400)

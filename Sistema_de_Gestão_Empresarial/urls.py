@@ -15,7 +15,9 @@ urlpatterns = [
     path('atualizar-perfil/', atualizar_perfil_view, name='atualizar_perfil'),
     path('novo-setor/', cria_setor, name='novo-setor'),
     path('colaboradores/', colaboradores_view, name='colaboradores'),
+    path('colaboradores/importar/', importar_funcionarios, name='importar_funcionarios'),
+    path('colaboradores/baixar-template/', baixar_template, name='baixar_template'),
     path('colaboradores/<str:matricula>/', colaboradores_view, name='colaboradores'),
-    path('/colaboradores/baixar-template/', baixar_template, name='baixar_template'),
-    path('/colaboradores/importar/', importar_funcionarios, name='importar_funcionarios'),
+    
+    
 ]

@@ -3,11 +3,10 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.http import HttpResponse, JsonResponse
-
+from datetime import datetime
 
 import csv
 import logging
-import datetime
 
 from Organização.views import cria_empresa_view, cria_setor, cria_cargo
 from Organização.forms import EmpresaForm, SetorForm, CargoForm
@@ -123,76 +122,86 @@ def baixar_template(request):
     return response
 
 
-logger = logging.getLogger(__name__)
-
 fields = ['first_name', 'last_name', 'is_staff', 'date_joined', 'cpf', 
           'email', 'telefone', 'data_nascimento', 'cargo_id', 'matricula', 
           'is_active', 'empresa_id', 'setor_id']
 
-def importar_funcionarios(request):
-    if request.method == 'POST' and request.FILES['csvFile']:
-        csv_file = request.FILES['csvFile']
-        
-        # Verificação se o arquivo é um CSV
-        if not csv_file.name.endswith('.csv'):
-            messages.error(request, 'O arquivo deve ser um CSV.')
-            return JsonResponse({'error': 'O formato do arquivo é inválido.'})
+logger = logging.getLogger(__name__)
 
-        # Processar o CSV
+def importar_funcionarios(request):
+    if request.method == 'POST' and request.FILES.get('csvFile'):
+        csv_file = request.FILES['csvFile']
+
+        if not csv_file.name.endswith('.csv'):
+            return JsonResponse({'error': 'O formato do arquivo é inválido.'}, status=400)
+
         errors = []
-    
+
         try:
             decoded_file = csv_file.read().decode('utf-8').splitlines()
             reader = csv.DictReader(decoded_file, delimiter=';')
-            
-            # Verifica se as colunas do CSV correspondem às esperadas
-            if reader.fieldnames != fields:
-                errors.append('Campos inválidos! Colunas esperadas: ' + ', '.join(fields))
-            
-            for i, row in enumerate(reader, start=1):
-                if not row.get('first_name'):
-                    print(row.get('first_name'))
-                    errors.append(f"Linha {i}: O campo 'nome', está vazio.")
-                if not row.get('last_name'):
-                    errors.append(f"Linha {i}: O campo 'sobrenome', está vazio. ")
-                if not row.get('is_staff'):
-                    errors.append(f"Linha {i}: O campo 'is_staff', está vazio. ")
-                if not row.get('data_joined'):
-                    errors.append(f"Linha {i}: O campo 'data_joined', está vazio.")
-                if not row.get('cpf'):
-                    errors.append(f"Linha {i}: O campo 'cpf', está vazio. ")
-                if not row.get('email'):
-                    errors.append(f"Linha {i}: O campo 'email', está vazio. ")
-                if '@' not in row.get('email', ''):
-                    errors.append(f"Linha {i}: Forneça um e-mail válido para o campo 'email'. ")
-                if not row.get('telefone'):
-                    errors.append(f"Linha {i}: O campo 'telefone', está vazio. ")
-                if not row.get('data_nascimento'):
-                    errors.append(f"Linha {i}: O campo 'data_nascimento', está vazio. ")
-                try:
-                    idade = int(row.get('data_nascimento', ''))
-                    if idade <= 0:
-                        errors.append(f"Linha {i}: O campo 'data_nascimento' deve ser maior que 0. ")
-                except ValueError:
-                    errors.append(f"Linha {i}: Idade {row.get('data_nascimento', '')}, não é um número válido")
-                if not row.get('cargo_id'):
-                    errors.append(f"Linha {i}: O campo 'cargo_id', está vazio. ")
-                if not row.get('matricula'):
-                    errors.append(f"Linha {i}: O campo 'matricula', está vazio. ")
-                if not row.get('is_active'):
-                    errors.append(f"Linha {i}: O campo 'is_active', está vazio. ")
-                if not row.get('empresa_id'):
-                    errors.append(f"Linha {i}: O campo 'empresa_id', está vazio. ")
-                if not row.get('setor_id'):
-                    errors.append(f"Linha {i}: O campo 'setor_id', está vazio. ")
-        except ValueError:
-            errors.append('Erro ao abrir o arquivo enviado, tente novamente!')
+            reader.fieldnames = [field.lstrip('\ufeff') for field in reader.fieldnames]
 
-        if errors:
-            logger.error("Erros encontrados durante a importação: %s", errors)
-            messages.error(request, f'Houve erros ao processar o arquivo: {", ".join(errors)}')
-            return JsonResponse({'errors': errors}, status=400)
+            with transaction.atomic():
+                for i, row in enumerate(reader, start=1):
+                    try:
+                        # Verificar unicidade do e-mail
+                        email = row['email'].strip()
+                        if Colaborador.objects.filter(email=email).exists():
+                            errors.append(f"Linha {i}: O e-mail '{email}' já está cadastrado.")
+                            continue
 
-        return JsonResponse({'message': 'Importação concluída com sucesso!'})
+                        # Verificar e converter datas
+                        data_nascimento_str = row.get('data_nascimento', '').strip()
+                        if not data_nascimento_str:
+                            errors.append(f"Linha {i}: O campo 'data_nascimento' está vazio.")
+                            continue
+
+                        try:
+                            data_nascimento = datetime.strptime(data_nascimento_str, '%d/%m/%Y')
+                        except ValueError:
+                            errors.append(f"Linha {i}: A data '{data_nascimento_str}' não está no formato DD/MM/AAAA.")
+                            continue
+
+                        date_joined_str = row.get('date_joined', '').strip()
+                        if not date_joined_str:
+                            errors.append(f"Linha {i}: O campo 'date_joined' está vazio.")
+                            continue
+
+                        try:
+                            date_joined = datetime.strptime(date_joined_str, '%d/%m/%Y')
+                        except ValueError:
+                            errors.append(f"Linha {i}: A data '{date_joined_str}' não está no formato DD/MM/AAAA.")
+                            continue
+
+                        # Criar e salvar o colaborador
+                        colaborador = Colaborador(
+                            first_name=row['first_name'].strip(),
+                            last_name=row['last_name'].strip(),
+                            is_staff=row['is_staff'].strip().lower() == 'true',
+                            date_joined=date_joined,
+                            cpf=row['cpf'].strip(),
+                            email=email,
+                            telefone=row['telefone'].strip(),
+                            data_nascimento=data_nascimento,
+                            cargo_id=int(row['cargo_id']),
+                            is_active=row['is_active'].strip().lower() == 'true',
+                            empresa_id=int(row['empresa_id']),
+                            setor_id=int(row['setor_id'])
+                        )
+                        colaborador.save()
+
+                    except Exception as e:
+                        errors.append(f"Linha {i}: {e}")
+                        logger.error(f"Erro ao processar linha {i}: {e}")
+
+
+            if errors:
+                return JsonResponse({'errors': errors}, status=400)
+
+            return JsonResponse({'message': 'Importação concluída com sucesso!'})
+        except Exception as e:
+            logger.error(f"Erro ao processar o arquivo: {e}")
+            return JsonResponse({'error': str(e)}, status=500)
 
     return JsonResponse({'error': 'Requisição inválida'}, status=400)

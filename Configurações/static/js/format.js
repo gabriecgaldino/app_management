@@ -126,16 +126,28 @@ document.getElementById('uploadBtn').addEventListener('click', function() {
 });
 
 document.getElementById('confirmUploadBtn').addEventListener('click', function() {
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
     const form = document.createElement('form');
     form.method = 'POST';
-    form.action = '{% url "importar_funcionarios" %}';
+    form.action = '/colaboradores/importar/';
+    form.enctype = 'multipart/form-data';
+
+    // Adiciona o CSRF token ao formulário
+    const csrfInput = document.createElement('input');
+    csrfInput.type = 'hidden';
+    csrfInput.name = 'csrfmiddlewaretoken';
+    csrfInput.value = csrfToken;
+    form.appendChild(csrfInput);
+
+    // Adiciona o arquivo ao formulário
     const fileInput = document.getElementById('csvFile');
-    const file = fileInput.files[0];
     const inputFile = document.createElement('input');
     inputFile.type = 'file';
     inputFile.name = 'csvFile';
     inputFile.files = fileInput.files;
     form.appendChild(inputFile);
+
     document.body.appendChild(form);
     form.submit();
 });
@@ -165,7 +177,7 @@ document.querySelector('#import-modal').addEventListener('submit', async functio
                 const modal = new bootstrap.Modal(document.querySelector('#errorModal'));
                 modal.show();
             } else {
-                alert('Importação concluída com sucesso!');
+                alert(`${data.message}`);
             }
         }
     } catch (error) {

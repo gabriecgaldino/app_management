@@ -7,7 +7,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form action="{% url 'importar_funcionarios' %}" method="POST" enctype="multipart/form-data" id="import-modal">
+          <form action="" method="POST" enctype="multipart/form-data" id="import-modal">
             {% csrf_token %}
             <div class="input-group mb-3">
               <!-- Campo para exibir o nome do arquivo -->
@@ -19,7 +19,7 @@
               </div>
             </div>
             <a href="{% url 'baixar_template' %}" class="btn btn-info">Baixar Template</a>
-            <button class="btn btn-success" id="uploadBtn">Enviar</button>
+            <button class="btn btn-success" id="uploadBtn" type="submit">Enviar</button>
         </form>
             
         </div>
@@ -37,8 +37,12 @@
         </div>
         <div class="modal-body">
           <p>Você tem certeza que deseja enviar os dados?</p>
-          <button type="button" class="btn btn-danger" id="confirmUploadBtn">Confirmar</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+          <form action="" method="post">
+            {% csrf_token %}
+            <meta name="csrf-token" content="{{ csrf_token }}">
+            <button type="button" class="btn btn-danger" id="confirmUploadBtn" data-url="{% url 'importar_funcionarios' %}">Confirmar</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+          </form>
         </div>
       </div>
     </div>

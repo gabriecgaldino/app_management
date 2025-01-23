@@ -17,14 +17,13 @@ def login_view(request):
             user = authenticate(request, username=username, password=password)
             if user:
                 login(request, user)
-                logger.info(f"Usuário {username} autenticado com sucesso.")
+                messages.success(request, f'Usuário autenticado com sucesso!')
                 return redirect('index')
             else:
-                logger.warning(f"Tentativa de login falhou para o usuário {username}.")
                 messages.error(request, "Usuário ou senha incorretos.")
         else:
-            logger.error(f"Erro no formulário de login: {form_login.errors}")
             messages.error(request, "Erro no preenchimento do formulário.")
+            logger.error(f"Erro no formulário de login: {form_login.errors}")
 
     return render(request, 'login.html', {'form_login': form_login})
         

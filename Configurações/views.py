@@ -133,7 +133,8 @@ def importar_funcionarios(request):
         csv_file = request.FILES['csvFile']
 
         if not csv_file.name.endswith('.csv'):
-            return JsonResponse({'error': 'O formato do arquivo é inválido.'}, status=400)
+            messages.warning(request, 'O formato do arquivo é invalido.')
+            return redirect('/colaboradores/')
 
         errors = []
 
@@ -197,11 +198,14 @@ def importar_funcionarios(request):
 
 
             if errors:
-                return JsonResponse({'errors': errors}, status=400)
-
-            return JsonResponse({'message': 'Importação concluída com sucesso!'})
+                for error in errors:
+                    messages.error(request, error)
+                return redirect('/colaboradores/')
+            messages.success(request, 'Importação concluída com sucesso!')
+            return redirect('/colaboradores/')
         except Exception as e:
+            messages.error(request, 'Erro ao processar arquivo.')
             logger.error(f"Erro ao processar o arquivo: {e}")
-            return JsonResponse({'error': str(e)}, status=500)
-
-    return JsonResponse({'error': 'Requisição inválida'}, status=400)
+            return redirect('/colaboradores/')
+        
+    return redirect('/colaboradores/')

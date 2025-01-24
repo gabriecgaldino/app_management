@@ -1,0 +1,73 @@
+.alert-danger {
+    background-color: #f8d7da;
+    color: #842029;
+    border-color: #f5c2c7;
+    border-radius: 0.5rem;
+    font-size: 0.95rem;
+    padding: 1rem;
+
+    animation: fadeIn 0.5s ease-out;
+}
+.alert-danger ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.alert-danger li {
+    margin-bottom: 0.5rem;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+
+.messages-container {
+    position: fixed;
+    top: 20px; /* Primeira mensagem começa a 20px do topo */
+    right: 20px;
+    z-index: 1050;
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Espaço entre mensagens */
+}
+
+.slide-in {
+    animation: slideIn 0.5s ease-out forwards; 
+}
+
+.messages-container .alert {
+    margin-bottom: 10px; /* Espaçamento entre mensagens */
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%); 
+        opacity: 0; 
+    }
+    to {
+        transform: translateX(0); 
+        opacity: 1; 
+    }
+}
+
+.fade-out {
+    animation: fadeOut 0.5s ease-out forwards; 
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1; 
+    }
+    to {
+        opacity: 0; 
+    }
+}

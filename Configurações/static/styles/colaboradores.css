@@ -5,14 +5,15 @@
     border-radius: 0.5rem;
     font-size: 0.95rem;
     padding: 1rem;
-
     animation: fadeIn 0.5s ease-out;
 }
+
 .alert-danger ul {
     margin: 0;
     padding: 0;
     list-style: none;
 }
+
 .alert-danger li {
     margin-bottom: 0.5rem;
 }
@@ -27,8 +28,6 @@
         transform: translateY(0);
     }
 }
-
-
 
 .messages-container {
     position: fixed;
@@ -45,7 +44,7 @@
 }
 
 .messages-container .alert {
-    margin-bottom: 10px; /* Espaçamento entre mensagens */
+    margin: 0; /* Remove margem redundante */
 }
 
 @keyframes slideIn {
@@ -69,5 +68,20 @@
     }
     to {
         opacity: 0; 
+    }
+}
+
+.slide-out {
+    animation: slideOut 0.5s ease-out forwards;
+}
+
+@keyframes slideOut {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(100%);
+        opacity: 0;
     }
 }

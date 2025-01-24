@@ -4,7 +4,7 @@ from django.contrib.auth.views import LogoutView
 from Usuario.views import login_view
 from Configurações.views import configuracoes_view, perfil_view, atualizar_perfil_view, colaboradores_view, baixar_template, importar_funcionarios
 from Organização.views import cria_setor
-from Market.views import market_view, developer_view
+from Market.views import market_view, developer_login_view, developer_view
 from . import views
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -20,5 +20,6 @@ urlpatterns = [
     path('colaboradores/baixar-template/', baixar_template, name='baixar_template'),
     path('colaboradores/<str:matricula>/', colaboradores_view, name='colaboradores'),
     path('market/', market_view, name='market'),
-    path('developer/login/', developer_view, name='developer')
+    path('developer/login/', developer_login_view, name='developer'),
+    path('developer/', developer_view, name='central')
 ]

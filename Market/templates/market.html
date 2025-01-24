@@ -2,7 +2,47 @@
 
 {% load static %}
 
+{% block css %}
+  <link rel="stylesheet" href="../static/styles/market.css">
+{%endblock%}
+
 {% block content %}
+<!-- Barra de categorias -->
+<div class="categories-bar">
+  <div class="container d-flex justify-content-center">
+      <ul class="nav">
+          <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="crmDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">CRM</a>
+              <ul class="dropdown-menu" aria-labelledby="crmDropdown">
+                  <li><a class="dropdown-item" href="#">CRM Avançado</a></li>
+                  <li><a class="dropdown-item" href="#">CRM Simples</a></li>
+              </ul>
+          </li>
+          <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="vendasDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Vendas</a>
+              <ul class="dropdown-menu" aria-labelledby="vendasDropdown">
+                  <li><a class="dropdown-item" href="#">Gestão de Pedidos</a></li>
+                  <li><a class="dropdown-item" href="#">Controle de Orçamentos</a></li>
+              </ul>
+          </li>
+          <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="rhDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">RH</a>
+              <ul class="dropdown-menu" aria-labelledby="rhDropdown">
+                  <li><a class="dropdown-item" href="#">Folha de Pagamento</a></li>
+                  <li><a class="dropdown-item" href="#">Gestão de Pessoal</a></li>
+              </ul>
+          </li>
+          <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="administracaoDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Administração</a>
+              <ul class="dropdown-menu" aria-labelledby="administracaoDropdown">
+                  <li><a class="dropdown-item" href="#">Controle Financeiro</a></li>
+                  <li><a class="dropdown-item" href="#">Gestão de Estoques</a></li>
+              </ul>
+          </li>
+          <!-- Mais itens aqui -->
+      </ul>
+  </div>
+</div>
   <!-- Banner -->
   <div id="mainCarousel" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">

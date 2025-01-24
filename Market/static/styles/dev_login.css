@@ -1,0 +1,93 @@
+body {
+    background-color: #f5f7fa;
+    font-family: 'Arial', sans-serif;
+    color: #333;
+}
+
+.auth-container {
+    max-width: 900px;
+    margin: 2rem auto;
+    background: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+}
+
+.auth-left {
+    background-color: #002f63;
+    color: #fff;
+    padding: 2rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.auth-left h2 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.auth-left p {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.auth-left a {
+    color: #f5f7fa;
+    text-decoration: none;
+    font-weight: bold;
+    border: 1px solid #f5f7fa;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+.auth-left a:hover {
+    background-color: #f5f7fa;
+    color: #002f63;
+}
+
+.auth-right {
+    padding: 2rem;
+    flex: 1;
+}
+
+.auth-right h3 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    color: #002f63;
+}
+
+.form-control {
+    border-radius: 6px;
+}
+
+.btn-primary {
+    background-color: #002f63;
+    border-color: #002f63;
+    border-radius: 6px;
+}
+
+.btn-primary:hover {
+    background-color: #00478f;
+    border-color: #00478f;
+}
+
+.toggle-link {
+    display: block;
+    margin-top: 1rem;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #002f63;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.toggle-link:hover {
+    color: #00478f;
+}

@@ -1,0 +1,23 @@
+.categories-bar {
+    background-color: #343a40; /* Cor de fundo */
+    color: #fff;
+}
+
+.categories-bar .nav-link {
+    color: #fff;
+    padding: 10px 15px;
+    transition: background-color 0.3s ease;
+}
+
+.categories-bar .nav-link:hover {
+    background-color: #495057;
+}
+
+.categories-bar .dropdown-menu {
+    background-color: #f8f9fa; /* Cor do dropdown */
+    border-radius: 5px;
+}
+
+.categories-bar .dropdown-item:hover {
+    background-color: #e9ecef;
+}

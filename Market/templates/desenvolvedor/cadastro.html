@@ -1,0 +1,49 @@
+<!-- Modal de cadastro -->
+<div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="signupModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <!-- Cabeçalho do modal -->
+            <div class="modal-header border-0">
+                <h5 class="modal-title" id="signupModalLabel">Crie sua conta</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <!-- Corpo do modal -->
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="signupName" class="form-label">Nome completo</label>
+                        <input type="text" class="form-control" id="signupName" placeholder="Digite seu nome completo" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="signupEmail" class="form-label">E-mail</label>
+                        <input type="email" class="form-control" id="signupEmail" placeholder="Digite seu e-mail" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="signupPassword" class="form-label">Senha</label>
+                        <input type="password" class="form-control" id="signupPassword" placeholder="Digite sua senha" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="signupConfirmPassword" class="form-label">Confirmar senha</label>
+                        <input type="password" class="form-control" id="signupConfirmPassword" placeholder="Confirme sua senha" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="signupCompany" class="form-label">Nome da empresa (opcional)</label>
+                        <input type="text" class="form-control" id="signupCompany" placeholder="Digite o nome da sua empresa">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100">Criar conta</button>
+                </form>
+            </div>
+
+            <!-- Rodapé do modal -->
+            <div class="modal-footer border-0 text-center">
+                <p class="small">Já tem uma conta? <a href="#" class="text-decoration-none">Faça login</a></p>
+            </div>
+        </div>
+    </div>
+</div>

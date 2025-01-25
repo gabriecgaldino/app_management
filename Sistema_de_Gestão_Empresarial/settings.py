@@ -115,6 +115,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 AUTHENTICATION_BACKENDS = [
+    'Market.auth_developers.DeveloperAuthBackend',
     'django.contrib.auth.backends.ModelBackend',
 ]
 

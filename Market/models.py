@@ -1,12 +1,20 @@
 from django.db import models
-from django.conf import settings
+from django.contrib.auth.models import AbstractUser, Group, Permission
 from datetime import datetime
 
-class Developer(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
-    nome_empresa = models.CharField(max_length=100, blank=False, null=False)
-    cod_autorizacao = models.CharField(max_length=15, null=False, blank=False, unique=True)
+class Developer(AbstractUser):
+    groups = models.ManyToManyField(Group, related_name= 'developer', blank=True)
+    user_permissions = models.ManyToManyField(Permission, related_name='developer_permission', blank=True)
     aprovado = models.BooleanField(default=False)
+    cpf = models.CharField(max_length=11, blank=False, null=False)
+    telefone = models.CharField(max_length=11)
+    is_developer = models.BooleanField(default=True)
+    
+    def save(self, *args, **kwargs):
+        self.username = self.email
+        super().save(*args, **kwargs)
+        
+        
     
 class App(models.Model):
     nome = models.CharField(max_length=20, unique=True, blank=False)

@@ -67,7 +67,6 @@ def colaboradores_view(request):
     if request.method == 'POST':
         if 'atualizar' in request.POST and colaborador:
             # Atualização do colaborador
-            print(form_atualizar)
             form_atualizar = ColaboradorForm(request.POST, instance=colaborador)
             
             
@@ -80,10 +79,8 @@ def colaboradores_view(request):
                     colaborador_atualizado = form_atualizar.save(commit=False)
                     colaborador_atualizado.endereco = endereco
                     colaborador_atualizado.save()
-                print("Colaborador atualizado com sucesso.")
                 return redirect('colaboradores')
             else:
-                print("Erros ao atualizar colaborador:")
                 print(form_atualizar.errors)
                 print(form_endereco.errors)
 
@@ -97,12 +94,7 @@ def colaboradores_view(request):
                     novo_colaborador = form_colaborador.save(commit=False)
                     novo_colaborador.endereco = endereco
                     novo_colaborador.save()
-                print("Novo colaborador criado com sucesso.")
                 return redirect('colaboradores')
-            else:
-                print("Erros ao criar colaborador:")
-                print(form_colaborador.errors)
-                print(form_endereco.errors)
 
     return render(request, 'colaboradores.html', {
         'colaboradores': colaboradores,

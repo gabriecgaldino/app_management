@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, Group, Permission
 from Organização.models import Empresa, Setor, Cargo
 from django.core.exceptions import ValidationError
 from validate_docbr import CPF
@@ -24,6 +24,8 @@ class Colaborador(AbstractUser):
             raise ValidationError('CPF inválido.')
         
     # Dados pessoais
+    groups = models.ManyToManyField(Group, related_name='colaborador', blank=True)
+    user_permissions = models.ManyToManyField(Permission, related_name='colaborador_permission', blank=True)
     cpf = models.CharField(max_length=14, unique=True, validators=[validar_cpf])
     email = models.EmailField(max_length=50, unique=True)
     telefone = models.CharField(max_length=15, blank=True, null=True)

@@ -91,3 +91,61 @@ body {
 .toggle-link:hover {
     color: #00478f;
 }
+
+
+/* Estilos para o container de mensagens */
+.messages-container {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 9999;
+    width: auto;
+    max-width: 300px;
+}
+
+/* Estilos para cada mensagem */
+.alert {
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilos de animação para o slide-in */
+.slide-in {
+    animation: slideIn 0.5s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+/* Estilos para diferentes tipos de mensagens */
+.alert-success {
+    background-color: #4caf50;
+    color: white;
+}
+
+.alert-danger {
+    background-color: #f44336;
+    color: white;
+}
+
+.alert-warning {
+    background-color: #ff9800;
+    color: white;
+}
+
+.alert-info {
+    background-color: #2196f3;
+    color: white;
+}
+
+/* Botão de fechar */
+.btn-close {
+    opacity: 1;
+}

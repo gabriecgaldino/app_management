@@ -23,8 +23,8 @@ class Colaborador(AbstractUser):
             raise ValidationError('CPF inválido.')
         
     # Dados pessoais
-    groups = models.ManyToManyField(Group, related_name='colaborador', blank=True)
-    user_permissions = models.ManyToManyField(Permission, related_name='colaborador_permission', blank=True)
+    colaborador_groups = models.ManyToManyField(Group, related_name='colaborador', blank=True)
+    colaborador_permissions = models.ManyToManyField(Permission, related_name='colaborador_permission', blank=True)
     cpf = models.CharField(max_length=14, unique=True, validators=[validar_cpf])
     email = models.EmailField(max_length=50, unique=True)
     telefone = models.CharField(max_length=15, blank=True, null=True)
@@ -39,12 +39,13 @@ class Colaborador(AbstractUser):
                               blank=True, null=True, related_name='cargo')
     cargo = models.ForeignKey(Cargo, on_delete=models.PROTECT,
                               blank=True, null=True, related_name='cargo')
-    matricula = models.CharField(max_length=20, unique=True)
+    matricula = models.CharField(max_length=20, unique=True, blank=True, null=True)
     data_demissao = models.DateField(blank=True, null=True)
 
     # Dados de acesso
     is_active = models.BooleanField(default=1)
     is_developer = models.BooleanField(default=False)
+    
     USERNAME_FIELD = 'username'
 
     def save(self, *args, **kwargs):
@@ -67,3 +68,19 @@ class Colaborador(AbstractUser):
 
         super().save(*args, **kwargs)
         
+        
+class Developer(Colaborador):
+    is_developer_approved = models.BooleanField(default=False)
+    dev_groups = models.ManyToManyField(Group, related_name='developer', blank=True)
+    dev_permissions = models.ManyToManyField(Permission, related_name='developer_permission', blank=True)
+    
+    def save(self, *args, **kargs):
+        self.is_active = 1
+        self.cpf = re.sub(r'\D', '', self.cpf)
+        self.username = self.email
+        
+        if not self.password:
+            self.password1 = self.set_password(self.cpf[:8])
+            self.password2 = self.set_password(self.cpf[:8])
+            
+        super().save(self, *args, **kargs)

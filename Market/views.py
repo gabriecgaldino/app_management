@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import login
 from django.contrib import messages
 from .auth_developers import DeveloperAuthBackend
 
@@ -11,8 +11,8 @@ def market_view(request):
     return render(request, 'market.html')
 
 def developer_login_view(request):
-    form_login = DeveloperLoginForm()
-    form_register = DeveloperRegisterForm()
+    form_login = DeveloperLoginForm(request.POST or None)
+    form_register = DeveloperRegisterForm(request.POST or None)
 
     if 'login' in request.POST:
         form_login = DeveloperLoginForm(request, data=request.POST or None)

@@ -1,6 +1,6 @@
 from django.db import models
 from datetime import datetime
-from Usuario.models import Colaborador
+from Usuario.models import Developer
  
 class App(models.Model):
     nome = models.CharField(max_length=20, unique=True, blank=False)
@@ -9,7 +9,7 @@ class App(models.Model):
     instalado = models.BooleanField(default=False)
     dependencias = models.JSONField(default=list)
     arquivo_pacote = models.FileField(upload_to='app_pacotes/')
-    autor = models.ForeignKey(Colaborador, on_delete=models.PROTECT, blank=False, null=False)
+    autor = models.ForeignKey(Developer, on_delete=models.PROTECT, blank=False, null=False)
     publicado = models.BooleanField(default=False)
     created_At = models.DateTimeField(auto_now_add=True)
     updated_At = models.DateTimeField(auto_now=True)

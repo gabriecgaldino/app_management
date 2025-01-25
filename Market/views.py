@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
+from .auth_developers import DeveloperAuthBackend
 
 from .forms import DeveloperLoginForm, DeveloperRegisterForm
 
@@ -20,10 +21,11 @@ def developer_login_view(request):
             password = form_login.cleaned_data.get('password')
 
             # Use o backend personalizado para autenticar
-            user = authenticate(request, username=username, password=password, backend='Market.auth_backends.DeveloperAuthBackend')
+            backend = DeveloperAuthBackend()
+            user = backend.authenticate(request, username=username, password=password)
             if user:
                 login(request, user)
-                messages.success(request, 'Usuário autenticado!')
+                messages.success(request, 'Desenvolvedor autenticado!')
                 return redirect('/developer/')
             else:
                 messages.error(request, 'Usuário ou senha incorretos.')

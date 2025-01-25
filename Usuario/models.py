@@ -17,7 +17,6 @@ class Endereco(models.Model):
 
 
 class Colaborador(AbstractUser):
-    
     def validar_cpf(value):
         cpf = CPF()
         if not cpf.validate(value):
@@ -45,10 +44,8 @@ class Colaborador(AbstractUser):
 
     # Dados de acesso
     is_active = models.BooleanField(default=1)
-
+    is_developer = models.BooleanField(default=False)
     USERNAME_FIELD = 'username'
-    
-
 
     def save(self, *args, **kwargs):
         self.is_active = 1

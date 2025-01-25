@@ -13,6 +13,7 @@ class DeveloperAuthBackend(ModelBackend):
             user = User.objects.get(username=username)
             # Verifique se o usuário é válido para a central do desenvolvedor
             if user.is_developer and user.check_password(password):
+                print('desenvolvedor')
                 return user
         except User.DoesNotExist:
             return None

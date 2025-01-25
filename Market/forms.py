@@ -1,11 +1,11 @@
 from django import forms
-from .models import Developer
+from Usuario.models import Colaborador
 from django.contrib.auth.forms import AuthenticationForm
 
 
 class DeveloperRegisterForm(forms.Form):
     class Meta:
-        Model = Developer
+        Model = Colaborador
         fields = ['email', 'first_name', 'last_name', 'password', 'cpf', 'telefone']
         widgets = {
             'first_name': forms.TextInput(attrs={

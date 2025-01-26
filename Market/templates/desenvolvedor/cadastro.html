@@ -10,14 +10,16 @@
 
             <!-- Corpo do modal -->
             <div class="modal-body">
-                <form>
+                <form method="post">
                     {% csrf_token %}
                     <div class="mb-3">
-                        {{ form_register.as_p }}
-                        <label for="signupName" class="form-label">Nome completo</label>
-                        {{ form_register.first_name}} {{ form_register.lastname }}
+                        <label for="signupName" class="form-label">Nome </label>
+                        {{ form_register.first_name }} 
                     </div>
-
+                    <div class="mb-3">
+                        <label for="" class="form-label">Sobrenome</label>
+                        {{ form_register.last_name }}
+                    </div>
                     <div class="mb-3">
                         <label class="form-label">CPF</label>
                         {{ form_register.cpf }}
@@ -34,15 +36,8 @@
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">Senha</label>
-                        {{ form_register.password }}
+                        <label class="form-label">Atenção, sua senha de primeiro acesso será os 8 primeiros dígitos do CPF.</label>
                     </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Confirmar senha</label>
-                        {{ form_register.password }}
-                    </div>
-
                     <button type="submit" name="register" class="btn btn-primary w-100">Criar conta</button>
                 </form>
             </div>

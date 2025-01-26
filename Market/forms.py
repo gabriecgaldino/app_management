@@ -3,9 +3,9 @@ from Usuario.models import Developer
 from django.contrib.auth.forms import AuthenticationForm
 
 
-class DeveloperRegisterForm(forms.Form):
+class DeveloperRegisterForm(forms.ModelForm):
     class Meta:
-        Model = Developer
+        model = Developer
         fields = ['email', 'first_name', 'last_name', 'cpf', 'telefone']
         widgets = {
             'first_name': forms.TextInput(attrs={

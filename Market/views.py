@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import login
+from django.contrib.auth import login, authenticate
 from django.contrib import messages
 from .auth_developers import DeveloperAuthBackend
 
@@ -11,8 +11,8 @@ def market_view(request):
     return render(request, 'market.html')
 
 def developer_login_view(request):
-    form_login = DeveloperLoginForm(request.POST or None)
-    form_register = DeveloperRegisterForm(request.POST or None)
+    form_login = DeveloperLoginForm()
+    form_register = DeveloperRegisterForm()
 
     if 'login' in request.POST:
         form_login = DeveloperLoginForm(request, data=request.POST or None)
@@ -21,9 +21,10 @@ def developer_login_view(request):
             password = form_login.cleaned_data.get('password')
 
             # Use o backend personalizado para autenticar
-            backend = DeveloperAuthBackend()
-            user = backend.authenticate(request, username=username, password=password)
-            if user:
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                user.backend = 'django.contrib.auth.backends.ModelBackend'
+                
                 login(request, user)
                 messages.success(request, 'Desenvolvedor autenticado!')
                 return redirect('/developer/')
@@ -33,14 +34,15 @@ def developer_login_view(request):
             messages.warning(request, 'Hmm, formulário preenchido incorretamente.')
 
     if 'register' in request.POST:
-        form_register = DeveloperRegisterForm(request.POST)
-        if form_register.is_valid():
-            developer = form_register.save(commit=True)
-            developer.save()
-            messages.success(request, 'Usuário cadastrado com sucesso, realize o login!')
-            return redirect('developer_login_view')
-        else:
-            messages.error(request, 'Dados preenchidos incorretamente, verifique e tente novamente.')
+        try: 
+            form_register = DeveloperRegisterForm(request.POST)
+            if form_register.is_valid():
+                developer = form_register.save(commit=True)
+                developer.save()
+                messages.success(request, 'Usuário cadastrado com sucesso, realize o login!')
+                return redirect('developer_login_view')
+        except ValueError:
+            messages.error(request, f'Erro ao criar usuário, verifique e tente novamente.')
 
     return render(request, 'desenvolvedor/login.html', {
         'form_login': form_login,
@@ -49,6 +51,4 @@ def developer_login_view(request):
 
 
 def developer_view(request):
-
-        
     return render(request, 'desenvolvedor/central_do_desenvolvedor.html')

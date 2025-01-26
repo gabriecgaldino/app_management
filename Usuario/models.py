@@ -78,6 +78,7 @@ class Developer(Colaborador):
         self.is_active = 1
         self.cpf = re.sub(r'\D', '', self.cpf)
         self.username = self.email
+        self.is_developer = True
         
         if not self.password:
             self.password1 = self.set_password(self.cpf[:8])

@@ -1,9 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
 from django.contrib import messages
-from .auth_developers import DeveloperAuthBackend
 
-from .forms import DeveloperLoginForm, DeveloperRegisterForm
+from .forms import DeveloperLoginForm, DeveloperRegisterForm, AppRegisterForm
 
 
 
@@ -37,11 +36,12 @@ def developer_login_view(request):
         try: 
             form_register = DeveloperRegisterForm(request.POST)
             if form_register.is_valid():
-                developer = form_register.save(commit=True)
+                developer = form_register.save()
                 developer.save()
                 messages.success(request, 'Usuário cadastrado com sucesso, realize o login!')
-                return redirect('developer_login_view')
-        except ValueError:
+                return redirect('/developer/login/')
+        except ValueError as e:
+            print(e)
             messages.error(request, f'Erro ao criar usuário, verifique e tente novamente.')
 
     return render(request, 'desenvolvedor/login.html', {
@@ -51,4 +51,7 @@ def developer_login_view(request):
 
 
 def developer_view(request):
-    return render(request, 'desenvolvedor/central_do_desenvolvedor.html')
+    app_form = AppRegisterForm()
+    return render(request, 'desenvolvedor/central_do_desenvolvedor.html', {
+        'app_form': app_form
+        })

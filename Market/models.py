@@ -5,7 +5,7 @@ from Usuario.models import Developer
 class App(models.Model):
     nome = models.CharField(max_length=20, unique=True, blank=False)
     descricao = models.CharField(max_length=200, blank=True)
-    versão = models.CharField(max_length=20, blank=False)
+    versao = models.CharField(max_length=20, blank=False)
     instalado = models.BooleanField(default=False)
     dependencias = models.JSONField(default=list)
     arquivo_pacote = models.FileField(upload_to='app_pacotes/')
@@ -13,6 +13,11 @@ class App(models.Model):
     publicado = models.BooleanField(default=False)
     created_At = models.DateTimeField(auto_now_add=True)
     updated_At = models.DateTimeField(auto_now=True)
+    
+    def save(self, *args, **kwargs):
+        
+        
+        super().save(*args, **kwargs)
     
 class Market(models.Model):
     aplicativos = models.ForeignKey(

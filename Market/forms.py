@@ -1,5 +1,6 @@
 from django import forms
 from Usuario.models import Developer
+from Market.models import App
 from django.contrib.auth.forms import AuthenticationForm
 
 
@@ -51,3 +52,32 @@ class DeveloperLoginForm(AuthenticationForm):
         'id': 'password',
         'placeholder': 'Digite sua senha'
     }))
+    
+class AppRegisterForm(forms.ModelForm):
+    class Meta: 
+        model = App
+        fields = ['nome', 'descricao', 'versao', 'arquivo_pacote']
+        widgets = {
+            'nome': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Nome do App',
+                'id': 'app-name'
+            }),
+            'versao': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Versão',
+                'id': 'app-version'
+            }),
+            'descricao': forms.Textarea(attrs={
+                'class': 'form-control',
+                'placeholder': 'Detalhes do App',
+                'id': 'app-details',
+                'rows': '3'
+            }),
+            'arquivo_pacote': forms.FileInput(
+                attrs={
+                'class': 'form-control',
+                'placeholder': 'Carregue seu arquivo',
+                'id': 'app-path'
+            })
+        }

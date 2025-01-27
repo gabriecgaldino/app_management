@@ -103,15 +103,15 @@
                         <form>
                             <div class="mb-3">
                                 <label for="appName" class="form-label">Nome do Aplicativo</label>
-                                <input type="text" class="form-control" id="appName" placeholder="Digite o nome do aplicativo">
+                                {{ app_form.nome }}
                             </div>
                             <div class="mb-3">
                                 <label for="appDescription" class="form-label">Descrição</label>
-                                <textarea class="form-control" id="appDescription" rows="3" placeholder="Descreva o aplicativo"></textarea>
+                                {{ app_form.descricao }}
                             </div>
                             <div class="mb-3">
                                 <label for="appFile" class="form-label">Arquivo</label>
-                                <input type="file" class="form-control" id="appFile">
+                                {{ app_form.arquivo_pacote }}
                             </div>
                             <div class="d-grid">
                                 <button type="submit" class="btn btn-primary">Enviar Aplicativo</button>

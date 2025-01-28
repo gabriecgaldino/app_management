@@ -13,11 +13,8 @@ class App(models.Model):
     publicado = models.BooleanField(default=False)
     created_At = models.DateTimeField(auto_now_add=True)
     updated_At = models.DateTimeField(auto_now=True)
-    
-    def save(self, *args, **kwargs):
-        
-        
-        super().save(*args, **kwargs)
+    approved_status = models.BooleanField(default=False)
+
     
 class Market(models.Model):
     aplicativos = models.ForeignKey(

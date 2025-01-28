@@ -54,20 +54,21 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Gestor de Tarefas</td>
-                                        <td><span class="badge bg-success">Aprovado</span></td>
-                                        <td>João Silva</td>
-                                        <td><button class="btn btn-sm btn-primary">Detalhes</button></td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Controle de Estoque</td>
-                                        <td><span class="badge bg-warning">Em Análise</span></td>
-                                        <td>João Silva</td>
-                                        <td><button class="btn btn-sm btn-primary">Detalhes</button></td>
-                                    </tr>
+                                    {% for app in apps %}
+                                        <tr>
+                                            <td>{{ app.id }}</td>
+                                            <td>{{ app.nome }}</td>
+                                            {% if app.aproved_status %}
+                                                <td><span class="badge bg-success">Aprovado</span></td>
+                                            {% else %}
+                                                <td><span class="badge bg-warning">Em análise</span></td>
+                                            {% endif %}
+                                            <td>{{ app.autor.first_name }} {{ app.autor.first_name }}</td>  <!-- Exemplo: mostrando o nome completo do autor -->
+                                            <td><button class="btn btn-sm btn-primary">Detalhes</button></td>
+                                        </tr>
+                                    {% empty %}
+                                        <tr><td>Nenhum aplicativo publicado</td></tr>
+                                    {% endfor %}
                                 </tbody>
                             </table>
                         </div>

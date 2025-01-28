@@ -1,6 +1,9 @@
 from django.contrib import admin
 from django.urls import path
 from django.contrib.auth.views import LogoutView
+from django.conf import settings
+from django.conf.urls.static import static
+
 from Usuario.views import login_view
 from Configurações.views import configuracoes_view, perfil_view, atualizar_perfil_view, colaboradores_view, baixar_template, importar_funcionarios
 from Organização.views import cria_setor
@@ -22,4 +25,4 @@ urlpatterns = [
     path('market/', market_view, name='market'),
     path('developer/login/', developer_login_view, name='developer'),
     path('developer/', developer_view, name='central')
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

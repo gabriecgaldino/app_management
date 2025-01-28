@@ -3,6 +3,7 @@ from django.contrib.auth import login, authenticate
 from django.contrib import messages
 
 from .forms import DeveloperLoginForm, DeveloperRegisterForm, AppRegisterForm
+from Usuario.models import Developer
 
 
 
@@ -40,8 +41,7 @@ def developer_login_view(request):
                 developer.save()
                 messages.success(request, 'Usuário cadastrado com sucesso, realize o login!')
                 return redirect('/developer/login/')
-        except ValueError as e:
-            print(e)
+        except ValueError:
             messages.error(request, f'Erro ao criar usuário, verifique e tente novamente.')
 
     return render(request, 'desenvolvedor/login.html', {
@@ -52,6 +52,25 @@ def developer_login_view(request):
 
 def developer_view(request):
     app_form = AppRegisterForm()
-    return render(request, 'desenvolvedor/central_do_desenvolvedor.html', {
-        'app_form': app_form
-        })
+    if request.method == 'POST':
+        app_form = AppRegisterForm(request.POST, request.FILES)  # Certifique-se de incluir request.FILES
+
+        if app_form.is_valid():
+            app_instance = app_form.save(commit=False)  # Não salva ainda, para associar o autor
+            dev = request.user.id
+            # Associar o Developer ao campo 'autor'
+            if isinstance(Developer.objects.get(id=dev), Developer):
+                
+                app_instance.autor = Developer.objects.get(id=dev)
+            else:
+                messages.error(request, 'Você precisa ser um desenvolvedor para postar um aplicativo!')
+                return redirect('/developer/')
+
+            app_instance.save() 
+            messages.success(request, 'Aplicativo postado com sucesso!')
+            return AppRegisterForm()
+        else:
+            messages.error(request, 'Erro ao realizar upload, tente novamente mais tarde!')
+
+    return render(request, 'desenvolvedor/central_do_desenvolvedor.html', {'app_form': app_form})
+

@@ -101,3 +101,15 @@ body {
 .btn-close {
     opacity: 1;
 }
+
+.errorlist {
+    color: red;
+    font-size: 0.9em;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+input.is-invalid {
+    border-color: red;
+}

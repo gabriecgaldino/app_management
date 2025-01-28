@@ -100,23 +100,28 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form>
-                            <div class="mb-3">
-                                <label for="appName" class="form-label">Nome do Aplicativo</label>
-                                {{ app_form.nome }}
+                        <form method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div>
+                                {{ app_form.non_field_errors }}
+                                {% for field in app_form %}
+                                    <div>
+                                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                        {{ field }}
+                                        {% if field.errors %}
+                                            <ul class="errorlist">
+                                                {% for error in field.errors %}
+                                                    <li>{{ error }}</li>
+                                                {% endfor %}
+                                            </ul>
+                                        {% endif %}
+                                    </div>
+                                {% endfor %}
                             </div>
-                            <div class="mb-3">
-                                <label for="appDescription" class="form-label">Descrição</label>
-                                {{ app_form.descricao }}
-                            </div>
-                            <div class="mb-3">
-                                <label for="appFile" class="form-label">Arquivo</label>
-                                {{ app_form.arquivo_pacote }}
-                            </div>
-                            <div class="d-grid">
-                                <button type="submit" class="btn btn-primary">Enviar Aplicativo</button>
-                            </div>
+                            
+                            <button type="submit">Postar Aplicativo</button>
                         </form>
+                        
                     </div>
                 </div>
             </div>

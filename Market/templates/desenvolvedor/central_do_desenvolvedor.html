@@ -26,7 +26,7 @@
                     <a class="navbar-brand" href="#">Central do Desenvolvedor</a>
                     <div class="navbar-nav ms-auto">
                         <span class="navbar-text text-light me-3">
-                            João Silva <!-- Nome do desenvolvedor -->
+                            {{ user.first_name }} {{ user.last_name }}
                         </span>
                         <a class="nav-link" href="#">Perfil</a>
                         <a class="nav-link" href="#">Logout</a>
@@ -64,7 +64,7 @@
                                                 {{ app.approved_status }}
                                             </span>
                                         </td>
-                                        <td>{{ app.autor.first_name }} {{ app.autor.last_name }}</td>  <!-- Exemplo: nome completo do autor -->
+                                        <td>{{ app.autor.first_name }} {{ app.autor.last_name }}</td>  
                                         <td><button class="btn btn-sm btn-primary">Detalhes</button></td>
                                     </tr>
                                 {% empty %}

@@ -21,7 +21,7 @@ def developer_login_view(request):
             username = form_login.cleaned_data.get('username')
             password = form_login.cleaned_data.get('password')
 
-            # Use o backend personalizado para autenticar
+            # backend personalizado para autenticar
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 user.backend = 'django.contrib.auth.backends.ModelBackend'
@@ -57,10 +57,10 @@ def developer_view(request):
     apps = App.objects.all()
     
     if request.method == 'POST':
-        app_form = AppRegisterForm(request.POST, request.FILES)  # Certifique-se de incluir request.FILES
+        app_form = AppRegisterForm(request.POST, request.FILES)
 
         if app_form.is_valid():
-            app_instance = app_form.save(commit=False)  # Não salva ainda, para associar o autor
+            app_instance = app_form.save(commit=False)
             
             try:
                 developer = Developer.objects.get(id=dev)
@@ -71,7 +71,7 @@ def developer_view(request):
 
             app_instance.save() 
             messages.success(request, 'Aplicativo postado com sucesso!')
-            return redirect('/developer/')  # Redirecionamento após sucesso
+            return redirect('/developer/')
 
         else:
             messages.error(request, 'Erro ao realizar upload, tente novamente mais tarde!')

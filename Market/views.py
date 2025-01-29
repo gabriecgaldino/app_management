@@ -11,6 +11,8 @@ from .models import App
 import os
 import zipfile
 
+from .verify_app import verify_app
+
 
 
 
@@ -92,8 +94,15 @@ def developer_view(request):
                     
                 app_instance.autor = developer
                 app_instance.save()
+                
+                verification_result = verify_app(app_instance)
+                
+                if verification_result is True:
+                    messages.success(request, 'Aplicativo enviado e aprovado com sucesso!')
+                else:
+                    messages.error(request, f"Erro ao verificar o aplicativo: {verification_result}")
+                    return redirect('/developer/')
                     
-                messages.success(request, 'Upload realizado com sucesso, verifique o status de aprovação na tela principal.')
                 return redirect('/developer/')
                 
                 

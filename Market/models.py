@@ -16,8 +16,12 @@ class App(models.Model):
     publicado = models.BooleanField(default=False)
     created_At = models.DateTimeField(auto_now_add=True)
     updated_At = models.DateTimeField(auto_now=True)
-    approved_status = models.CharField(null=True, blank=True, max_length=50)
+    approved_status = models.CharField(null=True, blank=True, max_length=50, editable=True)
     
+    def save(self, *args, **kwargs):
+        self.approved_status = 'Em análise'
+    
+        super().save(*args, **kwargs)
 
 
     

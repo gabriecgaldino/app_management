@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 from .forms import DeveloperLoginForm, DeveloperRegisterForm, AppRegisterForm
 from Usuario.models import Developer
@@ -10,6 +11,11 @@ from .models import App
 
 def market_view(request):
     return render(request, 'market.html')
+
+def developer_logout_view(request):
+    logout(request)
+    messages.success(request, 'Desenvolvedor, desconectado com sucesso!')
+    return redirect('/developer/login/')
 
 def developer_login_view(request):
     form_login = DeveloperLoginForm()
@@ -50,7 +56,7 @@ def developer_login_view(request):
         'form_register': form_register
     })
 
-
+@login_required
 def developer_view(request):
     dev = request.user.id
     app_form = AppRegisterForm()

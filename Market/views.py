@@ -3,6 +3,8 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
+from django.shortcuts import get_object_or_404
+
 
 from .forms import DeveloperLoginForm, DeveloperRegisterForm, AppRegisterForm
 from Usuario.models import Developer
@@ -84,7 +86,7 @@ def developer_view(request):
             try:
                 developer = Developer.objects.get(id=dev)
                 
-                app_dir = os.path.join(settings.MEDIA_ROOT, f'apps/{developer.first_name}')
+                app_dir = os.path.join(settings.MEDIA_ROOT, f'apps/')
                 
                 os.makedirs(app_dir, exist_ok=True)
                 
@@ -98,6 +100,7 @@ def developer_view(request):
                 verification_result = verify_app(app_instance)
                 
                 if verification_result is True:
+                    app_instance.approved_status = 'Aprovado'
                     messages.success(request, 'Aplicativo enviado e aprovado com sucesso!')
                 else:
                     messages.error(request, f"Erro ao verificar o aplicativo: {verification_result}")
@@ -120,3 +123,30 @@ def developer_view(request):
     })
 
 
+def app_review(request, app_id):
+    app_instance = get_object_or_404(App, id=app_id)
+    
+    if app_instance.autor != Developer.objects.get(id=request.user.id):
+        messages.warning(request, 'Atenção, você não tem autorização para solicitar revisão desse app.')
+        return redirect('/developer/')
+
+    try:
+        verification_result = verify_app(app_instance)
+
+        if verification_result is True:
+            # Atualiza o status para 'Aprovado' se a verificação for bem-sucedida
+            app_instance.approved_status = 'Aprovado'
+            print(app_instance.approved_status)
+            app_instance.save()
+            print(app_instance.approved_status)
+            messages.success(request, 'Aplicativo revisado e aprovado com sucesso.')
+        else:
+            # Atualiza o status para 'Negado' caso haja falhas
+            app_instance.approved_status = 'Negado'
+            app_instance.save()
+            messages.error(request, f'O app ainda não atende aos requisitos. Erro: {verification_result}')
+
+    except Exception as e:
+        messages.error(request, f'Erro inesperado: {e}')
+        
+    return redirect('/developer/')

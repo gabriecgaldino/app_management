@@ -65,7 +65,10 @@
                                             </span>
                                         </td>
                                         <td>{{ app.autor.first_name }} {{ app.autor.last_name }}</td>  
-                                        <td><button class="btn btn-sm btn-primary">Detalhes</button></td>
+                                        <td>
+                                            <a class="btn btn-sm btn-primary">Detalhes</a>
+                                            <a href="{% url 'app_review' app.id %}" class="btn btn-sm btn-secondary">Revisão</a>
+                                        </td>
                                     </tr>
                                 {% empty %}
                                     <tr><td colspan="5">Nenhum aplicativo publicado</td></tr>

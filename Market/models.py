@@ -6,22 +6,26 @@ from Usuario.models import Developer
 register = template.Library()
  
 class App(models.Model):
+    STATUS_CHOICES = [
+        ('Pendente', 'Pendente'),
+        ('Aprovado', 'Aprovado'),
+        ('Negado', 'Negado'),
+    ]
     nome = models.CharField(max_length=20, unique=True, blank=False)
     descricao = models.CharField(max_length=200, blank=True)
     versao = models.CharField(max_length=20, blank=False)
     instalado = models.BooleanField(default=False)
     dependencias = models.JSONField(default=list)
-    zip_file = models.FileField(upload_to='app_pacotes/')
+    zip_file = models.FileField(upload_to=f'media/apps/')
     autor = models.ForeignKey(Developer, on_delete=models.PROTECT, blank=False, null=False)
     publicado = models.BooleanField(default=False)
     created_At = models.DateTimeField(auto_now_add=True)
     updated_At = models.DateTimeField(auto_now=True)
-    approved_status = models.CharField(null=True, blank=True, max_length=50, editable=True)
-    
-    def save(self, *args, **kwargs):
-        self.approved_status = 'Em análise'
-    
-        super().save(*args, **kwargs)
+    approved_status = models.CharField(
+        max_length=10,
+        choices=STATUS_CHOICES,
+        default='Pendente'
+    )
 
 
     

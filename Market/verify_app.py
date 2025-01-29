@@ -1,14 +1,8 @@
 import os
 import zipfile
-
 from django.core.exceptions import ValidationError
 
-# Função de verificação após o post do app
 def verify_app(app_instance):
-    """
-    Verifica se o app postado atende aos requisitos necessários para ser publicado.
-    Se aprovado, altera o status do app.
-    """
     try:
         # Requisito 1: Nome deve ter pelo menos 3 caracteres
         if len(app_instance.nome) < 3:
@@ -22,41 +16,37 @@ def verify_app(app_instance):
         if not app_instance.zip_file:
             raise ValidationError("É necessário enviar um arquivo compactado válido.")
 
-
-        # Verificação da arquitetura do app Django dentro do arquivo ZIP
-        zip_path = app_instance.zip_file.path  # Caminho do arquivo ZIP no servidor
+        zip_path = app_instance.zip_file.path
         
+        # Verificação do arquivo zip
         if not os.path.exists(zip_path):
             raise ValidationError("O arquivo zip fornecido não existe ou não pôde ser encontrado.")
 
-        # Verificar se a pasta ZIP contém os arquivos essenciais do Django
-        required_files = [
-            'urls.py',
-            'models.py',
-            'views.py',
-            'admin.py',
-            '__init__.py',
-            'migrations'
-        ]
-
-        # Abrindo o arquivo zip para verificar seu conteúdo
         with zipfile.ZipFile(zip_path, 'r') as zip_ref:
             zip_files = zip_ref.namelist()
-
-            # Verificando se todos os arquivos essenciais estão presentes
-            missing_files = [file for file in required_files if file not in zip_files]
-
+            
+            # Normalizando os caminhos dos arquivos e verificando se eles existem na lista
+            required_files = [
+                'models.py',
+                'views.py',
+                'admin.py',
+                '__init__.py',
+            ]
+            
+            # Verificar se os arquivos necessários existem na lista
+            missing_files = [file for file in required_files if not any(file in f for f in zip_files)]
+            
             if missing_files:
                 raise ValidationError(f"Arquitetura do app está incompleta. Arquivos faltando: {', '.join(missing_files)}")
 
-        # Se todos os requisitos forem passados, altera o status para aprovado
-        app_instance.status = 'aprovado'
-        app_instance.save()
+        # Atualizar o status para 'Aprovado' se tudo estiver correto
+        app_instance.status = 'Aprovado'
+        app_instance.save()  # Salvar a alteração no banco de dados
 
-        return True  # Se aprovado
+        return True  # Retorna True se o app for aprovado
+
     except ValidationError as e:
-        # Caso algum requisito não seja atendido, altera o status para rejeitado e retorna a mensagem
+        # Caso algum requisito não seja atendido, atualiza o status para 'Negado' e retorna a mensagem de erro
         app_instance.status = 'Negado'
-        app_instance.save()
+        app_instance.save()  # Salvar a alteração no banco de dados
         return str(e)  # Retorna a mensagem de erro para mostrar ao usuário
-

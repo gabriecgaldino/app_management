@@ -1,5 +1,5 @@
 {%load static %}
-
+{% load custom_tags %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -55,20 +55,22 @@
                                 </thead>
                                 <tbody>
                                     {% for app in apps %}
-                                        <tr>
-                                            <td>{{ app.id }}</td>
-                                            <td>{{ app.nome }}</td>
-                                            {% if app.aproved_status %}
-                                                <td><span class="badge bg-success">Aprovado</span></td>
-                                            {% else %}
-                                                <td><span class="badge bg-warning">Em análise</span></td>
-                                            {% endif %}
-                                            <td>{{ app.autor.first_name }} {{ app.autor.first_name }}</td>  <!-- Exemplo: mostrando o nome completo do autor -->
-                                            <td><button class="btn btn-sm btn-primary">Detalhes</button></td>
-                                        </tr>
-                                    {% empty %}
-                                        <tr><td>Nenhum aplicativo publicado</td></tr>
-                                    {% endfor %}
+                                    <tr>
+                                        
+                                        <td>{{ app.id }}</td>
+                                        <td>{{ app.nome }}</td>
+                                        <td>
+                                            <span class="badge {{ app.approved_status|status_badge_class }} status">
+                                                {{ app.approved_status }}
+                                            </span>
+                                        </td>
+                                        <td>{{ app.autor.first_name }} {{ app.autor.last_name }}</td>  <!-- Exemplo: nome completo do autor -->
+                                        <td><button class="btn btn-sm btn-primary">Detalhes</button></td>
+                                    </tr>
+                                {% empty %}
+                                    <tr><td colspan="5">Nenhum aplicativo publicado</td></tr>
+                                {% endfor %}
+
                                 </tbody>
                             </table>
                         </div>
@@ -128,5 +130,6 @@
             </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="../../static/js/central_do_desenvolvedor.js"></script>
     </body>
 </html>

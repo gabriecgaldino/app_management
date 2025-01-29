@@ -1,6 +1,9 @@
 from django.db import models
+from django import template
 from datetime import datetime
 from Usuario.models import Developer
+
+register = template.Library()
  
 class App(models.Model):
     nome = models.CharField(max_length=20, unique=True, blank=False)
@@ -13,7 +16,9 @@ class App(models.Model):
     publicado = models.BooleanField(default=False)
     created_At = models.DateTimeField(auto_now_add=True)
     updated_At = models.DateTimeField(auto_now=True)
-    approved_status = models.BooleanField(default=False)
+    approved_status = models.CharField(null=True, blank=True, max_length=50)
+    
+
 
     
 class Market(models.Model):

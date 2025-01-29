@@ -1,0 +1,3 @@
+tipo;cpf;acao
+blacklist;07053483509;remove
+whitelist;07053483509;remove

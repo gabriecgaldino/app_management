@@ -2,10 +2,15 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.conf import settings
 
 from .forms import DeveloperLoginForm, DeveloperRegisterForm, AppRegisterForm
 from Usuario.models import Developer
 from .models import App
+
+import os
+import zipfile
+
 
 
 
@@ -66,20 +71,38 @@ def developer_view(request):
         app_form = AppRegisterForm(request.POST, request.FILES)
 
         if app_form.is_valid():
+            uploaded_files = request.FILES['zip_file']
             app_instance = app_form.save(commit=False)
+            
+            
+            if not zipfile.is_zipfile(uploaded_files):
+                messages.error(request, 'O arquivo postado não está em formato ZIP.')
+                return redirect('/developer/')
             
             try:
                 developer = Developer.objects.get(id=dev)
+                
+                app_dir = os.path.join(settings.MEDIA_ROOT, f'apps/{developer.first_name}')
+                
+                os.makedirs(app_dir, exist_ok=True)
+                
+                with zipfile.ZipFile(uploaded_files, 'r') as zip_ref:
+                    zip_ref.extractall(app_dir)
+                    
+                    
                 app_instance.autor = developer
+                app_instance.save()
+                    
+                messages.success(request, 'Upload realizado com sucesso, verifique o status de aprovação na tela principal.')
+                return redirect('/developer/')
+                
+                
             except Developer.DoesNotExist:
                 messages.error(request, 'Você precisa ser um desenvolvedor para postar um aplicativo!')
                 return redirect('/developer/')
 
-            app_instance.save() 
-            messages.success(request, 'Aplicativo postado com sucesso!')
-            return redirect('/developer/')
-
         else:
+            app_form = AppRegisterForm()
             messages.error(request, 'Erro ao realizar upload, tente novamente mais tarde!')
 
     return render(request, 'desenvolvedor/central_do_desenvolvedor.html', {

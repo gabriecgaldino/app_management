@@ -56,7 +56,7 @@ class DeveloperLoginForm(AuthenticationForm):
 class AppRegisterForm(forms.ModelForm):
     class Meta: 
         model = App
-        fields = ['nome', 'descricao', 'versao', 'arquivo_pacote']
+        fields = ['nome', 'descricao', 'versao', 'zip_file']
         widgets = {
             'nome': forms.TextInput(attrs={
                 'class': 'form-control',
@@ -74,10 +74,11 @@ class AppRegisterForm(forms.ModelForm):
                 'id': 'app-details',
                 'rows': '3'
             }),
-            'arquivo_pacote': forms.FileInput(
+            'zip_file': forms.FileInput(
                 attrs={
                 'class': 'form-control',
                 'placeholder': 'Carregue seu arquivo',
-                'id': 'app-path'
+                'id': 'zip_file',
+                'name': 'zip_file'
             })
         }

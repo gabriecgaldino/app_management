@@ -11,7 +11,7 @@ class App(models.Model):
     versao = models.CharField(max_length=20, blank=False)
     instalado = models.BooleanField(default=False)
     dependencias = models.JSONField(default=list)
-    arquivo_pacote = models.FileField(upload_to='app_pacotes/')
+    zip_file = models.FileField(upload_to='app_pacotes/')
     autor = models.ForeignKey(Developer, on_delete=models.PROTECT, blank=False, null=False)
     publicado = models.BooleanField(default=False)
     created_At = models.DateTimeField(auto_now_add=True)

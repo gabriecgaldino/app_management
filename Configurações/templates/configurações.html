@@ -7,125 +7,158 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Configurações do Usuário</title>
     <!-- Links do Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Ícones do Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-    <link href="{% static 'styles/configurações.css'%}" rel="stylesheet">
-    
+    <!-- Fonte do Google (Roboto) -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Estilos personalizados -->
+    <link href="{% static 'styles/configurações.css' %}" rel="stylesheet">
+    <link href="{% static 'styles/modais.css' %}" rel="stylesheet">
 </head>
 
 <body class="bg-light">
     <!-- Navbar -->
     {% include 'navigation_bar.html' %}
-    
+
     <!-- Conteúdo da Página -->
-    <div class="container mt-5">
-        <div class="row">
-            <!-- Opções de Configuração -->
-            <div class="col-lg-8">
-                <div class="card settings-card mb-4">
-                    <div class="card-header">
-                        <h5>Configurações Pessoais</h5>
+    <div class="container mt-4 mt-lg-5">
+        <div class="row g-4">
+            <!-- Coluna principal -->
+            <div class="col-12 col-lg-8">
+                <!-- Configurações Pessoais -->
+                <div class="card settings-card mb-4 shadow-sm border-0">
+                    <div class="card-header bg-white border-0 py-4">
+                        <h4 class="mb-0 text-primary"><i class="bi bi-gear me-2"></i>Configurações Pessoais</h4>
                     </div>
                     <div class="card-body">
-                        <ul class="list-group">
-                            <li class="list-group-item" data-bs-toggle="modal" data-bs-target="#modalAlterarNome">
-                                <i class="bi bi-person-circle"></i>
-                                Alterar nome de usuário
-                            </li>
+                        <div class="list-group list-group-flush">
+                            <div class="list-group-item d-flex align-items-center py-3" data-bs-toggle="modal" data-bs-target="#modalAlterarNome">
+                                <i class="bi bi-person-circle me-3 fs-4 text-secondary"></i>
+                                <div>
+                                    <h6 class="mb-1">Alterar nome de usuário</h6>
+                                    <p class="mb-0 text-muted small">Atualize seu nome de exibição no sistema.</p>
+                                </div>
+                            </div>
                             {% include 'modais/modal_alteração_nome_colaborador.html' %}
-                            <li class="list-group-item" data-bs-toggle="modal" data-bs-target="#modalAlterarEmail">
-                                <i class="bi bi-envelope"></i>
-                                Alterar e-mail
-                            </li>
+                            <div class="list-group-item d-flex align-items-center py-3" data-bs-toggle="modal" data-bs-target="#modalAlterarEmail">
+                                <i class="bi bi-envelope me-3 fs-4 text-secondary"></i>
+                                <div>
+                                    <h6 class="mb-1">Alterar e-mail</h6>
+                                    <p class="mb-0 text-muted small">Mantenha seu endereço de e-mail atualizado.</p>
+                                </div>
+                            </div>
                             {% include 'modais/modal_alteração_email.html' %}
-                            <li class="list-group-item" data-bs-toggle="modal" data-bs-target="#modalAlterarSenha">
-                                <i class="bi bi-lock"></i>
-                                Alterar senha
-                            </li>
+                            <div class="list-group-item d-flex align-items-center py-3" data-bs-toggle="modal" data-bs-target="#modalAlterarSenha">
+                                <i class="bi bi-lock me-3 fs-4 text-secondary"></i>
+                                <div>
+                                    <h6 class="mb-1">Alterar senha</h6>
+                                    <p class="mb-0 text-muted small">Proteja sua conta com uma senha segura.</p>
+                                </div>
+                            </div>
                             {% include 'modais/modal_alteração_senha.html' %}
-                            <li class="list-group-item" data-bs-toggle="modal" data-bs-target="#modalAlterarIdioma">
-                                <i class="bi bi-globe"></i>
-                                Alterar idioma
-                            </li>
+                            <div class="list-group-item d-flex align-items-center py-3" data-bs-toggle="modal" data-bs-target="#modalAlterarIdioma">
+                                <i class="bi bi-globe me-3 fs-4 text-secondary"></i>
+                                <div>
+                                    <h6 class="mb-1">Alterar idioma</h6>
+                                    <p class="mb-0 text-muted small">Escolha o idioma preferido do sistema.</p>
+                                </div>
+                            </div>
                             {% include 'modais/modal_alteração_idioma.html' %}
-                            <li class="list-group-item" data-bs-toggle="modal"
-                                data-bs-target="#modalAlterarNotificacoes">
-                                <i class="bi bi-bell"></i>
-                                Notificações
-                            </li>
+                            <div class="list-group-item d-flex align-items-center py-3" data-bs-toggle="modal" data-bs-target="#modalAlterarNotificacoes">
+                                <i class="bi bi-bell me-3 fs-4 text-secondary"></i>
+                                <div>
+                                    <h6 class="mb-1">Notificações</h6>
+                                    <p class="mb-0 text-muted small">Gerencie suas preferências de notificação.</p>
+                                </div>
+                            </div>
                             {% include 'modais/modal_alteração_notificações.html' %}
-                        </ul>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Opções de Configuração de Organização -->
-                <div class="card settings-card mb-4">
-                    <div class="card-header">
-                        <h5>Configurações da Organização</h5>
+                <!-- Configurações da Organização -->
+                <div class="card settings-card mb-4 shadow-sm border-0">
+                    <div class="card-header bg-white border-0 py-4">
+                        <h4 class="mb-0 text-primary"><i class="bi bi-building me-2"></i>Configurações da Organização</h4>
                     </div>
-
                     <div class="card-body">
-                        <ul class="list-group">
-                            <li class="list-group-item" data-bs-toggle="modal"
-                                data-bs-target="#modalAlterarNomeOrganizacao">
-                                <i class="bi bi-building"></i>
-                                Alterar nome da organização
-                            </li>
+                        <div class="list-group list-group-flush">
+                            <div class="list-group-item d-flex align-items-center py-3" data-bs-toggle="modal" data-bs-target="#modalAlterarNomeOrganizacao">
+                                <i class="bi bi-building me-3 fs-4 text-secondary"></i>
+                                <div>
+                                    <h6 class="mb-1">Alterar nome da organização</h6>
+                                    <p class="mb-0 text-muted small">Atualize o nome da sua organização.</p>
+                                </div>
+                            </div>
                             {% include 'modais/modal_alteração_nome_organização.html' %}
-                            <li class="list-group-item" data-bs-toggle="modal" data-bs-target="#modalAlterarEndereco">
-                                <i class="bi bi-house-door"></i>
-                                Alterar endereço
-                            </li>
+                            <div class="list-group-item d-flex align-items-center py-3" data-bs-toggle="modal" data-bs-target="#modalAlterarEndereco">
+                                <i class="bi bi-house-door me-3 fs-4 text-secondary"></i>
+                                <div>
+                                    <h6 class="mb-1">Alterar endereço</h6>
+                                    <p class="mb-0 text-muted small">Atualize o endereço da organização.</p>
+                                </div>
+                            </div>
                             {% include 'modais/modal_alteração_endereço_organização.html' %}
-                            <li class="list-group-item" data-bs-toggle="modal" data-bs-target="#modalAlterarTelefone">
-                                <i class="bi bi-phone"></i>
-                                Alterar telefone
-                            </li>
+                            <div class="list-group-item d-flex align-items-center py-3" data-bs-toggle="modal" data-bs-target="#modalAlterarTelefone">
+                                <i class="bi bi-phone me-3 fs-4 text-secondary"></i>
+                                <div>
+                                    <h6 class="mb-1">Alterar telefone</h6>
+                                    <p class="mb-0 text-muted small">Atualize o telefone de contato.</p>
+                                </div>
+                            </div>
                             {% include 'modais/modal_alteração_telefone_organização.html' %}
-                        </ul>
+                        </div>
                     </div>
                 </div>
+
                 <!-- Configurações de Administração -->
-                <div class="card settings-card mb-4">
-                    <div class="card-header">
-                        <h5>Configurações de Administração</h5>
+                <div class="card settings-card mb-4 shadow-sm border-0">
+                    <div class="card-header bg-white border-0 py-4">
+                        <h4 class="mb-0 text-primary"><i class="bi bi-tools me-2"></i>Configurações de Administração</h4>
                     </div>
                     <div class="card-body">
-                        <ul class="list-group">
-                            <li class="list-group-item" data-bs-toggle="modal" data-bs-target="#modalAdicionarSetor">
-                                <i class="bi bi-building"></i>
-                                Gerenciar Setores
-                            </li>
+                        <div class="list-group list-group-flush">
+                            <div class="list-group-item d-flex align-items-center py-3" data-bs-toggle="modal" data-bs-target="#modalAdicionarSetor">
+                                <i class="bi bi-building me-3 fs-4 text-secondary"></i>
+                                <div>
+                                    <h6 class="mb-1">Gerenciar Setores</h6>
+                                    <p class="mb-0 text-muted small">Adicione ou edite os setores da organização.</p>
+                                </div>
+                            </div>
                             {% include 'modais/modal_adição_setor.html' %}
-                            <li class="list-group-item" data-bs-toggle="modal" data-bs-target="#modalAdicionarCargo">
-                                <i class="bi bi-briefcase"></i>
-                                Gerenciar Cargos
-                            </li>
+                            <div class="list-group-item d-flex align-items-center py-3" data-bs-toggle="modal" data-bs-target="#modalAdicionarCargo">
+                                <i class="bi bi-briefcase me-3 fs-4 text-secondary"></i>
+                                <div>
+                                    <h6 class="mb-1">Gerenciar Cargos</h6>
+                                    <p class="mb-0 text-muted small">Adicione ou edite os cargos da organização.</p>
+                                </div>
+                            </div>
                             {% include 'modais/modal_adição_cargos.html' %}
-                            <li class="list-group-item">
-                                <a class="nav-link" href="{% url 'colaboradores' %}">
-                                    <i class="bi bi-person-check me-2"></i>
-                                    Gerenciar colaboradores
+                            <div class="list-group-item d-flex align-items-center py-3">
+                                <a class="nav-link d-flex align-items-center" href="{% url 'colaboradores' %}">
+                                    <i class="bi bi-person-check me-3 fs-4 text-secondary"></i>
+                                    <div>
+                                        <h6 class="mb-1">Gerenciar Colaboradores</h6>
+                                        <p class="mb-0 text-muted small">Gerencie os colaboradores da organização.</p>
+                                    </div>
                                 </a>
-                            </li>
-                        </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <!-- Coluna para o botão de cadastrar nova organização -->
-            <div class="col-lg-4">
-                <div class="card settings-card">
-                    <div class="card-header">
-                        <h5>Nova Organização</h5>
+            <div class="col-12 col-lg-4">
+                <div class="card settings-card shadow-sm border-0">
+                    <div class="card-header bg-white border-0 py-4">
+                        <h4 class="mb-0 text-primary"><i class="bi bi-plus-circle me-2"></i>Nova Organização</h4>
                     </div>
                     <div class="card-body">
-                        <p class="card-text">Caso você precise criar uma nova organização, clique no botão abaixo para
-                            iniciar o cadastro.</p>
-                        <a href="#" class="btn btn-primary w-100" data-bs-toggle="modal"
-                            data-bs-target="#modalCadastrarOrganizacao">
-                            <i class="bi bi-plus-circle"></i> Cadastrar Nova Organização
+                        <p class="card-text text-muted mb-4">Crie uma nova organização para gerenciar seus projetos e colaboradores.</p>
+                        <a href="#" class="btn btn-primary w-100 d-flex align-items-center justify-content-center py-2" data-bs-toggle="modal" data-bs-target="#modalCadastrarOrganizacao">
+                            <i class="bi bi-plus-circle me-2"></i> Cadastrar Nova Organização
                         </a>
                         {% include 'modais/modal_nova_organização.html' %}
                     </div>
@@ -134,10 +167,23 @@
         </div>
     </div>
 
-    <!-- Scripts do Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script>
+    <!-- Scripts do JQuery -->
 
+    <!-- Scripts do Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+    const modals = document.querySelectorAll('.modal');
+    modals.forEach(modal => {
+        modal.addEventListener('show.bs.modal', () => {
+            console.log(`Abrindo modal: ${modal.id}`);
+        });
+        modal.addEventListener('hide.bs.modal', () => {
+            console.log(`Fechando modal: ${modal.id}`);
+        });
+    });
+});
+    </script>
 </body>
 
 </html>

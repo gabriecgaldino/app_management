@@ -1,12 +1,78 @@
-.list-group-item:hover {
-    background-color: #d8d8d8;
-    cursor: pointer;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transform: translateX(5px);
-    transition: all 0.3s ease;
-
+/* Estilos gerais */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f8f9fa;
 }
 
-.list-group-item i {
-    margin-right: 10px;
+.settings-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.settings-card:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+    background-color: #fff;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.list-group-item {
+    transition: background-color 0.2s ease;
+    cursor: pointer;
+    border: none;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.list-group-item:hover {
+    background-color: #f8f9fa;
+}
+
+.list-group-item:last-child {
+    border-bottom: none;
+}
+
+.btn-primary {
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    background-color: #0d6efd;
+    border: none;
+    font-weight: 500;
+}
+
+.btn-primary:hover {
+    background-color: #0b5ed7;
+}
+
+.text-primary {
+    color: #0d6efd !important;
+}
+
+.text-muted {
+    color: #6c757d !important;
+}
+
+/* Ajustes para dispositivos móveis */
+@media (max-width: 767.98px) {
+    .container {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .card-header h4 {
+        font-size: 1.25rem;
+    }
+
+    .list-group-item h6 {
+        font-size: 0.9rem;
+    }
+
+    .list-group-item p {
+        font-size: 0.8rem;
+    }
+
+    .btn-primary {
+        font-size: 0.9rem;
+    }
 }

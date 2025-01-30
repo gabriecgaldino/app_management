@@ -1,19 +1,23 @@
 <!-- Modal de Cadastro de Colaborador -->
-
-<div class="modal fade" id="modalCadastroColaborador" tabindex="-1" aria-labelledby="modalCadastroColaboradorLabel"
-    aria-hidden="false">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modalCadastroColaboradorLabel">Cadastrar Colaborador</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+<div class="modal fade" id="modalCadastroColaborador" tabindex="-1" aria-labelledby="modalCadastroColaboradorLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg">
+            <!-- Cabeçalho do Modal -->
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="modalCadastroColaboradorLabel">
+                    <i class="bi bi-person-plus me-2"></i>Cadastrar Colaborador
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+
+            <!-- Formulário de Cadastro -->
             <form method="post" action="" id="formCadastroColaborador">
                 {% csrf_token %}
                 <div class="modal-body">
+                    <!-- Mensagens de Erro -->
                     {% if form_colaborador.errors %}
                     <div class="alert alert-danger">
-                        <ul>
+                        <ul class="mb-0">
                             {% for field, errors in form_colaborador.errors.items %}
                             <li>
                                 <strong>{{ field|capfirst }}:</strong>
@@ -25,153 +29,153 @@
                         </ul>
                     </div>
                     {% endif %}
-                    <!-- Dados Pessoais -->
-                    <h6 class="mb-3">Dados Pessoais</h6>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="id_nome" class="form-label">Nome</label>
-                                {{form_colaborador.first_name}}
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="id_sobrenome" class="form-label">Sobrenome</label>
-                                {{form_colaborador.last_name}}
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="row">
+                    <!-- Dados Pessoais -->
+                    <h6 class="mb-3 text-primary"><i class="bi bi-person-lines-fill me-2"></i>Dados Pessoais</h6>
+                    <div class="row g-3">
                         <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="id_cpf" class="form-label">CPF</label>
-                                {{form_colaborador.cpf}}
+                            <div class="form-floating">
+                                {{ form_colaborador.first_name }}
+                                <label for="id_nome">Nome</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                {{ form_colaborador.last_name }}
+                                <label for="id_sobrenome">Sobrenome</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                {{ form_colaborador.cpf }}
+                                <label for="id_cpf">CPF</label>
                                 {% if form_colaborador.cpf.errors %}
-                                <div class="text-danger">
+                                <div class="text-danger small mt-1">
                                     {{ form_colaborador.cpf.errors|join:" " }}
                                 </div>
                                 {% endif %}
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="id_email" class="form-label">Email</label>
-                                {{form_colaborador.email}}
+                            <div class="form-floating">
+                                {{ form_colaborador.email }}
+                                <label for="id_email">Email</label>
                                 {% if form_colaborador.email.errors %}
-                                <div class="text-danger">
+                                <div class="text-danger small mt-1">
                                     {{ form_colaborador.email.errors|join:" " }}
                                 </div>
                                 {% endif %}
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="id_telefone" class="form-label">Telefone</label>
-                                {{form_colaborador.telefone}}
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="id_data_nascimento" class="form-label">Data de Nascimento</label>
-                                    {{form_colaborador.data_nascimento}}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <h6 class="mb-3">Endereço</h6>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <div class="mb-3">
-                                    <label for="id_cep">CEP</label>
-                                    {{form_endereco.cep}}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="id_rua">Rua</label>
-                                {{form_endereco.rua}}
+                            <div class="form-floating">
+                                {{ form_colaborador.telefone }}
+                                <label for="id_telefone">Telefone</label>
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="id_numero">N°</label>
-                                {{form_endereco.numero}}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="id_estado">Estado</label>
-                                {{form_endereco.estado}}
-                            </div>
-                            <div class="mb-3">
-                                <label for="id_bairro">Bairro</label>
-                                {{form_endereco.bairro}}
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="id_cidade">Cidade</label>
-                                {{form_endereco.cidade}}
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="id_pais">Pais</label>
-                                {{form_endereco.pais}}
+                            <div class="form-floating">
+                                {{ form_colaborador.data_nascimento }}
+                                <label for="id_data_nascimento">Data de Nascimento</label>
                             </div>
                         </div>
                     </div>
 
+                    <!-- Endereço -->
+                    <h6 class="mt-4 mb-3 text-primary"><i class="bi bi-house-door me-2"></i>Endereço</h6>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                {{ form_endereco.cep }}
+                                <label for="id_cep">CEP</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                {{ form_endereco.rua }}
+                                <label for="id_rua">Rua</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                {{ form_endereco.numero }}
+                                <label for="id_numero">Número</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                {{ form_endereco.bairro }}
+                                <label for="id_bairro">Bairro</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                {{ form_endereco.cidade }}
+                                <label for="id_cidade">Cidade</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                {{ form_endereco.estado }}
+                                <label for="id_estado">Estado</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                {{ form_endereco.pais }}
+                                <label for="id_pais">País</label>
+                            </div>
+                        </div>
+                    </div>
 
                     <!-- Dados Profissionais -->
-                    <h6 class="mb-3">Dados Profissionais</h6>
-                    <div class="row">
+                    <h6 class="mt-4 mb-3 text-primary"><i class="bi bi-briefcase me-2"></i>Dados Profissionais</h6>
+                    <div class="row g-3">
                         <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="empresa" class="form-label">Empresa</label>
-                                {{form_colaborador.empresa}}
+                            <div class="form-floating">
+                                {{ form_colaborador.empresa }}
+                                <label for="id_empresa">Empresa</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                {{ form_colaborador.setor }}
+                                <label for="id_setor">Setor</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                {{ form_colaborador.cargo }}
+                                <label for="id_cargo">Cargo</label>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="id_setor" class="form-label">Setor</label>
-                                {{form_colaborador.setor}}
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="id_cargo" class="form-label">Cargo</label>
-                                {{form_colaborador.cargo}}
-                            </div>
-                        </div>
-                    </div>
+
                     <!-- Dados de Acesso -->
-                    <h6 class="mb-3">Dados de Acesso</h6>
-                    <div class="row">
+                    <h6 class="mt-4 mb-3 text-primary"><i class="bi bi-lock me-2"></i>Dados de Acesso</h6>
+                    <div class="row g-3">
                         <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="id_is_active" class="form-label">Ativo</label>
-                                {{form_colaborador.is_active}}
+                            <div class="form-check form-switch">
+                                {{ form_colaborador.is_active }}
+                                <label class="form-check-label" for="id_is_active">Ativo</label>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                    <button type="submit" class="btn btn-primary">Salvar</button>
+
+                <!-- Rodapé do Modal -->
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="bi bi-x-circle me-1"></i>Fechar
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-save me-1"></i>Salvar
+                    </button>
                 </div>
             </form>
         </div>
     </div>
 </div>
+
+<!-- Scripts -->
 <script type="module" src="../static/js/service.mjs"></script>

@@ -1,32 +1,76 @@
-/* Estilo do botão */
-.btn-custom {
-    background-color: #343a40;
-    color: #ffffff;
-    border-radius: 8px;
-    border: none;
+/* Estilos gerais */
+.navbar {
+    padding: 0.75rem 1rem;
+    background-color: #343a40 !important; /* Cor escura para a navbar */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.btn-custom:hover {
-    background-color: #495057;
-}
-
-/* Estilo do menu lateral */
-.offcanvas-custom {
-    background-color: #343a40;
-    color: #ffffff;
-}
-
-.offcanvas-custom .list-group-item {
-    background-color: #495057;
-    color: #ffffff;
-    border: none;
-}
-
-.offcanvas-custom .list-group-item:hover {
-    background-color: #6c757d;
-}
-
-.offcanvas-title {
+.navbar-brand h2 {
+    color: #ffc107; /* Cor laranja para o logo */
     font-weight: bold;
-    font-size: 1.5rem;
+}
+
+/* Barra de pesquisa */
+.input-group {
+    max-width: 500px;
+}
+
+.form-control {
+    background-color: #495057;
+    border: none;
+    color: #fff;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-control:focus {
+    background-color: #495057;
+    box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.25); /* Destaque laranja ao focar */
+}
+
+/* Dropdown de usuário */
+.dropdown-menu {
+    background-color: #343a40;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 0.5rem 0;
+}
+
+.dropdown-item {
+    color: #fff;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.dropdown-item:hover {
+    background-color: #495057;
+    color: #fff;
+}
+
+.dropdown-item.text-danger:hover {
+    background-color: #dc3545; /* Cor de destaque para o botão "Sair" */
+    color: #fff;
+}
+
+.dropdown-divider {
+    border-color: #495057; /* Cor do divisor */
+}
+
+/* Ícones */
+.bi {
+    font-size: 1.25rem;
+}
+
+/* Responsividade */
+@media (max-width: 767.98px) {
+    .navbar {
+        padding: 0.5rem;
+    }
+
+    .form-control {
+        width: 100%;
+    }
+
+    .dropdown-menu {
+        width: 100%;
+    }
 }

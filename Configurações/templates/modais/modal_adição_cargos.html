@@ -1,28 +1,48 @@
+
 <div class="modal fade" id="modalAdicionarCargo" tabindex="-1" aria-labelledby="modalAdicionarCargoLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modalAdicionarCargoLabel">Adicionar Cargo</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg">
+            <!-- Cabeçalho do Modal -->
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="modalAdicionarCargoLabel">
+                    <i class="bi bi-briefcase me-2"></i>Adicionar Cargo
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+
+            <!-- Corpo do Modal -->
             <form method="post" action="{% url 'configurações' %}">
                 {% csrf_token %}
                 <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="id_nome_cargo" class="form-label">Nome do Cargo</label>
-                        {{form_cargo.setor}}
+                    <!-- Campo: Setor -->
+                    <div class="mb-4">
+                        <label for="id_setor" class="form-label fw-bold">
+                            <i class="bi bi-building me-1"></i>Setor
+                        </label>
+                        {{ form_cargo.setor }}
+                        <small class="form-text text-muted">Selecione o setor ao qual o cargo pertence.</small>
                     </div>
-                    <div class="mb-3">
-                        <label for="id_nome_cargo" class="form-label">Nome do Cargo</label>
-                        {{form_cargo.nome_cargo}}
+
+                    <!-- Campo: Nome do Cargo -->
+                    <div class="mb-4">
+                        <label for="id_nome_cargo" class="form-label fw-bold">
+                            <i class="bi bi-card-heading me-1"></i>Nome do Cargo
+                        </label>
+                        {{ form_cargo.nome_cargo }}
+                        <small class="form-text text-muted">Insira o nome do cargo que deseja adicionar.</small>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                    <button type="submit" class="btn btn-primary">Salvar</button>
+
+                <!-- Rodapé do Modal -->
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="bi bi-x-circle me-1"></i>Fechar
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-save me-1"></i>Salvar
+                    </button>
                 </div>
             </form>
         </div>
     </div>
 </div>
-

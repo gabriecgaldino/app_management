@@ -1,3 +1,5 @@
+import os
+import zipfile
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
@@ -5,13 +7,9 @@ from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.shortcuts import get_object_or_404
 
-
 from .forms import DeveloperLoginForm, DeveloperRegisterForm, AppRegisterForm
 from Usuario.models import Developer
 from .models import App
-
-import os
-import zipfile
 
 from .verify_app import verify_app
 

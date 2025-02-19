@@ -6,6 +6,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.shortcuts import get_object_or_404
+from django.http import JsonResponse
 
 from .forms import DeveloperLoginForm, DeveloperRegisterForm, AppRegisterForm
 from Usuario.models import Developer
@@ -148,3 +149,17 @@ def app_review(request, app_id):
         messages.error(request, f'Erro inesperado: {e}')
         
     return redirect('/developer/')
+
+
+def app_remove(request, app_id):
+    app_instance = get_object_or_404(App, id=app_id)
+    
+    if not app_instance:
+        messages.error(request, 'Aplicativo não encontrado.')
+    else:
+        app_instance.delete()
+        messages.success(request, 'Aplicativo removido com sucesso!')
+        
+    return redirect('/developer/')
+    
+    

@@ -1,4 +1,4 @@
-Este projeto é uma aplicação web feita com Django para gerenciar aplicações. 
+Este projeto é uma aplicação web feita com Django para gerenciar empresas através de pequenas aplicações internas. 
 
 ## Requisitos
 
